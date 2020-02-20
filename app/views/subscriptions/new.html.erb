@@ -1,0 +1,153 @@
+<% content_for :page_title do %>
+  <i class="fa fa-calendar-check-o"></i> Activate Subscription
+<% end %>
+
+<% content_for :page do %>
+    <div class="panel panel-default" data-next-panel=".promo-code-panel">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-check-square-o"></i> <strong>Step 1</strong> Choose a Package</h3>
+      </div>
+      
+      <div class="panel-body">
+				<div class="row subscription-packages">
+					<div class="col-sm-6 text-center">
+						<%= button_to '#', class: 'btn btn-lg btn-default', data: {subscription_type: SUBSCRIPTION_BASIC} do %>
+							<h3>Basic</h3>
+							<small class="text-muted"><%= number_to_currency(@settings.basic_package_price, precision: 0) %>/month</small>
+						<% end %>
+					</div>
+					
+					<div class="col-sm-6 text-center">
+						<%= button_to '#', class: 'btn btn-lg btn-default', data: {subscription_type: SUBSCRIPTION_PREMIUM} do %>
+							<h3>Premium</h3>
+							<small class="text-muted"><%= number_to_currency(@settings.premium_package_price, precision: 0) %>/month</small>						
+						<% end %>
+					</div>
+				</div>       
+      </div> <!-- /.package panel body -->
+    </div> <!-- /package panel -->
+		
+		<!-- Promo code validation status -->
+		<div class="alert alert-success validate-code-success hide">
+			<i class="fa fa-check"></i> <strong>Code accepted!</strong> <span class="code-description"></span>
+		</div>
+		
+		<!-- Promo code entry -->
+		<div class="panel panel-default panel-faded promo-code-panel promo-code-container" data-next-panel=".payment-panel">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-question-circle-o"></i> <strong>Step 2</strong> Got a Promo Code?</h3>
+			</div>
+			
+			<div class="panel-body">
+				<p>If you have a promo code, enter it here.</p>
+				
+				<%= simple_form_for PromoCode.new, url: promo_codes_check_path(format: :json), html: {class: 'validate-code'}, remote: true do |f| %>
+					<%= f.hidden_field :subscription_type %>
+					<%= f.input :code, label: false, input_html: {class: 'input-lg'} %>
+					
+					<ul class="list-inline text-center">
+						<li>
+							<%= f.button :button, class: 'btn btn-primary submit-code center-block' do %>
+								<i class="fa fa-check"></i> Validate Code
+							<% end %>
+						</li>
+						
+						<li>
+							<%= button_to '#', class: 'btn btn-default center-block no-promo-code' do %>
+								I Don't Have a Promo Code
+							<% end %>
+						</li>
+					</ul>
+				<% end %>
+			</div>
+		</div>
+    
+		<!-- Payment information entry -->
+    <div class="panel panel-default panel-faded payment-panel">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-credit-card"></i> <strong>Step 3</strong> Payment</h3>
+      </div>
+      
+      <div class="panel-body">
+      <%= simple_form_for [@masseur, @subscription], format: :json, remote: true do |f| %>
+        <%= f.error_notification %>
+				<%= f.hidden_field :subscription_type %>
+
+        <%= simple_fields_for :card, @card do |cc| %>
+          <div class="row">
+            <div class="col-md-6">
+              <%= cc.input :first_name, label: 'First Name', input_html: {class: 'input-lg'} %>
+            </div>
+        
+            <div class="col-md-6">
+              <%= cc.input :last_name, label: 'Last Name', input_html: {class: 'input-lg'} %>
+            </div>
+          </div>
+
+          <%= cc.input :number, label: 'Card Number', input_html: {class: 'input-lg'} %>            
+
+      
+          <div class="row">
+            <div class="col-md-9">
+							<%= cc.input :expiry_string, label: 'Expiration', placeholder: 'MM/YY', input_html: {class: 'input-lg'} %>
+            </div>
+            
+            <div class="col-md-3">
+              <%= cc.input :verification_value, label: 'Security Code', maxlength: 3, input_html: {class: 'input-lg'} %>
+            </div>
+          </div>          
+        <% end %>
+      
+        <%= simple_fields_for :code, @code do |code| %>
+          <%= code.hidden_field :code %>
+        <% end %>
+            
+        <%= button_to 'submit', class: 'btn btn-lg btn-success center-block', data: {disable_with: 'Submitting...'} do %>
+          <i class="fa fa-lock"></i> Activate Subscription
+        <% end %>
+				<p class="text-center text-muted">
+					<small>Your information is protected with 2048-bit encryption.</small>				
+				</p>
+      <% end %>
+    </div> <!-- /.panel-body -->
+  </div> <!-- /.panel -->
+	
+	<% if Rails.env.development? %>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		  <h3 class="panel-title">
+		    <i class="fa fa-credit-card"></i> Test Cards
+		    </h3>
+		</div>
+
+	  <div class="panel-body">
+	    <table class="table table-condensed">
+	      <thead>
+	        <tr>
+	          <td>Number</td>
+	          <td>CVV</td>
+	          <td>Result</td>
+	        </tr>
+	      </thead>
+  
+	      <tbody>
+	        <tr>
+	          <td>4007000000027</td>
+	          <td>123</td>
+	          <td>Success</td>
+	        </tr>
+    
+	        <tr>
+	          <td>4012888818888</td>
+	          <td>123</td>
+	          <td>Success</td>
+	        </tr>
+	      </tbody>
+	    </table>
+	  </div>
+	</div> <!-- /end test cards panel -->
+	<% end %>
+	
+<% end %>
+
+<%= render 'shared/masseur_nav', active: 'subscriptions' %>

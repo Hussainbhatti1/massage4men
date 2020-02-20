@@ -1,0 +1,85 @@
+<%= simple_form_for obj do |f| %>
+	<%= f.input :times_seen,
+							as: :select,
+							collection: ['Once', 'Twice', 'Three times', 'Four times', 'Five or more times'],
+							label: 'How many times have you seen this masseur?',
+							include_blank: '(select one)' %>
+							
+	<p>Thinking about your most recent appointment with this masseur, please answer the following:</p>
+							
+	<%= f.input :appointment_date,
+							as: :datepicker,
+							input_html: {class: 'form-control'},
+							placeholder: 'MM/DD/YYYY',
+							label: 'What was the date of your appointment?' %>
+
+	<%= f.input :appointment_location,
+							label: 'Where was your appointment?',
+							placeholder: 'City/State' %>
+
+	<%= f.input :appointment_scheduled_length,
+							as: :select,
+							collection: ['30 minutes', '45 minutes', '60 minutes', '75 minutes', '90 minutes', '120 minutes', '180 minutes', '240 minutes'],
+							label: 'What was the scheduled length of your appointment?',
+							include_blank: '(select one)'
+							%>
+
+	<%= f.input :appointment_actual_length,
+							as: :select,
+							collection: ['30 minutes', '45 minutes', '60 minutes', '75 minutes', '90 minutes', '120 minutes', '180 minutes', '240 minutes'],
+							label: 'How long did the session actually last?',
+							include_blank: '(select one)'
+							%>
+
+	<%= f.input :masseur_on_time,
+							as: :select,
+							collection: ['Yes', 'No (5 minutes late)', 'No (10 minutes late)', 'No (15 minutes late)', 'No (more than 15 minutes late)', 'No (he never showed up at all!)'],
+							label: 'Did your masseur arrive on time?',
+							include_blank: '(select one)' %>
+
+	<div class="masseur-on-time-info hide">
+		<%= f.input :masseur_notified_of_lateness,
+			 					as: :select,
+								collection: ['Yes', 'No'],
+								label: 'Did the masseur let you know he would be late?',
+							include_blank: '(select one)' %>
+	</div>
+	
+	<%= f.input :incall_or_outcall,
+							as: :select,
+							collection: ['I went to him (incall)', 'He came to me (outcall)'],
+							label: 'Did you go to your session or did the masseur come to you?',
+							include_blank: '(select one)' %>
+
+  <%= f.input :service_as_requested,
+							as: :select,
+							collection: ['Yes', 'Mostly', 'Not at all'],
+							label: raw('Did the masseur provide the type of massage you requested? <small class="text-muted">(Pressure, products, style, etc.)</small>'),
+							include_blank: '(select one)' %>
+
+	<p>On a scale of 1&mdash;5 <small class="text-muted">(1 being <em>horrible</em> and 5 being <em>awesome</em>)</small>, please rate:</p>
+
+	<%= f.input :masseur_appearance, input_html: {class: 'rating', data: {show_clear: false, show_caption: false, rating_class: 'rating-fa', glyphicon: false, symbol: raw('&#xf256;'), size: 'sm'}}, label: raw('Masseur\'s appearance: <small class="text-muted">(How did he look, smell, overall hygiene)</small>') %>
+
+	<%= f.input :masseur_personality, input_html: {class: 'rating', data: {show_clear: false, show_caption: false, rating_class: 'rating-fa', glyphicon: false, symbol: raw('&#xf256;'), size: 'sm'}}, label: raw('Masseur\'s personality: <small class="text-muted">(Did he make you feel at ease and comfortable? Was he friendly?)</small>') %>	
+	
+	<%= f.input :rating, input_html: {class: 'rating', data: {show_clear: false, show_caption: false, rating_class: 'rating-fa', glyphicon: false, symbol: raw('&#xf256;'), size: 'sm'}}, label: 'Overall rating of this masseur:' %>
+							
+	<p>On a scale of 1&mdash;5 <small class="text-muted">(1 being <em>definitely not</em> and 5 being <em>absolutely will</em>)</small>, please rate:</p>
+
+	<%= f.input :likelihood_to_rebook, input_html: {class: 'rating', data: {show_clear: false, show_caption: false, rating_class: 'rating-fa', glyphicon: false, symbol: raw('&#xf256;'), size: 'sm'}}, label: 'The likelihood that you will book another session with this masseur:' %>
+
+	<%= f.input :likelihood_to_refer, input_html: {class: 'rating', data: {show_clear: false, show_caption: false, rating_class: 'rating-fa', glyphicon: false, symbol: raw('&#xf256;'), size: 'sm'}}, label: 'The likelihood that you will refer this masseur to a friend or colleague:' %>
+	
+	<%= f.input :review,
+							as: :text,
+							label: raw('Please describe your massage experience: <small class="text-muted">(80-500 characters)</small>'),
+							placeholder: 'Include any comments about the masseur, his style and technique or your overall impression of the session.',
+							maxlength: 500,
+							input_html: {class: 'ap-counter'} %>
+
+
+	<p class="text-center">
+		<%= f.submit 'Submit my Review', class: 'btn btn-lg btn-primary' %>							
+	</p>
+<% end %>

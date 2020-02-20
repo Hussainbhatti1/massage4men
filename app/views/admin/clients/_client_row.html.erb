@@ -1,0 +1,53 @@
+<tr<%= client.active? ? '' : raw(' class="danger"') %>>
+  <td><%= client.id %></td>
+  <td><%= client.full_name %></td>
+  <td><%= (client.display_name == client.first_name) ? '-' : client.display_name %></td>
+  <td><%= mail_to client.email %></td>
+  <td><%= client.city %></td>
+  <td><%= client.state %></td>
+  <td><%= client.created_at.to_s(:short_without_time) %></td>
+	<td><%= client.active? ? 'Yes' : 'No' %></td>
+	<td>
+		<div class="btn-group">
+		  <button type="button" class="btn btn-default">Actions</button>
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="caret"></span>
+		    <span class="sr-only">Toggle Dropdown</span>
+		  </button>
+		  <ul class="dropdown-menu">
+				<% if client.active? %>
+			    <li>
+						<% if session[:impersonating] && session[:impersonating]['email'] == client.email %>
+							<%= link_to unimpersonate_admin_client_path(client), method: :delete do %>
+								<i class="fa fa-stop-circle"></i> Stop Impersonating
+							<% end %>					
+						<% else %>
+							<%= link_to impersonate_admin_client_path(client), data: @impersonate_data do %>
+								<i class="fa fa-cog"></i> Impersonate
+							<% end %>					
+						<% end %>
+					</li>
+				<% end %>
+
+				<li>
+					<%= link_to client_password_url(format: :json), class: 'reset-password-from-admin', data: {user_email: client.email, confirm: 'This will send an email to the user with instructions to reset their password. Are you sure you want to do this?'} do %>
+						<i class="fa fa-unlock-alt"></i> Reset Password
+					<% end %>
+				</li>
+
+		    <li role="separator" class="divider"></li>
+
+				<li>
+					<% if client.active? %>
+						<%= link_to suspend_admin_client_url(client), method: :post, form_class: 'suspend-client', data: {confirm: 'Are you sure you want to suspend this client? They will be prevented from logging in while suspended.'} do %>
+							<i class="fa fa-ban"></i> Suspend
+						<% end %>					
+					<% else %>
+						<%= link_to unsuspend_admin_client_url(client), method: :post, form_class: 'unsuspend-client', data: {confirm: 'Are you sure you want to unsuspend this client? They will be able to login immediately.'} do %>
+							Unsuspend
+						<% end %>
+					<% end %>
+				</li>
+			</ul>
+		</div>
+</tr>  

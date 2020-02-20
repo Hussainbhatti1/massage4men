@@ -1,0 +1,55 @@
+<% content_for :page_title do %>
+  <i class="fa fa-camera"></i> Manage Photos
+<% end %>
+
+<% content_for :page do %>
+    <div class="row photo-grid"> <!-- TODO: Fix these into proper rows -->
+    <% if @photos.count > 0 %>
+      <% @photos.in_groups_of(4, false).each do |photo_group| %>
+          <% photo_group.each do |photo| %>
+            <div class="col-xs-6 col-sm-4 col-md-3 col">
+              <div class="photo-container">
+                <% if !photo.approved || photo.adult %>
+                  <div class="photo-extra">
+                    <% if !photo.approved %>
+                      <p class="pull-left" data-toggle="tooltip" data-placement="bottom" title="<%= t(:pending_tooltip) %>">Pending</p>
+                    <% end %>
+              
+                    <% if photo.adult %>
+                      <p class="pull-right" data-toggle="tooltip" data-placement="bottom" title="<%= t(:nsfw_tooltip) %>">NSFW</p>
+                    <% end %>
+                  </div>
+                <% end %>
+          
+                <%= image_tag photo.picture.url(:thumb), class: 'photo img-responsive' %>
+              </div> <!-- /.photo-container -->
+              
+              <% if can? :destroy, photo %>
+                <%= button_to photo_path(photo), method: :delete, remote: true, form_class: 'delete-photo', class: 'btn btn-sm btn-danger center-block', data: {confirm: 'Are you sure you want to delete this photo? It will be removed from all ads it is attached to.'} do %>
+                  <i class="fa fa-trash"></i> Delete
+                <% end %>
+              <% end %>
+            </div> <!-- /.photo-container -->
+          <% end %>
+      <% end %>
+  
+      <div class="col-xs-6 col-sm-4 col-md-3">
+        <div class="well add-container text-center">
+          <%= link_to '#', data: {toggle: 'modal', target: '.modal', url: new_masseur_photo_path} do %>
+            <i class="fa fa-plus fa-5x"></i><br>
+            Add Photo
+          <% end %>
+        </div>
+      </div>
+
+    <% else %>
+      <div class="col-xs-6 col-sm-4 col-md-3 photo-container text-center">
+        <%= link_to '#', data: {toggle: 'modal', target: '.modal', url: new_masseur_photo_path} do %>
+          <i class="fa fa-plus fa-5x"></i><br>
+          Add Photo
+        <% end %>
+      </div>
+    <% end %>
+    </div> <!-- /.photo-grid -->
+<% end %>
+<%= render 'shared/masseur_nav', active: 'photos' %>

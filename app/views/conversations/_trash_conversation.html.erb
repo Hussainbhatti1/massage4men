@@ -1,0 +1,14 @@
+<!-- TRASH -->
+<td>
+  <div class="text-center">
+    <%= image_tag conversation_avatar_for(conversation.originator, :small_thumb), class: 'img-circle inbox-avatar' %>
+    <br>
+    <small><%= display_name_for(conversation.originator) %></small>
+  </div>
+</td>
+
+<td></td>
+
+<td>
+  <%= link_to conversation.subject, conversation_path(conversation) %>    
+</td>

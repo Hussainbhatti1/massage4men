@@ -1,0 +1,14 @@
+.vertical-align {
+  display:flex;
+  align-items:center;
+  
+  margin-bottom:10px;
+}
+
+div.equal-height {
+  display:flex;
+  
+  > div {
+    display:flex;
+  }
+}

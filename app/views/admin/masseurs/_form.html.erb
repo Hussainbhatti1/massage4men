@@ -1,0 +1,134 @@
+<%= simple_form_for [:admin, @masseur] do |f| %>
+  <%= f.error_notification %>
+
+<div class="row">
+	<div class="col-md-9">	
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Basic Information</h3>
+			</div>
+		
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+					  <%= f.input :first_name %>			
+					</div>
+	
+					<div class="col-md-6">
+					  <%= f.input :last_name %>			
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-6">
+						<%= f.input :email %>						
+					</div>
+					
+					<div class="col-md-6">
+						<%= f.input :screen_name %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-10">
+					  <%= f.input :mailing_address %>
+					</div>
+	
+					<div class="col-md-2">
+					  <%= f.input :mailing_unit %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-3">
+					  <%= f.input :mailing_city %>
+					</div>
+	
+					<div class="col-md-3">
+					  <%= f.input :mailing_state, collection: states_for_country(f.object.mailing_country) %>  
+					</div>
+	
+        	<div class="col-md-3">
+        	  <%= f.input :mailing_country, priority: ['US', 'MX'] %>  
+        	</div>
+  
+					<div class="col-md-3">
+					  <%= f.input :mailing_zip, wrapper_html: {class: use_postal_code?(f.object.mailing_country) ? ' show' : 'hide'} %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">  
+					  <%= f.input :contact_phone, input_html: {data: {mask: phone_mask_for_country(f.object.mailing_country)}} %>
+					</div>
+	
+					<div class="col-md-6">
+					  <%= f.input :contact_phone_type, collection: ['Mobile', 'Landline'], include_blank: false %>
+					</div>
+				</div>
+
+				<%= f.input :provides_services_at_mailing_address %>
+				
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<%= link_to 'Change Password', '#password', data: {toggle: 'collapse'} %>
+						</h3>
+					</div>
+					
+					<div class="panel-body collapse" id="password">
+						<div class="alert alert-warning">
+							<i class="fa fa-exclamation-triangle"></i> This is <em>only</em> required if you want to change this user's password.
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<%= f.input :password %>
+							</div>
+							
+							<div class="col-md-6">
+								<%= f.input :password_confirmation %>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			  <%= f.submit class: 'btn btn-lg btn-primary' %>  
+			</div> <!-- /.panel-body -->
+		</div> <!-- /.panel -->
+	</div> <!-- /.col-9 -->
+
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Account Options</h3>
+			</div>
+			
+			<div class="panel-body">
+			  <%= f.input :approved %>
+			  <%= f.input :featured %>			
+				<%= f.input :available %>				
+			</div>
+		</div> <!-- /.status panel -->
+	<% end %>
+
+		<% if can? :manage, MasseurDocumentation %>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Badges</h3>
+			</div>
+			
+			<div class="panel-body">
+				<h4>Certification</h4>
+				<%= render partial: 'doc_status', locals: {doc_type: 'certification'} %>
+				
+				<h4>License</h4>
+				<%= render partial: 'doc_status', locals: {doc_type: 'license'} %>
+
+				<h4>Photo ID</h4>
+				<%= render partial: 'doc_status', locals: {doc_type: 'photo_id'} %>
+			</div>
+		</div>
+		<% end %>
+	</div> <!-- /.col-3 -->
+</div>

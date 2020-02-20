@@ -1,0 +1,212 @@
+// Place all the styles related to the Ads controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'mixins';
+.ad-panel h4 {
+  margin-top:0;
+  padding-top:0;
+}
+
+.small-square {
+  width:100px;
+}
+
+.xs-square {
+  width:50px;
+}
+
+.ad-unit {
+  .thumbnail {
+    padding:0;
+
+    img {
+      width:100%;
+    }
+    
+    .caption {
+      h3 {
+        margin-top:0;
+      }
+    }
+  }
+}
+
+.add-photo-container {
+  a:first-child {
+    text-decoration:none;
+  }
+}
+
+.add-primary {
+  margin-bottom:0;
+  
+  p:first-child {
+   margin-bottom:0; 
+  }
+  
+  a:first-child {
+    
+  }
+  
+  .caption {
+    padding:0 3px;
+  }
+}
+
+.user-meta {
+  .panel-title {
+    font-size:24px;
+    
+    .label-available {
+      @include pulsate(green);
+    }
+  }
+  
+  .profile-photo {
+    border:1px solid gray;
+  }  
+}
+
+.ad-panel {
+  .panel-body {
+    padding:10px;
+
+    img {
+      margin-bottom:10px;
+    }
+  }
+}
+
+.user-vitals {
+  table {
+    margin-bottom:0;
+    border:1px solid #f0f0f0;
+  }
+}
+
+.remove-photo-from-ad {
+  cursor:pointer;
+}
+
+#add-photo-modal {
+  .add-photo-grid {
+
+  }
+  
+  .used-photos {
+    display:none;
+  }  
+}
+
+.new_ad[data-persisted=false], .new_travel_ad[data-persisted=false] {
+  .primary-photo-panel, .other-photos-panel, .travel-ad-location {
+    display:none;
+  }
+}
+
+.row.ad {
+  .panel-title {
+    font-weight:bold;
+  }
+}
+
+.list-inline.user-actions {
+  li {
+    padding-left:0;
+    padding-right:0;
+  }
+  
+  .btn {
+    //  Shrink the buttons ever-so-slightly so they fit on one line
+    font-size:13px;
+  }
+}
+
+.fa-star {
+  &.inactive {
+    color:lighten(#8E8E8E, 20%);
+  }
+  
+  &.active {
+    color:#337AB7;
+  }
+}
+
+.active-star {
+	color:#337AB7;
+}
+
+.rating-container {
+	color:#808080;
+	
+	.rating-stars {
+		color:#337AB7;
+	}
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+	background-color:#EAE8E8;
+}
+
+//	Don't show NSFW pics by default in pickers
+[data-nsfw=true] {
+	display:none;
+}
+
+
+/*  Slick Carousel */
+.slider-responsive {
+  border:1px solid gray;
+}
+
+.slick-next {
+  right:30px;
+}
+
+.slick-prev {
+  z-index:10;
+  left:10px;
+}
+
+.slick-slider {
+  margin-bottom:0;
+}
+
+.slick-prev:before, .slick-next:before {
+    color: black;
+    font-size:40px;
+    
+    background:white;
+    border-radius:10px;
+    border:1px solid gray;
+    
+    font-family:Helvetica;
+}
+
+/* Responsive ad map */
+.ad-map {
+	position:relative;
+	padding-bottom:50%;
+	height:0;
+	overflow:hidden;
+	
+	iframe {
+		position:absolute;
+		top:0;
+		left:0;
+		width:100% !important;
+		height:100% !important;
+	}
+}
+
+.masseur-badges {
+	margin:10px auto;
+}
+
+.average-container {
+	margin-top:-3px;
+}
+
+.review-average {
+	margin:2px auto auto 10px;
+}

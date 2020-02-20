@@ -1,0 +1,88 @@
+
+<%  params[:action]=='upload_photo' ? @photo_queue = @photos : @photo_queue%>
+<% if @photo_queue.count > 0 %>
+
+<table class="table table-condensed photo-queue-table">
+  <thead>
+    <tr class="row">
+      <th class="col-md-2">Photo <small class="text-muted">click to enlarge</small></th>
+      <th class="col-md-2">Uploader</th>
+      <th class="col-md-1">Adult?</th>
+      <th class="col-md-3">Ad</th>
+      <th class="col-md-2">File to Upload</th>
+      <th class="col-md-2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @photo_queue.each do |photo| %>
+    <tr class="row">
+      <td><%= link_to image_tag(photo.picture.url(:medium_thumb), class: 'img-responsive'), photo.picture.url(:resized), data: {toggle: 'lightbox'}%></td>
+      <td><%= link_to photo.masseur.display_name, [:admin, photo.masseur], data: {target: '.modal', toggle: 'modal'} %></td>
+      <td><%= photo.adult.humanize %></td>
+      <td>
+        <% if photo.ad_photos.count > 0 %>
+          <% if photo.ad_photos.count == 1 %>
+            <% if photo.ad_photos.first.travel_ad %>
+              <%= link_to [photo.masseur, photo.ad_photos.first.travel_ad], class: 'btn btn-default' do %>
+                <i class="fa fa-eye"></i> View Travel Ad
+              <% end %>
+            <% else %>
+              <%= link_to [photo.masseur, photo.ad_photos.first.ad], class: 'btn btn-default' do %>
+                <i class="fa fa-eye"></i> View <%= photo.ad_photos.first.ad.massage_type.name %> Ad
+              <% end %>           
+            <% end %>
+          <% else %>
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Choose Ad...
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <% photo.ad_photos.each do |ad_photo| %>
+                  <li>
+                    <%= link_to friendly_ad_path(ad_photo.ad_obj) do %>
+                      <%= raw(ad_photo.ad_obj.travel_ad? ? '<i class="fa fa-plane"></i> Travel' : '') %> <%= ad_photo.ad_obj.massage_type.name %>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+        <% else %>
+          None
+        <% end %>        
+      </td>
+       <td>
+        <%= simple_form_for photo , method: :post, url: upload_photo_admin_masseur_path(photo.masseur), remote:true, html: {class: 'form-inline admin-search'} do |f| %>
+            <%= f.file_field_tag :picture  %>
+            <%= f.hidden_field :id %>
+              <p><%= submit_tag "upload", class: "btn btn-small btn-success" %></p>
+              <%end%>
+       </td>
+      <td>
+        <%= button_to 'Approve', approve_admin_photo_path(photo), form_class: 'approve-photo', class: 'btn btn-success', remote: true %>
+      </td>
+      
+      <td>
+        <% if !photo.adult %>
+          <%= button_to 'Approve As Adult', approve_as_adult_admin_photo_path(photo), form_class: 'approve-photo-as-adult', class: 'btn btn-primary', remote: true, data: {confirm: 'This photo will be marked as ADULT and then approved.'}, disabled: photo.adult %>        
+        <% end %>
+      </td>
+      
+      <td>
+        <%= button_to 'Deny', deny_admin_photo_path(photo), form_class: 'deny-photo', class: 'btn btn-danger', data: {confirm: 'Are you sure you want to deny this photo? It will be deleted from the system and the uploader will not be notified.'}, remote: true %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><%= link_to 'Manage Photo Queue', approval_queue_admin_photos_path, class: 'btn btn-primary' if current_page?(approval_queue_admin_photos_path) %></p>
+<% else %>
+  <div class="alert alert-success">
+    <i class="fa fa-check"></i> <strong>You're all caught up!</strong> No photos are currently awaiting approval.
+  </div>
+<% end %>
+
+

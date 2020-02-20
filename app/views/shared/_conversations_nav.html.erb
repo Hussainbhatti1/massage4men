@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-3">
+    <% if current_user.kind_of? Masseur %>
+        <%= render partial: 'shared/masseur_side_nav', locals: {active: active} %>
+    <% elsif current_user.kind_of? Client %>
+        <%= render partial: 'shared/client_side_nav', locals: {active: active} %>
+    <% end %>
+  </div> <!-- /.col-md-2 -->
+  
+  <div class="col-md-9 dashboard-content">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= content_for?(:page_title) ? yield(:page_title) : 'Untitled Page' %></h3>
+      </div>
+      
+      <div class="panel-body">
+        <%= yield :page %>        
+      </div> <!-- /.panel-body -->
+    </div> <!-- /.panel -->
+  </div> <!-- /.col-md-10 -->
+</div> <!-- /.row -->

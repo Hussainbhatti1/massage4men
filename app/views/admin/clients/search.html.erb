@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			Client Search Results
+		</h3>
+	</div>
+	
+	<div class="panel-body">
+		<%= render 'search_form' %>
+		
+		<% if @clients.count > 0 %>
+		  <table class="table table-striped">
+		    <thead>
+		      <tr>
+		        <th>ID</th>
+						<th>Name</th>
+		        <th>Screen Name</th>
+		        <th>Email</th>
+		        <th>City</th>
+		        <th>State</th>
+		        <th>Registered</th>
+						<th>Active?</th>
+						<th></th>
+		      </tr>
+		    </thead>
+  
+		    <tbody>
+		      <% @clients.each do |client| %>
+						<%= render partial: 'client_row', locals: {client: client} %>
+		      <% end %>
+		    </tbody>
+		  </table>
+
+		  <div class="text-center">
+		    <%= paginate @clients, :theme => 'twitter-bootstrap-3' %>
+				
+		    <p class="clearfix text-muted">
+          <%= page_entries_info @clients %>
+        </p>
+		  </div>
+
+		<% else %>
+		  <p>No results.</p>
+		<% end %>
+	</div> <!-- /.panel-body -->
+</div> <!-- /.panel -->

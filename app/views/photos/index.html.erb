@@ -1,0 +1,88 @@
+<% if !session[:m4m]['signup_in_progress'] %>
+  <ol class="breadcrumb">
+    <li><%= link_to 'My Profile', current_user %></li>
+    <li class="active">Manage Photos</li>
+  </ol>
+
+<h2>Your Photos</h2>
+<% end %>
+
+
+<div class="row">
+  <div class="col-md-4">
+    <% if session[:m4m]['signup_in_progress'] %>
+      <%= render partial: 'shared/signup_sidebar', locals: {active: 3} %>
+    
+      <div class="well">
+        <p>Next, upload photos to use in your ads. You can upload as many photos as you like, and select which ones to assign to your ads.</p>
+        
+        <%= link_to 'Next: Configure Ads', masseur_ads_path(current_masseur), class: 'btn btn-lg btn-primary' %>
+      </div>
+    <% else %>
+      <div class="well">
+        <p>Manage your photos here.</p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <i class="fa fa-camera-retro"></i> Your Photos
+        </h3>
+      </div>
+      
+      <div class="panel-body">
+        <div class="row photo-grid"> <!-- TODO: Fix these into proper rows -->
+        <% if @photos.count > 0 %>
+          <% @photos.in_groups_of(4, false).each do |photo_group| %>
+              <% photo_group.each do |photo| %>
+                <div class="col-xs-6 col-sm-4 col-md-3 col">
+                  <div class="photo-container">
+                    <% if !photo.approved || photo.adult %>
+                      <div class="photo-extra">
+                        <% if !photo.approved %>
+                          <p class="pull-left" data-toggle="tooltip" data-placement="bottom" title="<%= t(:pending_tooltip) %>">Pending</p>
+                        <% end %>
+              
+                        <% if photo.adult %>
+                          <p class="pull-right" data-toggle="tooltip" data-placement="bottom" title="<%= t(:nsfw_tooltip) %>">NSFW</p>
+                        <% end %>
+                      </div>
+                    <% end %>
+          
+                    <%= image_tag photo.picture.url(:thumb), class: 'photo img-responsive' %>
+                  </div> <!-- /.photo-container -->
+              
+                  <% if can? :destroy, photo %>
+                    <%= button_to photo_path(photo), method: :delete, remote: true, form_class: 'delete-photo', class: 'btn btn-sm btn-danger center-block', data: {confirm: 'Are you sure you want to delete this photo? It will be removed from all ads it is attached to.'} do %>
+                      <i class="fa fa-trash"></i> Delete
+                    <% end %>
+                  <% end %>
+                </div> <!-- /.photo-container -->
+              <% end %>
+          <% end %>
+  
+          <div class="col-xs-6 col-sm-4 col-md-3">
+            <div class="well add-container text-center">
+              <%= link_to '#', data: {toggle: 'modal', target: '.modal', url: new_masseur_photo_path} do %>
+                <i class="fa fa-plus fa-5x"></i><br>
+                Upload
+              <% end %>
+            </div>
+          </div>
+
+        <% else %>
+          <div class="col-xs-6 col-sm-4 col-md-3 photo-container text-center">
+            <%= link_to '#', data: {toggle: 'modal', target: '.modal', url: new_masseur_photo_path} do %>
+              <i class="fa fa-plus fa-5x"></i><br>
+              Upload
+            <% end %>
+          </div>
+        <% end %>
+        </div> <!-- /.photo-grid -->        
+      </div>
+    </div> <!-- /.panel -->
+  </div> <!-- /.col-md-8 -->
+</div> <!-- /.row -->

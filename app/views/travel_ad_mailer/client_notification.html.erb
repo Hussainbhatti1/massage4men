@@ -1,0 +1,26 @@
+<td align="center" valign="top">
+  	<!-- BEGIN BODY // -->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+          <tr>
+              <td valign="top" class="bodyContent">
+								<center>
+									<h1 style="font-size:1.25em;text-align:center;"><%= @masseur.screen_name %> is coming to <%= @travel_ad.city %>!</h1>
+									He'll be visiting from <%= duration_string(@travel_ad) %>.<br>
+																		
+									<%= link_to masseur_travel_ad_url(@masseur, @travel_ad) do %>
+										<%= image_tag(@travel_ad.primary_photo.photo.picture.url(:thumb)) %>
+									<% end %>
+									<br>
+									<i>&ldquo;<%= @travel_ad.about_me %>&rdquo;</i>
+																			
+									<br><br>
+									<%= link_to 'Check out his ad', masseur_travel_ad_url(@masseur, @travel_ad) %> and give him a call.
+
+									<br><br>Thank you for using M4M.net!
+								</center>
+              </td>
+          </tr>
+      </table>
+      <!-- // END BODY -->
+  </td>
+</tr>

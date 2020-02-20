@@ -1,0 +1,19 @@
+<h2>Log In</h2>
+
+<div class="row">
+  <div class="col-md-5">
+    <%= render 'form' %>
+  </div>
+
+  <div class="col-md-7">
+    <h3>New to Massage4Men?</h3>
+    <ul class="list-inline">
+    	<li>
+        <%= link_to t(:sign_up_client), new_client_registration_path, class: 'btn btn-lg btn-primary', data: {toggle: 'modal', target: '.modal', confirm_close: true} %>
+      </li>
+    	<li>
+        <%= link_to t(:sign_up_masseur), new_masseur_registration_path, class: 'btn btn-lg btn-primary', data: {toggle: 'modal', target: '.modal', confirm_close: true} %>
+      </li>
+    </ul>
+  </div>
+</div>

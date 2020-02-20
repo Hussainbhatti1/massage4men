@@ -1,0 +1,8 @@
+<%= simple_form_for([:admin, @tracking_link]) do |f| %>
+	<%= f.error_notification %>
+	<%= f.input :code, hint: 'If you do not specify a code, one will be automatically generated.'%>
+	<%= f.input :source, label: 'Traffic Source' %>
+	<%= f.input :notes %>
+	
+	<%= f.submit class: 'btn btn-primary' %>
+<% end %>

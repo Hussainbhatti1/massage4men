@@ -1,0 +1,2 @@
+module Masseurs::RegistrationsHelper
+end

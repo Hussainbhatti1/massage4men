@@ -1,0 +1,125 @@
+<% content_for :page_title do %>
+  <i class="fa fa-user"></i> My Masseur Account
+<% end %>
+
+<% content_for :page do %>
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="row">
+      <div class="col-md-7">
+        <h4>Basic Information</h4>
+  
+				<div class="row">
+					<div class="col-md-6">
+		        <%= f.input :email, hint: raw('Your email is only used for signing in.
+It is <em>never</em> displayed.') %>
+					</div>
+					
+					<div class="col-md-6">
+						<%= f.input :screen_name %>
+					</div>
+				</div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :first_name %>            
+          </div>
+
+          <div class="col-md-6">
+            <%= f.input :last_name %>            
+          </div>
+        </div>
+
+				<%= f.input :dob, start_year: (Time.now.year - 18), end_year: (Time.now.year - 100), order: [:month, :day, :year], prompt: {month: 'Birth month', day: 'Birth day', year: 'Birth year'}, label: 'Birth Date', hint: 'All masseurs must be at least 18.', input_html: {class: 'form-control'} %>
+
+        <div class="row">
+          <div class="col-md-9">
+            <%= f.input :mailing_address %>            
+          </div>
+
+          <div class="col-md-3">
+            <%= f.input :mailing_unit, label: 'Unit' %>            
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-3">
+            <%= f.input :mailing_city, label: 'City' %>          
+          </div>
+
+          <div class="col-md-3">
+        		<%= f.input :mailing_state, label: 'State', collection: states_for_country(f.object.mailing_country) %>     
+          </div>
+          
+          <div class="col-md-3">
+            <%= f.input :mailing_country, label: 'Country', priority: ['US', 'MX'] %>
+          </div>
+
+          <div class="col-md-3">
+        		<%= f.input :mailing_zip, label: 'Zip / Postal Code' %>          
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.input :contact_phone, input_html: {data: {mask: phone_mask_for_country(f.object.mailing_country)}} %>
+          </div>
+
+          <div class="col-md-6">
+            <%= f.input :contact_phone_type, label: 'Phone Type', collection: ['Mobile', 'Landline'], include_blank: false %>            
+          </div>
+        </div>
+
+            <%= f.input :provides_services_at_mailing_address, label: 'I provide services at this address' %>
+					
+					<hr>
+					
+					<h4>Password <small>only required if you want to change it</small></h4>
+					<div class="row">
+						<div class="col-md-4 input-current-password-eye">
+							<%= f.input :current_password %>
+              <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"
+              onclick="masseur_current_password_eye()"></span>
+						</div>
+						
+						<div class="col-md-4 input-current-password-eye">
+							<%= f.input :password, label: 'New password', placeholder: 'Leave blank to keep your current password' %>
+              <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"
+              onclick="masseur_password_eye()"></span>
+						</div>
+
+						<div class="col-md-4 input-confirm-pass-edit">
+							<%= f.input :password_confirmation, label: 'Confirm new password' %>
+                <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"
+                onclick="masseur_confirm_password_eye()"></span>
+						</div>
+					</div>
+					
+					<hr>
+
+      </div>
+      
+      <div class="col-md-5 profile-photo-sidebar">
+        <h4>Profile Photo</h4>
+
+        <% if @masseur.profile_photo.present? %>
+          <%= image_tag @masseur.profile_photo.url(:thumb) %>
+        <% end %>
+
+        <p>Your profile photo is shown on your ads and in search results.</p>
+
+        <p>
+        Sexually-explicit profile photos are <strong>not allowed.</strong>
+        <br>M4M will delete such photos at our discretion.
+        </p>
+
+        <%= f.input :profile_photo, label: false %>
+      </div>
+    </div>
+
+    <%= f.submit 'Update Account', class: 'btn btn-lg btn-primary center-block',onclick: 'masseur_address_require(event)' %>
+  <% end %>  
+<% end %>
+
+<%= render 'shared/masseur_nav', active: 'account' %>

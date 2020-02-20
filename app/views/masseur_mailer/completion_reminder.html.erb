@@ -1,0 +1,44 @@
+<td align="center" valign="top">
+  	<!-- BEGIN BODY // -->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+          <tr>
+              <td valign="top" class="bodyContent">
+                  <b><big>Hello <%= @masseur.screen_name %>,</big></b>
+									
+                  <p>Your M4M account has been activated, but you still need to complete your profile before your ads can start running.</p>
+                  
+                  <p>Please <%= link_to 'login to your account', dashboard_masseur_url(@masseur) %> and complete the following items:</p>
+                  
+                  <p>
+                    <% if !@completion[:basic_details] %>
+                      - Your <%= link_to 'Basic Details', edit_masseur_registration_url %> (real name, contact information, etc.)
+                      <br>                  
+                    <% end %>
+                  
+                    <% if !@completion[:ad_details] %>
+                      - Your <%= link_to 'Ad Details', edit_masseur_masseur_detail_url(@masseur) %> (information about your services that appears on your ads)
+                      <br>
+                    <% end %>
+                  
+                    <% if !@completion[:photos] %>
+                      - <%= link_to 'Upload at least one photo', manage_masseur_photos_url(@masseur) %>
+                      <br>
+                    <% end %>
+                  
+                    <% if !@completion[:ads] %>
+                      - <%= link_to 'Create at least one ad', manage_masseur_ads_url(@masseur) %>
+                      <br>
+                    <% end %>
+                  
+                    <% if !@completion[:rates] %>
+                      - <%= link_to 'Enter your rates for your services', masseur_masseur_detail_rates_url(@masseur) %>
+                    <% end %>
+                  </p>
+
+                  <p>Thank you for using M4M.net!</p>									
+              </td>
+          </tr>
+      </table>
+      <!-- // END BODY -->
+  </td>
+</tr>

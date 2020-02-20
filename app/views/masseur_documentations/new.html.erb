@@ -1,0 +1,21 @@
+<% content_for :page_title do %>
+	<i class="fa fa-certificate"></i> Manage Documentation
+<% end %>
+
+<% content_for :page do %>
+	<% if @masseur.all_dox_approved? %>
+		<div class="alert alert-success">
+			<i class="fa fa-check"></i> All of your documentation has been approved and you have earned all badges.
+		</div>
+	<% elsif @masseur.all_dox_submitted? %>
+		<div class="alert alert-info">
+			<i class="fa fa-info"></i> All of your documents have been submitted and are awaiting approval.
+		</div>
+	<% else %>
+		<p>To get any or all of the badges offered on M4M, you must submit the documents required for each badge.</p>
+	
+		<%= render 'form' %>	
+	<% end %>
+<% end %>
+
+<%= render 'shared/masseur_nav', active: 'dox' %>

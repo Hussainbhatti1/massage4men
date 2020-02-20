@@ -1,0 +1,77 @@
+<%= simple_form_for @masseur_documentation, url: masseur_masseur_documentation_path(@masseur) do |f| %>
+	<% if @masseur_documentation.certification.exists? && @masseur_documentation.certification_approved %>
+		<div class="alert alert-success">
+			<i class="fa fa-check"></i> Your Certified Therapist badge is approved and visible on your ads.
+		</div>
+	<% elsif @masseur_documentation.certification.exists? %>
+		<div class="alert alert-info">
+			<i class="fa fa-info"></i> Your Certified Therapist documentation is awaiting approval.
+		</div>
+	<% else %>
+		<div class="media">
+			<div class="media-left">
+				<h4 class="media-heading">Certified Therapist</h4>
+				<p>Submit a copy of a certificate or diploma from an accredited massage school, college or university.</p>
+			
+				<%= f.input :certification, as: :file, label: false, input_html: { accept: ALLOWED_MASSEUR_DOCUMENTATION_FILETYPES.join(','), capture: 'camera' } %>
+				<%= f.input :certification_notes, as: :text, label: 'Notes' %>			
+			</div>
+	
+			<div class="media-right">
+				<%= image_tag 'badge-certified.png', alt: 'Certified Therapist', class: 'dox-badge' %>
+			</div>
+		</div>
+	<% end %>
+
+	<% if @masseur_documentation.license.exists? && @masseur_documentation.license_approved %>
+		<div class="alert alert-success">
+			<i class="fa fa-check"></i> Your Licensed Therapist badge is approved and visible on your ads.
+		</div>
+	<% elsif @masseur_documentation.license.exists? %>
+		<div class="alert alert-info">
+			<i class="fa fa-info"></i> Your Licensed Therapist documentation is awaiting approval.
+		</div>
+	<% else %>
+		<div class="media">
+			<div class="media-left">
+				<h4 class="media-heading">Licensed Therapist</h4>
+				<p>Submit a copy of your state license and the contact agency or website that can be used to verify your license.</p>				
+			
+				<%= f.input :license, as: :file, label: false, input_html: { accept: ALLOWED_MASSEUR_DOCUMENTATION_FILETYPES.join(','), capture: 'camera' } %>
+				<%= f.input :license_notes, as: :text, label: 'Notes' %>
+			</div>
+	
+			<div class="media-right">
+				<%= image_tag 'badge-licensed.png', alt: 'Licensed Therapist', class: 'dox-badge' %>
+			</div>
+		</div>	
+	<% end %>
+
+	<% if @masseur_documentation.photo_id.exists? && @masseur_documentation.photo_id_approved %>
+		<div class="alert alert-success">
+			<i class="fa fa-check"></i> Your Verified Therapist badge is approved and visible on your ads.
+		</div>	
+	<% elsif @masseur_documentation.photo_id.exists? %>
+		<div class="alert alert-info">
+			<i class="fa fa-info"></i> Your Verified Therapist documentation is awaiting approval.
+		</div>	
+	<% else %>
+		<div class="media">
+			<div class="media-left">
+				<h4 class="media-heading">Verified Therapist</h4>
+					<p>Upload a photo of your face holding your driver’s license, State ID or US issued passport. The image must be clear and all dates on the ID must be readable.  We cannot issue a verified badge without a government issued photo ID. You must also post a photo as your primary image that clearly shows that you are the same individual as on the ID!</p>
+				
+					<%= f.input :photo_id, as: :file, label: false, input_html: { accept: ALLOWED_MASSEUR_DOCUMENTATION_FILETYPES.join(','), capture: 'camera' } %>
+					<%= f.input :photo_id_notes, as: :text, label: 'Notes' %>
+			</div>
+	
+			<div class="media-right">
+				<%= image_tag 'badge-verified.png', alt: 'Licensed Therapist', class: 'dox-badge' %>
+			</div>
+		</div>	
+	<% end %>
+
+	<p>Once M4M issues you a badge, it will appear on your profile and we will send you an email to notify you your badge(s) have been added.</p>
+
+	<%= f.button :submit, 'Submit Documents', class: 'btn btn-primary', data: {disable_with: 'Uploading...'} %>
+<% end %>

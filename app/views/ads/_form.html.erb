@@ -1,0 +1,163 @@
+<%= simple_form_for [@masseur, current_ad], data: {ad_index: ad_index, remote: remote, persisted: current_ad.persisted?} do |f| %>
+  <fieldset>
+  <div class="panel panel-default main-ad-panel">
+    <div class="panel-heading">
+      <h3 class="panel-title"><strong>Step 1:</strong> Ad Basics</h3>
+    </div>
+    
+    <div class="panel-body">
+      <%= f.association :massage_type, label: 'What type of ad is this?', include_blank: '(select type...)', input_html: {class: 'massage-type-select', data: {ad_index: ad_index}} %>
+			
+      <%= f.input :about_me, label: 'What do you want clients to know about you?', input_html: {rows: 5}, placeholder: 'This information can be different for each of your ads.' %>
+			
+      <%= f.input :about_my_services, input_html: {rows: 5, maxlength: 1200}, label: 'Tell clients a little bit about your services.', placeholder: 'This information can be different for each of your ads.' %>
+			    
+			<% if !current_ad.persisted? %>		
+  			<%= button_tag 'Next: Add Primary Photo', class: 'btn btn-lg btn-primary center-block ad-change-step', data: {next_panel: '.primary-photo-panel'} %>    
+      <% end %>
+    </div>
+  </div>
+
+  <!-- PRIMARY PHOTO -->
+  <%= hidden_field_tag :primary_photo_id, (current_ad.primary_photo ? current_ad.primary_photo.photo.id : ''), data: {ad_index: ad_index} %>
+  <div class="panel panel-default primary-photo-panel">
+    <div class="panel-heading">
+      <h3 class="panel-title"><strong>Step 2:</strong> Primary Photo</h3>
+    </div>
+    
+    <div class="panel-body">
+      <p>This is the main photo that appears in search results and at the top of your ad.</p>
+  
+      <div class="primary-ad-photo" data-ad-index="<%= ad_index %>">
+        <div class="row">
+            <% if current_ad.primary_photo %>
+              <div class="col-md-3 remove-photo-from-ad" data-ad-index="<%= ad_index %>" data-photo-id="<%= current_ad.primary_photo.photo.id %>" data-primary="true">
+                <div class="thumbnail">
+                  <%= link_to '#' do %>
+                    <%= image_tag(current_ad.primary_photo.photo.picture(:thumb)) %>
+                  <% end %>
+                </div> <!-- /.thumbnail -->
+              </div> <!-- .col-md-3 -->
+            <% end %>
+              <div class="col-md-3">
+                <div class="thumbnail text-center add-primary<%= current_ad.primary_photo ? ' hide' : '' %>">
+                  <p>
+                    <%= link_to '#', data: {ad_index: ad_index, toggle: 'modal', target: ".add-photo-modal[data-ad-index=#{ad_index}]", primary: true} do %>
+                      <i class="fa fa-plus fa-5x"></i>                    
+                    <% end %>
+                  </p>
+                
+                  <div class="caption">
+                    <p><%= link_to 'Add Primary Photo', '#', data: {ad_index: ad_index, toggle: 'modal', target: ".add-photo-modal[data-ad-index=#{ad_index}]", primary: true, show_nsfw: false} %></p>
+                  </div> <!-- /.caption -->
+                </div> <!-- /.thumbnail -->
+              </div> <!-- /.col-md-3 -->
+        </div> <!-- /.row -->
+      </div> <!-- /.primary-ad-photo -->
+
+			<% if !current_ad.persisted? %>		
+			<ul class="list-inline text-center center-block">
+				<li><%= button_tag 'Previous', class: 'btn btn-lg btn-default center-block ad-change-step', data: {next_panel: '.main-ad-panel'} %></li>
+				
+				<li><%= button_tag 'Next: Add More Photos', class: 'btn btn-lg btn-primary center-block ad-change-step', data: {next_panel: '.other-photos-panel'} %></li>
+			</ul>
+      <% end %>
+			
+    </div> <!-- /.panel-body -->
+  </div> <!-- /.panel -->
+  
+  <div class="panel panel-default other-photos-panel">
+    <div class="panel-heading">
+      <h3 class="panel-title"><strong>Step 3:</strong> Other Photos</h3>
+    </div>
+    
+    <div class="panel-body">
+      <p>These photos will appear in a gallery in your ad.<br>Click a photo to remove it from this ad.</p>
+  
+      <%= f.association :photos, as: :check_boxes, label: false, label_method: Proc.new { '' }, input_html: {data: {ad_index: ad_index}}, wrapper_html: {class: 'hide'} %>
+      
+      <div class="ad-photos" data-ad-index="<%= ad_index %>">
+      <% if current_ad.ad_photos.count > 0 %>
+        <% current_ad.ad_photos.where.not(primary: true).in_groups_of(4, false).each do |group| %>
+          <div class="row">
+            <% group.each do |photo| %>
+              <div class="col-md-3 remove-photo-from-ad" data-ad-index="<%= ad_index %>" data-photo-id="<%= photo.photo.id %>">
+                <div class="thumbnail">
+                  <%= image_tag photo.photo.picture.url(:thumb), class: 'img-responsive', data: {ad_index: ad_index, photo_id: photo.photo.id} %>                
+                </div> <!-- /.thumbnail -->
+              </div> <!-- /.col-md-3 -->
+            <% end %>
+          </div> <!-- /.row -->    
+        <% end %>
+      <% else %>
+        <div class="row"></div>
+      <% end %>
+      </div> <!-- /.ad-photos -->
+
+        <p>
+          <%= link_to '#', class: 'btn btn-success', data: {ad_index: ad_index, toggle: 'modal', target: ".add-photo-modal[data-ad-index=#{ad_index}]", show_nsfw: false} do %>
+            <i class="fa fa-plus"></i> Add Photos
+          <% end %>
+        </p>        
+    </div> <!-- /.panel-body -->
+		
+		<ul class="list-inline text-center center-block">
+			<% if !current_ad.persisted? %>		
+			<li><%= button_tag 'Previous', class: 'btn btn-lg btn-default center-block ad-change-step', data: {next_panel: '.primary-photo-panel'} %></li>
+      <% end %>
+			
+			<li>
+				<% if @ad.travel_ad? && !@ad.persisted? %>
+					<%= button_tag 'Next: Travel Ad Location', class: 'btn btn-lg btn-primary center-block ad-change-step', data: {next_panel: '.travel-ad-location'} %>    		
+				<% else %>
+				  <% if !remote && !@ad.travel_ad? %>
+				    <%= f.submit class: 'btn btn-lg btn-primary center-block', data: {disable_with: 'Saving Ad...'} %>
+				  <% end %>		
+				<% end %>
+			</li>			
+		</ul>
+
+  </div> <!-- /.other-photos-panel -->
+
+	<% if @ad.travel_ad? %>
+		<div class="panel panel-default travel-ad-location">
+	    <div class="panel-heading">
+	      <h3 class="panel-title"><strong>Step 4:</strong> Ad Location</h3>
+	    </div>
+    
+	    <div class="panel-body">
+				<p>Where and when do you want this ad to run?</p>
+				
+				<div class="row">
+					<div class="col-sm-6">
+						<%= f.input :city, required: true %>
+					</div>
+					
+					<div class="col-sm-6">
+						<%= f.input :state, collection: us_states, required: true %>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-6">
+						<%= f.input :start_date, as: :datepicker, input_html: {class: 'form-control'}, required: true %>
+					</div>
+					
+					<div class="col-sm-6">
+						<%= f.input :end_date, as: :datepicker, input_html: {class: 'form-control'}, required: true %>
+					</div>
+				</div>
+				
+				<ul class="list-inline center-block text-center">
+    			<% if !current_ad.persisted? %>		
+  					<li><%= button_tag 'Previous', class: 'btn btn-lg btn-default center-block ad-change-step', data: {next_panel: '.other-photos-panel'} %></li>
+          <% end %>
+          
+					<li><%= f.submit class: 'btn btn-lg btn-primary center-block', data: {disable_with: 'Saving Travel Ad...'} %></li>
+				</ul>				
+			</div> <!-- /.panel-body -->
+		</div>
+	<% end %>
+
+  </fieldset>
+<% end %>

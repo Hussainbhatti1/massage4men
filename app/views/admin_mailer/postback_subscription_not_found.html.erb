@@ -1,0 +1,4 @@
+<p>Today at <%= Time.now.to_s(:time_only) %>, the system received a postback from Authorize.net attempting to renew a subscription that does not appear to exist.</p>
+
+<p>The complete contents of the POST is as follows:</p>
+<pre><%= @post_params.inspect %></pre>

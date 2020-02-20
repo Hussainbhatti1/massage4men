@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">Send Message to <%= display_name_for(@recipient) %></h4>
+</div>
+
+<div class="modal-body">
+  <div class="message-form<%= user_signed_in? ? '' : ' hide' %>">
+    <%= simple_form_for :message, method: :post, url: messages_path, data: {remote: true} do |f| %>
+      <%= f.hidden_field :recipient_type, value: @recipient_type %>
+      <%= f.hidden_field :recipient_id, value: @recipient_id %>
+
+      <%= f.input :subject, required: false %>
+      <%= f.input :body, label: 'Message', required: true, as: :text %>
+
+      <%= f.submit 'Send Message', class: 'btn btn-primary', data: {disable_with: 'Sending...'}%>
+    <% end %>    
+  </div>
+</div> <!-- / end body -->

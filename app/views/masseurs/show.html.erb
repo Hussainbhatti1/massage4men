@@ -1,0 +1,293 @@
+<div class="row ad">
+  <div class="col-md-4">
+    <div class="panel panel-primary user-meta">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="masseur-name"><%= @masseur.screen_name %></span>
+          
+          <% if @masseur.available %>
+            <span class="label label-success label-available pull-right">Available</span>
+          <% end %>
+        </h3>
+      </div>
+      
+      <div class="panel-body text-center">
+        <%= image_tag profile_photo_url_for(@masseur), class: 'profile-photo' %>
+
+            <ul class="list-unstyled city-and-age">
+              <li><%= @masseur.masseur_detail.home_base_city %>, <%= @masseur.masseur_detail.home_base_state %></li>
+              <li><%= @masseur.age %> years old</li>
+            </ul>
+						
+		        <ul class="list-unstyled">
+              <li<%= @average > 0 ? raw(" data-toggle=\"tooltip\" title=\"#{@average} out of 5 stars\"") : nil %>>
+                <% 1.upto(@average) do %>
+                  <i class="fa fa-2x fa-star active"></i>
+                <% end %>
+                
+                <% (5 - @average).times do %>
+                  <i class="fa fa-2x fa-star inactive"></i>
+                <% end %>
+              </li>
+              
+              <p class="text-muted">
+                <small>
+                  <% if @masseur.reviews.count == 0 %>
+                    No reviews yet.
+                  <% else %>
+                    Based on <%= pluralize(@masseur.reviews.count, 'review') %>
+                  <% end %>
+                </small>
+              </p>
+            </ul>
+            
+            <% if @masseur == current_user %>              
+	            <%= link_to edit_masseur_registration_path, class: 'btn btn-primary' do %>
+	              <i class="fa fa-pencil"></i> Edit Your Profile
+	            <% end %>
+            <% else %>            
+              <ul class="list-inline user-actions">           
+                <% if @masseur.masseur_detail.display_phone %>
+                <li>
+                  <%= link_to '#', class: 'btn btn-success call-masseur', data: {number: @masseur.masseur_detail.display_phone} do %>
+                    <i class="fa fa-phone"></i> Call
+                  <% end %>
+                </li>
+                <% end %>
+          
+                <li>
+                  <% form_url = current_user.present? ? new_message_path(masseur_id: @masseur.id) : new_client_registration_path(source: "message_masseur", masseur_id: @masseur.id) %>
+                  
+                  <%= link_to form_url, class: 'btn btn-primary', data: {toggle: 'modal', target: '.modal'} do %>
+                    <i class="fa fa-envelope"></i> Message
+                  <% end %>
+                </li>
+
+                <% if current_user.kind_of? Client %>              
+                <li>
+                  <% if current_user.favorited?(@masseur) %>
+                    <%= link_to defavorite_masseur_path(@masseur), class: 'btn btn-pink defavorite-masseur', data: {masseur_id: @masseur.id} do %>
+                      <i class="fa fa-ban"></i> Defavorite
+                    <% end %>                  
+                  <% else %>
+                    <%= link_to favorite_masseur_path(@masseur), class: 'btn btn-pink favorite-masseur', data: {masseur_id: @masseur.id} do %>
+                      <i class="fa fa-heart"></i> Favorite
+                    <% end %>
+                  <% end %>
+                </li>
+                <% end %>
+
+              </ul>
+	          <% end %>
+      </div> <!-- /.panel-body -->
+    </div> <!-- /.panel -->
+    
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-map-marker"></i> Location
+				</h3>
+			</div>
+			
+			<div class="panel-body ad-map">
+				<iframe
+				  frameborder="0" style="border:0"
+				  src="https://www.google.com/maps/embed/v1/place?key=<%= GOOGLE_MAPS_API_KEY %>&q=<%= @masseur.masseur_detail.home_base_string %>" allowfullscreen>
+				</iframe>
+			</div>
+		</div>
+		
+    <div class="panel panel-default user-vitals">
+      <div class="panel-heading">
+        <h3 class="panel-title">Vitals</h3>
+      </div>
+      
+      <div class="panel-body">
+        <table class="table table-striped table-responsive">
+          <tbody>
+            <tr>
+              <td>Height</td>
+              <td><%= @masseur.masseur_detail.height_feet %>' <%= @masseur.masseur_detail.height_inches %>"</td>
+            </tr>
+            
+            <tr>
+              <td>Weight</td>
+              <td><%= weight_with_unit(@masseur) %></td>
+            </tr>
+            
+            <tr>
+              <td>Build</td>
+              <td><%= answer_or_pnta(@masseur.masseur_detail.build) %></td>
+            </tr>
+    
+            <tr>
+              <td>Body Hair</td>
+              <td><%= answer_or_pnta(@masseur.masseur_detail.body_hair) %></td>
+            </tr>
+    
+            <tr>
+              <td>Hair Color</td>
+              <td><%= answer_or_pnta(@masseur.masseur_detail.hair_color) %></td>
+            </tr>
+
+            <tr>
+              <td>Eye Color</td>
+              <td><%= answer_or_pnta(@masseur.masseur_detail.eye_color) %></td>
+            </tr>
+    
+            <tr>
+              <td>Sexual Orientation</td>
+              <td><%= answer_or_pnta(@masseur.masseur_detail.sexual_orientation) %></td>
+            </tr>
+    
+            <tr>
+              <td>Smoking</td>
+              <td><%= answer_or_pnta(@masseur.masseur_detail.smoking_frequency) %></td>
+            </tr>
+
+            <tr>
+              <td>Drugs</td>
+              <td><%= answer_or_pnta(@masseur.masseur_detail.drug_frequency) %></td>
+            </tr>
+    
+            <tr>
+              <td>Ethnicity</td>
+              <td><%= answer_or_pnta(@masseur.masseur_detail.ethnicity) %></td>
+            </tr>
+          </tbody>
+        </table>        
+      </div> <!-- /.panel-body -->
+    </div> <!-- /.panel -->
+    
+    <!-- RATES -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Rates</h3>
+      </div>
+      
+      <div class="panel-body">
+        <h4>Incall <small>You go to him.</small></h3>
+        
+        <% if @incall_rates %>
+        <table class="table table-striped table-responsive">
+          <tbody>
+            <% @incall_rates.each do |rate| %>
+            <tr>
+              <td><%= rate.time %></td>
+              <td><%= rate.rate %></td>
+            </tr>
+            <% end %>
+          </tbody>                
+        </table>
+        <% end %>
+
+        <h4>Outcall <small>He comes to you.</small></h3>
+        <% if @outcall_rates %>
+        <table class="table table-striped table-responsive">
+          <tbody>
+            <% @outcall_rates.each do |rate| %>
+            <tr>
+              <td><%= rate.time %></td>
+              <td><%= rate.rate %></td>
+            </tr>
+            <% end %>
+          </tbody>                
+        </table>
+        <% end %>
+      </div>
+    </div>
+    
+    <!-- LANGUAGES -->
+    <% if @masseur.masseur_detail.languages.count > 0 %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Languages I Speak</h3>
+        </div>
+      
+        <div class="panel-body">
+          <% @masseur.masseur_detail.languages.in_groups_of(3, false) do |language_group| %>
+            <div class="row">
+              <% language_group.each do |language| %>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                  <%= language.english_name %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    
+    <!-- SOCIAL -->
+    <% if @masseur.has_social_networks? %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Social</h3>
+      </div>
+      
+      <div class="panel-body">
+          <ul class="list-inline">
+          <% if @masseur.masseur_detail.show_facebook %>
+            <li>
+              <%= link_to facebook_url_for(@masseur.masseur_detail.facebook_url), class: 'btn btn-lg btn-social-icon btn-facebook', target: '_blank', data: {toggle: 'tooltip'}, title: 'Facebook' do %>
+                <i class="fa fa-facebook"></i>
+              <% end %>
+            </li>
+          <% end %>
+
+          <% if @masseur.masseur_detail.show_website %>
+            <li>
+              <%= link_to @masseur.masseur_detail.website_url, class: 'btn btn-lg btn-social-icon btn-vk', target: '_blank', data: {toggle: 'tooltip'}, title: 'Website' do %>
+              <i class="fa fa-link"></i>
+              <% end %>
+            </li>
+          <% end %>
+
+          <% if @masseur.masseur_detail.show_linkedin %>
+            <li>
+              <%= link_to linkedin_url_for(@masseur.masseur_detail.linkedin_url), class: 'btn btn-lg btn-social-icon btn-linkedin', target: '_blank', data: {toggle: 'tooltip'}, title: 'LinkedIn' do %>
+              <i class="fa fa-linkedin"></i>
+              <% end %>
+            </li>
+          <% end %>
+
+          <% if @masseur.masseur_detail.show_pinterest %>
+            <li>
+              <%= link_to pinterest_url_for(@masseur.masseur_detail.pinterest_url), class: 'btn btn-lg btn-social-icon btn-pinterest', target: '_blank', data: {toggle: 'tooltip'}, title: 'Pinterest' do %>
+              <i class="fa fa-pinterest"></i>
+              <% end %>
+            </li>
+          <% end %>    
+        </ul>
+      </div>
+    </div>
+    <% end %>
+    <!-- End SOCIAL -->
+    
+  </div> <!-- /.col-md-4 -->
+  
+  <div class="col-md-8">
+    <ul class="nav nav-tabs nav-justified ad-nav">
+      <% @ads.each_with_index do |ad, index| %>
+        <li<%= ad.massage_type.name.downcase == @active_ad ? raw(" class=\"active\"") : nil %>>
+          <%= link_to "#{ad.massage_type.name} Massage", "##{ad.massage_type.name.downcase}", data: { toggle: 'tab', ad_type: ad.massage_type.name.downcase, ad_url: show_new_masseur_ad_url(@masseur, ad) } %>
+        </li>
+      <% end %>
+    </ul>
+    
+    <div class="tab-content">
+      <% @ads.each_with_index do |ad, index| %>
+        <div class="tab-pane fade<%= ad.massage_type.name.downcase == @active_ad ? " in active" : nil %>" id="<%= ad.massage_type.name.downcase %>" data-loaded="false">
+          <p class="text-center">
+            <i class="fa fa-5x fa-circle-o-notch fa-spin"></i>
+            <br>
+            <span>Loading <%= ad.massage_type.name %> Ad...</span>
+          </p>
+        </div>
+      <% end %>
+    </div>
+    
+  	<%#= render 'masseurs/reviews' %>
+    
+  </div> <!-- End right column -->
+</div> <!-- /.row -->  

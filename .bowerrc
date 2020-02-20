@@ -1,0 +1,8 @@
+{
+  "directory": "vendor/assets/components",
+  "ignoredDependencies": [
+    "jquery",
+    "bootstrap",
+    "font-awesome"
+  ]
+}

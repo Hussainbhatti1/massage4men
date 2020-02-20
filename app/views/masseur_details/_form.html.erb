@@ -1,0 +1,299 @@
+<%= simple_form_for(@masseur_detail, url: masseur_masseur_detail_path(@masseur)) do |f| %>
+  <%= f.error_notification %>
+  
+  <%= f.input :display_phone, label: 'Screen/Displayed Phone Number', hint: "If you don't provide a display number, no phone number will be shown on your ads." %>  
+	
+	<div class="row">
+		<div class="col-md-3">
+			<%= f.input :display_real_age, label: 'Display your real age?', as: :radio_buttons, item_wrapper_tag: 'div', wrapper_html: {data: {in_groups_of: 2, grouped_tag: 'div'}} %>
+		</div>
+		
+		<div class="col-md-9 real-age-entry" data-visible="<%= hide_show_fake_age %>">
+			<%= f.input :display_age, label: 'Display this age' %>
+		</div>
+	</div>
+	
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><i class="fa fa-home"></i> Home Base</h3>
+    </div>
+    
+    <div class="panel-body">
+      <p>This is where your standard (non-travel) ads will run.</p>
+				
+				<% if @masseur_detail.created_at == @masseur_detail.updated_at %>
+				<div class="alert alert-info">
+					<i class="fa fa-info-circle"></i> We've approximated your location based on your internet address. Please correct it, if needed.
+				</div>
+				<% end %>
+			</p>
+    	<div class="row">
+    		<div class="col-sm-3">
+    			<%= f.input :home_base_city, label: 'City' %>
+    		</div>
+		
+    		<div class="col-sm-3">
+    			<%= f.input :home_base_state, label: 'State', collection: us_states %>
+    		</div>
+		
+    		<div class="col-sm-3">
+    			<%= f.input :home_base_zip, label: 'Zip / Postal Code' %>
+    		</div>
+		
+    		<div class="col-sm-3">
+    			<%= f.input :home_base_country, label: 'Country', priority: ['US', 'MX'] %>
+    		</div>
+    	</div>      
+    </div>
+  </div> <!-- /.panel-default -->
+	
+  <!-- START VITALS PANEL -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-info-circle"></i> Vitals
+      </h3>
+    </div>
+    
+    <div class="panel-body">
+    	<div class="row">
+    		<div class="col-md-12">
+    			<p>The information below is how clients search for you. You're encouraged to enter as much information as possible to make your ads easier to find. However, if you enter &ldquo;<abbr title="Prefer not to answer" data-toggle="tooltip">PNTA</abbr>,&rdquo; it will be harder for clients to find you.</p>
+    		</div>
+    	</div>
+	
+      <div class="row">
+        <div class="col-md-3 height-imperial">
+        	<%= f.input :height_feet, label: raw('Height <a class="metric-toggle">(prefer metric?)</a>'), input_html: {class: 'pull-left'}, wrapper: :vertical_input_group do %>
+            <%= f.input_field :height_feet, as: :select, collection: 3..7, class: 'form-control' %>
+            <span class="input-group-addon">ft</span>
+          <% end %>
+        </div>
+    
+        <div class="col-md-3 height-imperial">
+          <%= f.input :height_inches, label: raw('&nbsp;'), input_html: {class: 'pull-left'}, wrapper: :vertical_input_group do %>
+            <%= f.input_field :height_inches, as: :select, collection: 0..11, class: 'form-control' %>
+            <span class="input-group-addon">in</span>
+          <% end %>
+        </div>
+    
+        <div class="col-md-6 height-metric">
+        	<%= f.input :height_cm, label: raw('Height <a class="metric-toggle">(prefer feet/inches?)</a>'), wrapper: :vertical_input_group do %>
+        		<%= f.input_field :height_cm, class: 'form-control' %>
+        		<span class="input-group-addon">cm</span>
+        	<% end %>
+        </div>
+        
+        <div class="col-md-6 weight-input">
+          <%= f.input :weight_unit, as: :hidden, input_html: {value: 'lbs'} %>
+        	<%= f.input :weight, label: 'Weight', wrapper: :vertical_input_group do %>
+        		<%= f.input_field :weight, class: 'form-control' %>
+
+            <span class="input-group-addon">
+            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+                    <span class="weight-unit">lbs</span> <span class="caret"></span>
+            </a>
+                <ul class="dropdown-menu weight-unit-selector">
+                    <li><a href="#">lbs</a></li>
+                    <li><a href="#">kg</a></li>
+                </ul>
+              </span>
+        	<% end %>      
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.association :build, include_blank: 'PNTA' %>
+        </div>
+    
+        <div class="col-md-6">
+          <%= f.association :body_hair, label_method: :hairiness, include_blank: 'PNTA' %>      
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.association :hair_color, label_method: :color, include_blank: 'PNTA' %>
+        </div>
+    
+        <div class="col-md-6">
+          <%= f.association :eye_color, label_method: :color, include_blank: 'PNTA' %>      
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.association :smoking_frequency, label: 'Smoking', label_method: :frequency, include_blank: 'PNTA' %>
+        </div>
+    
+        <div class="col-md-6">
+          <%= f.association :drug_frequency, label: 'Drugs', label_method: :frequency, include_blank: 'PNTA' %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.association :sexual_orientation, label_method: :orientation, include_blank: 'PNTA' %>
+        </div>
+    
+        <div class="col-md-6">
+          <%= f.association :ethnicity, include_blank: 'PNTA' %>      
+        </div>
+      </div>        
+    </div>
+  </div>
+  <!-- END VITALS PANEL -->
+  
+  <!-- START LANGUAGES PANEL -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-globe"></i> Languages Spoken
+      </h3>
+    </div>
+      
+    <div class="panel-body">
+      <%= f.association :languages, as: :check_boxes, label_method: :english_and_native_name, label: false, item_wrapper_tag: 'div', wrapper_html: {data: {in_groups_of: 3, grouped_tag: 'div'}} %>      
+    </div>
+  </div>
+  <!-- END LANGUAGES PANEL -->
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Offerings</h3>
+    </div>
+    
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12">
+          <%= f.association :services, as: :check_boxes, label: false, item_wrapper_tag: 'div', wrapper_html: {data: {in_groups_of: 4, grouped_tag: 'div'}} %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- START SOCIAL PANEL -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-users"></i> Social Accounts
+      </h3>
+    </div>
+    
+    <div class="panel-body">
+      <p>Create rapport with clients and get more fans by adding your social accounts.</p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.input :show_facebook, label: 'Link to your Facebook Page?', as: :radio_buttons, input_html: {data: {social_service: 'facebook'}} %>
+      
+          <div class="social-url" data-social-service="facebook">
+        	<%= f.input :facebook_url, label: false, wrapper: :vertical_input_group do %>
+        		<span class="input-group-addon"><i class="fa fa-facebook"></i> facebook.com/</span>
+        		<%= f.input_field :facebook_url, class: 'form-control' %>
+        	<% end %>        
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <%= f.input :show_website, label: 'Link to your website?', as: :radio_buttons, input_html: {data: {social_service: 'website'}} %>
+      
+          <div class="social-url" data-social-service="website">
+        	<%= f.input :website_url, label: false, wrapper: :vertical_input_group do %>
+            <span class="input-group-addon">
+              <i class="fa fa-link"></i> http://
+            </span>
+        
+            <%= f.input_field :website_url, class: 'form-control' %>
+          <% end %>
+          </div>
+        </div>      
+      </div>
+  
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.input :show_linkedin, label: 'Link to your LinkedIn account?', as: :radio_buttons, input_html: {data: {social_service: 'linkedin'}} %>
+      
+          <div class="social-url" data-social-service="linkedin">
+        	<%= f.input :linkedin_url, label: false, wrapper: :vertical_input_group do %>
+        		<span class="input-group-addon"><i class="fa fa-linkedin"></i> linkedin.com/in/</span>
+        		<%= f.input_field :linkedin_url, class: 'form-control' %>
+        	<% end %>        
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <%= f.input :show_pinterest, label: 'Link to your Pinterest?', as: :radio_buttons, input_html: {data: {social_service: 'pinterest'}} %>
+      
+          <div class="social-url" data-social-service="pinterest">
+        	<%= f.input :pinterest_url, label: false, wrapper: :vertical_input_group do %>
+        		<span class="input-group-addon"><i class="fa fa-pinterest"></i> pinterest.com/</span>
+        		<%= f.input_field :pinterest_url, class: 'form-control' %>
+        	<% end %>        
+          </div>
+        </div>      
+      </div>        
+    </div>
+  </div>
+  <!-- END SOCIAL PANEL -->
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">More Details</h3>
+        </div>
+        
+        <div class="panel-body">
+          <%= f.association :massage_types, label: 'What types of massage do you offer?', as: :check_boxes, item_wrapper_tag: 'div', wrapper_html: {data: {in_groups_of: 3, grouped_tag: 'div'}} %>
+
+      <%= f.association :client_types, label: 'Who do you serve?', as: :check_boxes, item_wrapper_tag: 'div', wrapper_html: {data: {in_groups_of: 3, grouped_tag: 'div'}} %>
+
+          <%= f.input :additional_services, label: raw('What additional services, if any, do you offer? <span class="text-muted">(just keep it legal!)</span>') %>
+
+          <div class="row">
+            <div class="col-md-6">
+              <%= f.association :work_locations, label: 'Where do you work?', as: :check_boxes, item_wrapper_tag: 'div', wrapper_html: {data: {in_groups_of: 3, grouped_tag: 'div'}} %>
+            </div>
+        
+            <div class="col-md-6 work-location-radius"<%= @masseur_detail.offers_incall? ? " data-visible=true" : '' %>>
+              <div class="form-inline">
+                <%= f.input :work_location_radius, as: :string, label: 'Within', input_html: {maxlength: 4} %>
+                <%= f.input :work_location_radius_zip, label: ' miles of ZIP ', input_html: {maxlength: 5} %>
+              </div>
+            </div>
+          </div> <!-- /.row -->
+
+          <%= f.association :work_surfaces, label: false, as: :check_boxes, item_wrapper_tag: 'div', wrapper_html: {data: {in_groups_of: 5, grouped_tag: 'div'}} %>
+          
+          <%= f.input :service_details, label: 'Details of your massage service:' %>
+        </div> <!-- /.panel-body -->
+      </div> <!-- /.panel -->
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Products Used</h3>
+        </div>
+        
+        <div class="panel-body">
+          <%= f.association :massage_products, label: false, as: :check_boxes, item_wrapper_tag: 'div', wrapper_html: {data: {in_groups_of: 4, grouped_tag: 'div'}} %>          
+        </div>
+      </div> <!-- end products used -->
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Techniques Your Offer</h3>
+        </div>
+        
+        <div class="panel-body">
+          <%= f.association :massage_techniques, label: false, as: :check_boxes, item_wrapper_tag: 'div', wrapper_html: {data: {in_groups_of: 4, grouped_tag: 'div'}} %>        
+        </div>
+      </div>
+            
+    </div>
+  </div>
+  
+  <%= f.submit t(:details_update), class: 'btn btn-lg btn-primary' %>
+	
+<% end %>

@@ -1,0 +1,16 @@
+staging:
+  pid_file: /home/m4m/workspace/apps/m4m/shared/tmp/pids/searchd.pid
+  indices_location: /home/m4m/workspace/apps/m4m/shared/db/sphinx
+  configuration_file: /home/workspace/m4m/apps/m4m/shared/staging.sphinx.conf
+  binlog_path: /home/m4m/workspace/apps/m4m/shared/binlog
+
+production:
+  pid_file: /home/m4m/apps/m4m/shared/tmp/pids/searchd.pid
+  indices_location: /home/m4m/apps/m4m/shared/db/sphinx
+  configuration_file: /home/m4m/apps/m4m/shared/production.sphinx.conf
+  binlog_path: /home/m4m/apps/m4m/shared/binlog
+
+development:
+  pid_file:   /Users/aqib/m4m/workspace/workspace/tmp/pids/searchd.pid
+  indices_location: /Users/aqib/m4m/workspace/db
+  configuration_file: /Users/aqib/m4m/workspace/config/development.sphinx.conf

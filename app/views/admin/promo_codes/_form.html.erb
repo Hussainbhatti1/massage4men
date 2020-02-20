@@ -1,0 +1,44 @@
+<%= simple_form_for [:admin, @promo_code], html: {class: 'form-horizontal'}, wrapper: :horizontal_form do |f| %>
+  <% f.error_notification %>
+
+  <%= f.input :code, hint: raw('Promo codes are <em>not</em> case-sensitive.') %>
+  
+  <%= f.input :basic_discount_percentage, wrapper: :horizontal_input_group do %>
+    <%= f.input_field :basic_discount_percentage, class: 'form-control' %>
+    <span class="input-group-addon" id="basic-addon2">%</span>
+  <% end %>
+
+  <%= f.input :premium_discount_percentage, wrapper: :horizontal_input_group do %>
+    <%= f.input_field :premium_discount_percentage, class: 'form-control' %>
+    <span class="input-group-addon" id="basic-addon2">%</span>
+  <% end %>
+
+  <%= f.input :length_in_days, label: 'Discount applied for', wrapper: :horizontal_input_group do %>
+    <%= f.input_field :length_in_days, class: 'form-control' %>
+    <span class="input-group-addon" id="basic-addon2">days</span>
+  <% end %>
+
+  <%= f.input :start_date, label: 'Start date', as: :datepicker, input_html: {class: 'form-control'}, hint: 'Optional. The code will not be usable before 12:00 a.m. on this date.' %>
+  
+  <%= f.input :end_date, label: 'End date', as: :datepicker, input_html: {class: 'form-control'}, hint: 'Optional. The code will not be usable after 11:59:59 p.m. on this date.' %>
+  
+  <%= f.input :description, as: :text, hint: 'Recommended. Provide a description of what this code does.' %>
+  
+  <%= f.input :active, label: false, inline_label: 'Active', wrapper: :horizontal_boolean %>
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-envelope"></i> Emails</h3>
+		</div>
+		
+		<div class="panel-body">
+			<%= f.input :seven_day_email_subject, label: 'Email Subject (7 days remaining):' %>
+			<%= f.input :seven_day_email_content, label: 'Email Content (7 days remaining):' %>
+			
+			<%= f.input :fourteen_day_email_subject, label: 'Email Subject (14 days remaining):' %>
+			<%= f.input :fourteen_day_email_content, label: 'Email Content (14 days remaining):' %>
+		</div>
+	</div>
+  
+  <%= f.submit class: 'btn btn-lg btn-primary col-md-offset-3' %>
+<% end %>

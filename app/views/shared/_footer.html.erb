@@ -1,0 +1,40 @@
+<footer>
+  <p class="pull-left">
+    &copy; 2015-<%= Date.today.year %> M4M Services Corporation
+  </p>
+    
+  <div class="pull-right">
+    <ul class="list-inline">
+      <% if Rails.env != 'production' %>
+        <li><small class="text-muted"><%= Rails.env %></small></li>
+      <% end %>
+      
+      <% if @settings.privacy_page %>
+        <li><%= link_to 'Privacy Policy', '/privacy-policy' %></li>
+      <% end %>
+      
+      <li><%= link_to 'Contact Us', contact_path %></li>
+    
+      <% if @settings.tos_page %>
+        <li><%= link_to 'Terms of Service', '/terms-of-service' %></li>
+      <% end %>
+
+      <% if ACTIVE_LOCALES.count > 1 %>
+        <% ACTIVE_LOCALES.each do |locale| %>
+          <li><i class="flag f16 <%= (locale[:flag_code].present? ? locale[:flag_code] : locale[:code]) %>"></i> <%= link_to locale[:name], params: {locale: locale[:code]} %></li>
+        <% end %>
+      <% end %>
+    </ul>    
+
+    <div class="row seals">
+      <div class="col-md-6">
+        <!-- (c) 2005, 2016. Authorize.Net is a registered trademark of CyberSource Corporation -->
+        <div class="AuthorizeNetSeal"> <script type="text/javascript" language="javascript">var ANS_customer_id="e3d0d297-9a35-43ca-9590-41f391ec5b1b";</script> <script type="text/javascript" language="javascript" src="//verify.authorize.net/anetseal/seal.js" ></script></div>
+      </div>
+      
+      <div class="col-md-6">
+        <%= image_tag '/geotrust.gif', alt: 'GeoTrust Secured' %>
+      </div>
+    </div>
+  </div>
+</footer>

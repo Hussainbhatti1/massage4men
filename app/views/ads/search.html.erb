@@ -1,0 +1,98 @@
+<% if @markers %>
+  <script>
+    markers = <%= raw @markers.to_json %>;
+  </script>
+<% end %>
+
+<div class="row">
+  <% if @masseurs %>
+    <h2>Search Results <small><%= pluralize(@masseurs.length, 'result') %> found near <%= @location_string %></small></h2>
+  <% end %>
+  
+    <div class="col-md-3">
+      <div class="panel panel-default standalone-search-panel">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="fa fa-search"></i> Search
+          </h3>
+        </div>
+      
+        <div class="panel-body">
+          <%= simple_form_for :search, html: {class: 'search standalone-search'} do |f| %>
+            <h3><i class="fa fa-map-marker"></i> Location</h3>
+            <%= f.input :location, label: false, wrapper: :vertical_input_group do %>
+              <%= f.input_field :location, placeholder: 'City, state, zip or airport code', class: 'form-control input-lg search-info', value: @location_string %>
+
+            <% end %>
+
+            <div class="get-location-container">
+              <i class="fa fa-location-arrow location-icon get-location"></i>
+              <%= link_to '#', class: 'get-location' do %>
+                Use your current location
+              <% end %>
+            </div>
+
+            <div class="input-group distance vertical">
+              <h3><i class="fas fa-road"></i> Distance (miles)</h3>
+              <%= f.input_field :distance, placeholder: '300', class: 'form-control', value: @distance %>
+            </div>
+            
+            <div class="input-group massage-types vertical">
+              <h3><i class="fa fa-check"></i> Massage Types</h3>
+              
+              <%= f.collection_check_boxes(:massage_types, MassageType.all.order(:id), :id, :name, item_wrapper_class: 'checkbox', checked: (params[:search] ? params[:search][:massage_types] : MassageType.all.collect { |t| t.id })) do |b|
+               b.label { b.check_box + b.text }
+              end %>
+            </div>
+              
+            <%= f.submit 'Search', class: 'btn btn-lg btn-primary' %>
+          <% end %>        
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-9">
+      <% if !@masseurs %>
+        <p>Choose some criteria to find masseurs.</p>
+      <% else %>
+        <% if @masseurs.count > 0 %>
+          <!-- <div class="row">
+            <ul class="nav nav-tabs pull-right">
+              <li class="active">
+                <%= link_to '#grid-view', data: {toggle: 'tab'} do %>
+                  <i class="fa fa-th"></i> Grid View
+                <% end %>
+              </li>
+
+              <li>
+                <%= link_to '#map-view', data: {toggle: 'tab'} do %>
+                  <i class="fa fa-map"></i> Map View</li>
+                <% end %>
+              </li>
+            </ul>
+          </div> -->
+      
+          <!-- <div class="tab-content"> -->
+            <!-- <div class="tab-pane active" id="grid-view"> -->
+              <% @masseurs.in_groups_of(2, false).each do |group| %>
+                <div class="row search-result">
+                  <% group.each do |masseur| %>
+									<div class="col-md-6">
+                    <%= render 'shared/horizontal_ad_unit', masseur: masseur %>
+									</div>
+                  <% end %>
+                </div> <!-- /.row -->
+              <% end %>          
+            <!-- </div> -->
+        
+            <!-- <div class="tab-pane" id="map-view">
+              <div class="flexible-container" id="map">
+              </div>
+            </div> -->
+          <!-- </div> -->
+        <% else %>
+          <p>Try broadening your search.</p>
+        <% end %>      
+      <% end %>
+    </div>  
+</div>

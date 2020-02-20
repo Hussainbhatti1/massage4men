@@ -1,0 +1,64 @@
+<% content_for :page_title do %>
+  <i class="fa fa-dashboard"></i> My Dashboard
+<% end %>
+
+<% content_for :page do %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Availability</h3>
+  </div>
+  
+  <div class="panel-body availability-panel">
+    <%= render 'availability_form' %>
+  </div>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Ad Statistics</h3>
+  </div>
+  
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-sm-4 col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="stats-figure">
+              <h2 class="text-center"><%= @today_ad_views %></h2>
+              <p class="text-center text-muted">total views today</p>
+            </div> <!-- /.stats-figure -->
+          </div> <!-- /.panel-body -->
+        </div> <!-- /.panel -->
+      </div>
+
+
+      <div class="col-sm-4 col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="stats-figure">
+              <h2 class="text-center"><%= @month_ad_views %></h2>
+              <p class="text-center text-muted">total views this month</p>
+            </div> <!-- /.stats-figure -->
+          </div> <!-- /.panel-body -->
+        </div> <!-- /.panel -->
+      </div>
+
+
+      <div class="col-sm-4 col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="stats-figure">
+              <h2 class="text-center"><%= @all_time_ad_views %></h2>
+              <p class="text-center text-muted">total views for all-time</p>
+            </div> <!-- /.stats-figure -->
+          </div> <!-- /.panel-body -->
+        </div> <!-- /.panel -->
+      </div>
+
+    </div> <!-- /.row -->
+  </div> <!-- /ad stats .panel-body -->
+</div>
+<% end %>
+
+<%= render 'shared/masseur_nav', active: 'dashboard' %>

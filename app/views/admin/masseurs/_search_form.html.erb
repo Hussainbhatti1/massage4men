@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<i class="fa fa-search"></i> Search
+		</h3>
+	</div>
+	
+	<div class="panel-body">
+		<%= simple_form_for :search, method: :get, url: search_admin_masseurs_path, html: {class: 'form-inline admin-search'} do |f| %>
+			<%= f.input 'first_name', label: false, placeholder: 'First name', input_html: {value: params[:search].try(:[], :first_name)} %>
+			<%= f.input 'last_name', label: false, placeholder: 'Last name', input_html: {value: params[:search].try(:[], :last_name)} %>
+
+			<%= f.input 'screen_name', label: false, placeholder: 'Screen name', input_html: {value: params[:search].try(:[], :screen_name)} %>
+			<%= f.input 'email', label: false, placeholder: 'Email', input_html: {value: params[:search].try(:[], :email)} %>
+			<%= f.input 'mailing_city', label: false, placeholder: 'City', input_html: {value: params[:search].try(:[], :mailing_city)}%>
+			<%= f.input 'mailing_state', label: false, placeholder: 'State', input_html: {value: params[:search].try(:[], :mailing_state)} %>
+			<%= f.input 'mailing_zip', label: false, placeholder: 'Zip', input_html: {value: params[:search].try(:[], :mailing_zip)} %>
+	
+			<%= f.submit 'Search', class: 'btn btn-success' %>
+		<% end %>				
+	</div>
+</div>

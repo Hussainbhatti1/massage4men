@@ -1,0 +1,52 @@
+<h1 class="page-header"><%= title 'Advertise With Us' %></h1>
+<p>Welcome to the new Massage4Men site! We are offering FREE standard accounts to new masseurs who sign up as the first listing in any area. the listing will be FREE to 90 days. Thereafter, your ad will run for 50% off our regular rates for the following 12 months.</p>
+
+<div class="row ad-packages equal-height">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          Basic Listing
+        </h4>
+      </div>
+      
+      <div class="panel-body">
+        <ul>
+          <li><%= number_to_currency(@settings.basic_package_price, precision: 0) %>/month</li>
+          <li>Create 1 ad in your home area</li>
+          <li>Create 1 travel ad</li>
+          <li>Post 1 profile photo and up to 4 non-adult photos per ad</li>
+          <li>Read reviews from your clients</li>
+          <li>Blind messaging - your email is never revealed</li>
+        </ul>
+    
+        <%= link_to 'Join Now', new_masseur_registration_path({ad_type: 'basic'}), class: 'btn btn-lg btn-primary buy-button' %>        
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          Premium Listing
+        
+          <span class="label label-success pull-right">Best Value!</span>
+        </h4>
+      </div>
+      
+      <div class="panel-body">
+        <ul>
+          <li><%= number_to_currency(@settings.premium_package_price, precision: 0) %>/month</li>
+          <li>Create up to 6 simulatenous travel ads with start/stop dates</li>
+          <li>Post 1 profile photo and up to 10 photos per ad</li>
+          <li>Read and post comments for reviews</li>
+          <li>Eligible for random <strong>Featured Masseur</strong> homepage placement</li>
+          <li>Blind messaging - your email is never revealed</li>
+        </ul>
+
+        <%= link_to 'Join Now', new_masseur_registration_path({ad_type: 'premium'}), class: 'btn btn-lg btn-primary buy-button' %>
+      </div>
+    </div>
+  </div>
+</div>

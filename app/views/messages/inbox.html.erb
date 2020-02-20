@@ -1,0 +1,57 @@
+<% content_for :page_title do %>
+  Inbox
+<% end %>
+
+<% content_for :page do %>
+  <% if @conversations.count > 0 %>
+    <table class="table table-striped table-responsive">
+      <thead>
+        <tr>
+          <th>From</th>
+          <th>Subject</th>
+          <th>Received</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <% @conversations.each do |convo| %>
+          <% convo.receipts_for(current_user).each do |receipt| %>
+          <tr>
+            <td>
+              <%= image_tag profile_photo_url_for(receipt.message.sender, :small_thumb), class: 'bordered-padded-avatar' %>
+              <%= receipt.message.sender.display_name %>
+            </td>
+            
+            <td><%= link_to receipt.message.subject, conversation_path(convo) %></td>
+            
+            <td>
+              <% if receipt.created_at.to_date == Date.today %>
+                <%= receipt.created_at.to_s(:time_only) %>
+              <% else %>
+                <%= receipt.created_at.to_s(:short_with_12_hour_time) %>              
+              <% end %>
+            </td>
+            
+            <td>
+              <%= button_to mark_read_conversation_path(convo), class: 'btn btn-primary' do %>
+                <i class="fa fa-check"></i> Mark Read
+              <% end %>
+            </td>
+            
+            <td>
+              <%= link_to conversation_path(convo), method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to send this message to the Trash?'} do %>
+                <i class="fa fa-trash"></i> Delete
+              <% end %>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>Your inbox is empty!</p>
+  <% end %>
+<% end %>
+
+<%= render 'shared/conversations_nav', active: 'inbox' %>

@@ -1,0 +1,3 @@
+$('.trash-conversation').on('ajax:success', function(event, data, xhr, status) {
+  $(this).closest('tr.conversation').fadeOut();
+});

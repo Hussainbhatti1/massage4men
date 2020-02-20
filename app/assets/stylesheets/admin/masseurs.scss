@@ -1,0 +1,22 @@
+table.approval-queue-table {
+  tbody {
+    td {
+      vertical-align:middle;
+    }    
+  }
+}
+
+form.admin-search {
+	.form-group {
+		@media (min-width: 768px) {
+			width:12.99%;		
+		}
+		
+		width:100%;
+
+		
+		.form-control {
+			width:100%;
+		}
+	}
+}

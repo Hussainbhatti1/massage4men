@@ -1,0 +1,30 @@
+// Place all the styles related to the Masseurs controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.masseur_provides_services_at_mailing_address {
+	span.radio-inline {
+		margin-top:0px;
+	}
+	
+	span.radio-inline:first-child {
+		padding-left:0;
+	}
+}
+
+.user-meta {
+  ul {
+    li {
+      text-align:center;
+    }
+    
+    &.city-and-age {
+      li {
+        font-size:16px;
+        
+        &:last-child {
+         font-size:14px; 
+        }
+      }
+    }
+  }
+}

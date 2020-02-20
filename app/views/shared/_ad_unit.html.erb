@@ -1,0 +1,17 @@
+<div class="col-sm-4 ad-unit">
+  <div class="thumbnail">
+    <%= image_tag 'http://placehold.it/250x250', class: 'img-responsive' %>
+  
+    <div class="caption">
+      <h3><%= ad.massage_type.name %></h3>
+      
+      <%= link_to edit_masseur_ad_path(current_user, ad), class: 'btn btn-primary' do %>
+        <i class="fa fa-pencil"></i> Edit
+      <% end %>
+
+      <%= link_to masseur_ad_path(current_user, ad), method: :delete, class: 'btn btn-danger' do %>
+        <i class="fa fa-trash"></i> Delete
+      <% end %>    
+    </div> <!-- /.caption -->
+  </div> <!-- /.thumbnail -->  
+</div> <!-- /.col-sm-4 -->

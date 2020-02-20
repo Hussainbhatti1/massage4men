@@ -1,0 +1,175 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title"><%= @masseur.full_name %> <%= raw(approval_label) %> <%= raw(featured_label) %> <%= raw(suspended_label) %></h4>
+</div>
+<div class="modal-body">
+  <h4><i class="fa fa-user"></i> User Info</h4>
+  <table class="table table-responsive">
+    <tr>
+      <td>Display Name</td>
+      <td><%= @masseur.display_name %></td>
+    </tr>
+    
+    <tr>
+      <td>Email</td>
+      <td><%= mail_to @masseur.email %></td>
+    </tr>
+    
+    <tr>
+      <td>Mailing Address<br>
+        <small>(<%= link_to 'map', map_url(@masseur.full_mailing_address(false)), target: '_blank' %>)</small></td>
+      <td>
+        <%= simple_format(@masseur.full_mailing_address) %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>Contact Phone</td>
+      <td>
+        <%= @masseur.contact_phone %>
+        <span class="text-muted">(<%= @masseur.contact_phone_type %>)</span>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>Provides services at mailing address?</td>
+      <td><%= @masseur.provides_services_at_mailing_address.humanize %></td>
+    </tr>
+
+    <tr>
+      <td>Available Now?</td>
+      <td><%= @masseur.available.humanize %></td>
+    </tr>
+		
+		<tr>
+			<td>Login Count</td>
+			<td><%= @masseur.sign_in_count %></td>
+		</tr>
+		
+		<tr>
+			<td>Last Login</td>
+			<td>
+				<% if @masseur.last_sign_in_at %>
+					<%= @masseur.last_sign_in_at.to_s(:short_with_12_hour_time) %> from <abbr title="<%= ip_info(@masseur.last_sign_in_ip) %>" data-toggle="tooltip"><%= @masseur.last_sign_in_ip %></abbr>
+				<% else %>
+					Never
+				<% end %>
+			</td>
+		</tr>
+  </table>
+  
+  <h4><i class="fa fa-credit-card"></i> Billing &amp; Subscription</h4>
+	<table class="table table-responsive">
+		<tbody>
+		<% if @masseur.active_trial %>
+			<tr>
+				<td>Has Active Trial?</td>
+				<td>Yes</td>
+			</tr>
+		
+			<tr>
+				<td>Trial Type</td>
+				<td><%= AD_TYPES[@masseur.active_trial.subscription_type].humanize %></td>
+			</tr>
+		
+			<tr>
+				<td>Trial Started</td>
+				<td><%= @masseur.active_trial.created_at.to_s(:short_without_time) %></td>
+			</tr>
+		
+			<tr>
+				<td>Trial Ends</td>
+				<td><%= @masseur.active_trial.ends_at.to_s(:short_without_time) %></td>
+			</tr>
+		
+			<tr>
+				<td>Promo Code Used</td>
+				<td>
+					<% if @masseur.active_trial.promo_code %>
+						<%= @masseur.active_trial.promo_code.code %><br>
+						<p>
+							<small>
+								<em>
+									<%= @masseur.active_trial.promo_code.description %>
+								</em>
+							</small>
+						</p>				
+					<% else %>
+						None				
+					<% end %>
+				</td>
+			</tr>
+		<% elsif @masseur.active_paid_subscription %>
+	    <tr>
+	      <td>Has Active Subscription?</td>
+	      <td><%= @masseur.active_subscription.present?.humanize %></td>
+	    </tr>
+
+			<tr>
+			  <td>Subscription Type</td>
+			  <td><%= AD_TYPES[@masseur.active_subscription.subscription_type].humanize %></td>
+			</tr>
+
+			<tr>
+			  <td>First Subscribed</td>
+			  <td><%= @masseur.active_subscription.created_at.to_s(:short_with_12_hour_time) %></td>
+			</tr>
+
+			<tr>
+			  <td>Renewal History</td>
+			  <td>
+			    <% if @masseur.active_subscription.subscription_transactions.count > 1 %>
+			      <ul class="list-unstyled">
+			        <% @masseur.active_subscription.subscription_transactions.each do |trans| %>
+			          <li><%= trans.created_at.to_s(:short_with_12_hour_time) %> (<%= number_to_currency(trans.amount_charged) %>)</li>          
+			        <% end %>
+			      </ul>
+			    <% else %>
+			      Never
+			    <% end %>
+			  </td>
+			</tr>
+
+			<% if @masseur.active_subscription.subscription_transactions.count > 0 %>
+			<tr>
+			  <td>Credit Card</td>
+			  <td>
+			    <ul class="cc list-inline">
+			      <li class="card <%= @masseur.active_subscription.last_transaction.card_brand %>"></li>
+			      <li><strong><%= @masseur.active_subscription.last_transaction.card_brand.humanize %></strong> ending in <strong><%= @masseur.active_subscription.last_transaction.cc_last_four %></strong>.</li>
+			    </ul>
+			  </td>
+			</tr>
+			<% end %>
+		<% else %>
+			<tr>
+				<td>Has Trial / Subscription?</td>
+				<td>No</td>
+			</tr>
+		<% end %>
+		</tbody>
+	</table>
+  
+  <h4><i class="fa fa-newspaper-o"></i> Ads &amp; Photos</h4>
+  <% if @masseur.local_and_travel_ads.count > 0 %>
+    <table class="table table-responsive">
+      <thead>
+        <tr>
+          <th>Ad Type</th>
+          <th>Photos</th>
+          <th>View <small class="text-muted">(new window)</small></th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <% @masseur.local_and_travel_ads.each do |ad| %>
+					<%= render partial: 'ad_row', locals: { ad: ad } %>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="alert alert-info">
+      <i class="fa fa-exclamation-triangle"></i> <%= @masseur.full_name %> hasn't created any ads.
+    </div>
+  <% end %>
+</div>

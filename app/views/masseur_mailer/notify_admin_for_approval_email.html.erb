@@ -1,0 +1,47 @@
+<td align="center" valign="top">
+  	<!-- BEGIN BODY // -->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+          <tr>
+              <td valign="top" class="bodyContent">
+								<p>Hello,</p>
+								
+								<p>A new masseur has just signed up on M4M.net and requires approval. Here's a little about him:</p>
+								
+								<table>
+									<tr>
+										<td width="40%"><strong>Name:</strong></td>
+										<td><%= @masseur.full_name %></td>
+									</tr>
+
+									<tr>
+										<td><strong>Email:</strong></td>
+										<td><%= mail_to @masseur.email %></td>
+									</tr>
+
+									<tr>
+										<td><strong>Date of birth:</strong></td>
+										<td><%= @masseur.dob.to_formatted_s(:long_without_time) %> <small>(<%= @masseur.age %> years old)</small></td>
+									</tr>
+									
+									<tr>
+										<td><strong>Signup IP:</strong></td>
+										<td><%= @masseur.last_sign_in_ip %> <small>(<%= ip_info(@masseur.last_sign_in_ip) %>)</small></td>
+									</tr>
+									
+									<tr>
+										<td><strong>Signup time:</strong></td>
+										<td><%= @masseur.created_at.to_formatted_s(:short_with_12_hour_time) %></td>
+									</tr>
+								</table>
+								
+								<p>								
+									<center>
+										<%= link_to 'Approve/Deny', approval_queue_admin_masseurs_url, style: 'color: #fff;background-color: #5cb85c;border-color:#4cae4c;padding:6px 12px;font-size:20px;font-weight:bold;border-radius:4px;text-align:center;text-decoration:none;margin:0 auto;' %>									
+									</center>
+								</p>
+              </td>
+          </tr>
+      </table>
+      <!-- // END BODY -->
+  </td>
+</tr>

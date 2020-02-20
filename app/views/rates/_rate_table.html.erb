@@ -1,0 +1,33 @@
+<table class="table table-responsive" data-rate-type="<%= rate_type %>">
+  <thead>
+    <tr>
+      <th>Rate</th>
+      <th>Time</th>
+			<th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+	<% if @rates %>
+    <% @rates.where(rate_type: rate_type).order(rate: :asc).each do |rate| %>
+      <%= render partial: 'rate_table_row', locals: {rate: rate} %>
+    <% end %>
+	<% end %>
+	</tbody>
+</table>
+    
+<%= simple_form_for [@masseur, @masseur.masseur_detail, Rate.new(rate_type: rate_type)], url: masseur_masseur_detail_rates_path, html: {class: "new-rate-#{rate_type}", id: "new-rate-#{rate_type}"}, data: {rate_type: rate_type}, remote: true do |f| %>
+	<table class="table table-responsive">
+		<tr>
+	    <%= f.input :rate_type, as: :hidden %>
+	    <td><%= f.input :rate, label: false, placeholder: 'i.e. "$50/hour"' %></td>
+	    <td><%= f.input :time, label: false, placeholder: 'i.e. "Up to 2 hours"' %></td>
+	    <td class="add-rate-cell">
+	      <%= button_to 'submit', class: 'btn btn-sm btn-primary' do %>
+	        <i class="fa fa-plus"></i> Add
+	      <% end %>
+	    </td>
+	  </tr>
+	</table>
+<% end %>

@@ -1,0 +1,123 @@
+<div class="row">
+  <div class="col-md-4">
+    <% if session[:m4m]['signup_in_progress'] %>
+      <%= render partial: 'shared/signup_sidebar', locals: {active: 4} %>
+
+      <div class="well">
+        <% if session[:m4m]['ad_type'] == 'basic' %>
+          <p>You're signing up for a <strong>Basic</strong> membership, which allows you to place one ad in your home area and one travel ad.</p>
+        
+          <p>For just $30 more per month, you can upgrade to a <strong>Premium</strong> membership, which allows you to place up to <em>three</em> ads in your home area and <em>six</em> travel ads.</p>
+        
+          <p><%= link_to 'Switch to Premium', switch_to_premium_masseurs_path, class: 'btn btn-success' %></p>
+
+          <p><%= link_to raw('Next: Finalize &amp; Checkout'), new_masseur_subscription_path(current_masseur), class: 'btn btn-primary continue-to-checkout' %></p>
+        
+        <% elsif session[:m4m]['ad_type'] == 'premium' %>
+          <p>You're signing up for a <strong>Premium</strong> membership, which allows you to place up to three ads in your home area and six simultaneous travel ads.</p>
+
+          <div class="alert alert-warning unsaved-ads-warning hide">
+            <p>You have unsaved ads remaining. Are you sure you want to continue without activating those ads?</p>
+            
+            <p><%= link_to 'Yes, continue anyway', new_masseur_subscription_path(current_masseur), class: 'btn btn-primary force-continue' %></p>
+          </div>
+
+          <ul class="list-inline">
+            <li><%= link_to raw('Next: Finalize &amp; Checkout'), new_masseur_subscription_path(current_masseur), class: 'btn btn-primary continue-to-checkout' %></li>
+          </ul>
+        <% end %>
+      </div>
+    
+    <% end %>
+  </div> <!-- /.col-md-4 -->
+  
+  <div class="col-md-8">
+    <% if session[:m4m]['signup_in_progress'] %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <i class="fa fa-home"></i> Local <%= 'Ad'.pluralize(@ads.count) %>
+        </h3>
+      </div>
+      
+      <div class="panel-body">
+        <p><%= 'This'.pluralize(@ads.count) %> <%= 'ad'.pluralize(@ads.count) %> will be shown in your home base area of <strong><%= current_masseur.masseur_detail.home_base_city.capitalize %>, <%= current_masseur.masseur_detail.home_base_state.upcase %></strong>.</p>        
+
+        <% if @ads.count > 1 %>
+          <div>
+            <ul class="nav nav-tabs">
+              <% @ads.each_with_index do |ad, index| %>
+                <li class="<%= (index == 0) ? 'active' : '' %>">
+                  <%= link_to "Create Ad ##{index + 1}", "#ad_#{index}", data: {toggle: 'tab'} %>
+                </li>
+              <% end %>
+            </ul>
+            
+            <div class="tab-content">
+              <br>
+              <% @ads.each_with_index do |ad, index| %>
+                <div class="tab-pane fade<%= index == 0 ? ' in active ' : '' %>" id="ad_<%= index %>">
+                  <%= render partial: 'shared/modals/add_photo', locals: {ad_index: index} %>
+                  <%= render partial: 'form', locals: {ad_index: index, current_ad: ad, remote: true} %>
+                </div>             
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <% @ads.each_with_index do |ad, index| %>
+            <%= render partial: 'shared/modals/add_photo', locals: {ad_index: index} %>
+            <%= render partial: 'form', locals: {ad_index: index, current_ad: ad, remote: true} %>             
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <i class="fa fa-plane"></i>
+          Travel Ads
+
+          <small class="pull-right"><%= link_to 'What is a travel ad?', '#' %></small>
+        </h3>
+      </div>
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">Travel Ad</div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <h4>Massage Type</h4>
+
+                  </div>
+
+                  <div class="col-md-9">
+                    <h4>Ad Area</h4>
+                    <input type="text" class="form-control" placeholder="City, state, zip, airport code">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-3">
+                    <h4>Profile Photo</h4>
+                  </div>
+
+                  <div class="col-md-9">
+                    <h4>Additional Photos</h4>
+                  </div>
+                </div>
+              </div> <!-- /.panel-body -->
+            </div> <!-- /.panel -->
+          </div> <!-- /.col-md-12 -->
+        </div> <!-- /.row -->
+      </div>
+    </div> <!-- /end travel ads -->
+ -->
+    <% else %>
+    <p>Here are your active and inactive ads.</p>
+    <% end %>
+  </div>
+</div>

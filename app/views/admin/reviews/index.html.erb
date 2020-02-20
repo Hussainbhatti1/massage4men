@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<i class="fa fa-pencil"></i> Manage Masseur Reviews
+		</h3>
+	</div>
+	
+	<div class="panel-body">
+		<%= render 'list' %>
+    
+	  <div class="text-center">
+	    <%= paginate @reviews, theme: 'twitter-bootstrap-3' %>
+
+	    <p class="clearfix text-muted">
+	      <%= page_entries_info @reviews %>
+	    </p>
+	  </div>
+	</div>
+</div>

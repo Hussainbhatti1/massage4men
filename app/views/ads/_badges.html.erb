@@ -1,0 +1,26 @@
+<% if @masseur.masseur_documentation %>
+<div class="panel panel-success masseur-badges">	
+	<div class="panel-body">
+		<div class="row">
+
+			<% if @masseur.masseur_documentation.certification_approved %>
+				<div class="col-sm-4">
+					<%= image_tag 'badge-certified.png', class: 'img-responsive', data: {toggle: 'popover', title: 'Certified Therapist', content: popover_text_with_disclaimer("<strong>#{@masseur.display_name}</strong> has provided training documents to M4M proving that he is a certified therapist."), placement: 'top', html: true} %>
+				</div>
+			<% end %>
+
+			<% if @masseur.masseur_documentation.license_approved %>
+				<div class="col-sm-4">
+					<%= image_tag 'badge-licensed.png', class: 'img-responsive', data: {toggle: 'popover', title: 'Licensed Therapist', content: popover_text_with_disclaimer("<strong>#{@masseur.display_name}</strong> has provided his licensure documents to M4M, proving that he is a licensed therapist."), placement: 'top', html: true} %>
+				</div>
+			<% end %>
+	
+			<% if @masseur.masseur_documentation.photo_id_approved %>
+				<div class="col-sm-4">
+					<%= image_tag 'badge-verified.png', class: 'img-responsive', data: {toggle: 'popover', title: 'Verified Therapist', content: popover_text_with_disclaimer("M4M has confirmed <strong>#{@masseur.display_name}</strong>'s identity via his photo ID."), placement: 'top', html: true} %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+<% end %>

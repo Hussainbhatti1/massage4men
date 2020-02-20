@@ -1,0 +1,34 @@
+<h2>Body Hair Options <small><%= @body_hairs.count %> total</small></h2>
+<% if @body_hairs.count > 0 %>
+  <table class="table table-striped table-responsive">
+    <thead>
+      <tr>
+        <th>Option</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% @body_hairs.each do |body_hair| %>
+        <tr>
+          <td><%= body_hair.hairiness %></td>
+          <td>
+            <%= link_to edit_admin_body_hair_path(body_hair), class: 'btn btn-primary' do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+          </td>
+          
+          <td>
+            <%= link_to admin_body_hair_path(body_hair), class: 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure you want to delete this body hair?'} do %>
+              <i class="fa fa-trash"></i> Delete
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-warning">
+    There are no body hair options in the system. <%= link_to new_admin_body_hair_path, 'Click here to add one.' %>
+  </div>
+<% end %>

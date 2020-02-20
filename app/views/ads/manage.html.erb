@@ -1,0 +1,63 @@
+<% content_for :page_title do %>
+  <i class="fa fa-newspaper-o"></i> Manage Ads
+<% end %>
+
+<% content_for :page do %>
+	<% if current_masseur.photos.count == 0 %>
+		<div class="alert alert-warning">
+			<i class="fa fa-exclamation-triangle"></i> You must <%= link_to 'upload some photos', manage_masseur_photos_path(current_masseur), class: 'alert-link' %> before you can create ads.
+		</div>
+	<% else %>
+	  <h3><i class="fa fa-map-marker"></i> Local Ads</h3>
+		<% if !current_masseur.masseur_detail %>
+			<div class="alert alert-warning">
+				<i class="fa fa-exclamation-triangle"></i> You need to <%= link_to 'specify your home city', new_masseur_masseur_detail_path(current_masseur), class: 'alert-link' %> before you can create ads.
+			</div>
+		<% else %>
+		  <p>These ads run near your home base of <strong><%= current_masseur.masseur_detail.home_base_city %>, <%= current_masseur.masseur_detail.home_base_state %></strong>.</p>
+		  <% if current_masseur.ads.count > 0 %>
+				<%= render partial: 'shared/ad_list', locals: { ads: current_masseur.ads }%>
+		  <% else %>
+				<div class="alert alert-warning">
+					You haven't created any local ads.
+				</div>
+			<% end %>
+  
+		  <% if current_user.can_create_local_ad? %>
+		    <%= link_to new_masseur_ad_path(current_user), class: 'btn btn-lg btn-success' do %>
+		      <i class="fa fa-plus"></i> Create New Local Ad
+		    <% end %>
+			<% end %>
+	  <% end %>
+
+	  <hr>
+
+	  <h3><i class="fa fa-plane"></i> Travel Ads</h3>
+		<p>These ads run anywhere you choose, for whatever length you choose.</p>
+	
+	  <% if current_user.travel_ads.count > 0 %>
+			<%= render partial: 'shared/ad_list', locals: { ads: current_user.travel_ads } %>
+	  <% else %>
+			<div class="alert alert-warning">
+				You haven't created any travel ads.
+			</div>
+	  <% end %>
+	
+		<% if !current_user.can_create_travel_ad? %>
+			<div class="alert alert-warning">
+				You are not able to create travel ads at this time.
+			</div>	
+		<% elsif current_user.travel_ads.count >= current_user.travel_ads_allowed %>
+			<div class="alert alert-warning">
+				You have reached the maximum number of travel ads for your account.			
+			</div>
+		<% else %>
+			<%= link_to new_masseur_travel_ad_path(current_masseur), class: 'btn btn-lg btn-success' do %>
+				<i class="fa fa-plus"></i> Create Travel Ad
+			<% end %>	
+		<% end %>
+	<% end %>
+	
+<% end %>
+<%= render 'shared/masseur_nav', active: 'ads' %>
+

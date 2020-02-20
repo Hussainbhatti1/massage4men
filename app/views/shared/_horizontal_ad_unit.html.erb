@@ -1,0 +1,46 @@
+<div class="panel panel-default media horizontal-ad-unit">
+  <div class="panel-body">
+    <div class="media-left">
+      <%= image_tag profile_picture(masseur, :medium_thumb), class: 'media-object profile-photo', lazy: true %>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">
+				<%= masseur.display_name %>
+			
+				<% if masseur.available? %>
+					<span class="label label-success label-available">Available Now</span>
+				<% end %>
+			</h4>
+      <p class="text-muted masseur-info">
+				<i class="fa fa-info-circle"></i> <%= height_str(masseur.masseur_detail) %> | <%= weight_str(masseur.masseur_detail) %> | <%= masseur.age  if masseur.present? %> years old
+				<br>
+        <i class="fa fa-home"></i> <%= masseur.masseur_detail.home_base_city %>, <%= masseur.masseur_detail.home_base_state %>
+				 
+				<% if session[:geo_location] && !session[:geo_location].nil? %>
+					<small>(<%= pluralize(distance_to(session[:geo_location]).round, 'mile') %>)</small>
+				<% end %>
+				<br>
+				
+				<% if masseur.reviews.count > 0 %>
+				<div class="row">
+					<div class="col-md-12">
+						<small><input class="rating" data-show-clear="false" data-show-caption="false" data-rating-class="rating-fa static-rating" data-glyphicon="false" data-container-class="average-container pull-left" data-symbol="" data-size="xxs" value="<%= masseur.review_average %>"></small>
+						
+					<span class="badge review-average"><%= pluralize(masseur.reviews.approved.count, 'review') %></span>
+					</div>
+				</div>
+				<% else %>
+					<i class="fa fa-hand-paper-o"></i> No reviews
+				<% end %>
+      </p>
+			    
+      <h5 class="clearfix"><strong>Massage Types Offered:</strong></h5>
+      <ul class="list-inline">
+        <% masseur.ads.each do |ad| %>
+          <li><%= link_to ad.massage_type.name, ad_url_for(masseur, ad.massage_type.name) %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,11 @@
+<% if rating %>
+	<% 1.upto(rating) do |r| %>
+		<i class="fa fa-2x fa-hand-paper-o active-star"></i>
+	<% end %>
+
+	<% 1.upto(5 - rating) do |r| %>
+		<i class="fa fa-2x fa-hand-paper-o"></i>					
+	<% end %>
+<% else %>
+	N/A
+<% end %>

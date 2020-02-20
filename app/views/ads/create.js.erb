@@ -1,0 +1,11 @@
+$('form.new_ad').on('ajax:success', function() {
+  <% if !@ad.valid? %>
+  console.log("<%= escape_javascript(@ad.errors.full_messages.join("\n")) %>");
+    // alert("There was a problem creating your ad:\n\n<%== escape_javascript(@ad.errors.full_messages.join("\n")) %>");
+  <% else %>
+    $(this).attr('data-submitted', true);
+    $(this).find('fieldset').attr('disabled', true);
+    $(this).find('img').addClass('grayscale disabled');
+    // alert("Your <%= @ad.massage_type.name %> ad has been saved.");
+  <% end %>  
+});

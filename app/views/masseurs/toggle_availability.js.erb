@@ -1,0 +1,9 @@
+$('.availability-form').on('ajax:success', function() {
+  $('.availability-panel').fadeOut(function() {
+    $(this).html("<%= j render partial: 'availability_form' %>");
+  }).fadeIn();  
+});
+
+$('.availability-form').on('ajax:error', function() {
+  alert('The system was not able to change your Availability. Please try again.');
+});

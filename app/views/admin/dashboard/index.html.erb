@@ -1,0 +1,52 @@
+<!-- MASSEUR QUEUE -->
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<i class="fa fa-user"></i> Masseurs Awaiting Approval <small><%= (@unapproved_users.count > 0 ? "#{@unapproved_users.count} in queue" : '') %></small>
+		</h3>
+	</div>
+		
+		<div class="panel-body">    
+	    <% if @unapproved_users.count > 0 %>
+	    <table class="table table-condensed">
+	      <thead>
+	        <tr>
+	      <th  style="width: 250px">Name</th>
+          <th  style="width: 250px">Email</th>
+          <th  style="width: 250px">Registered</th>
+	        </tr>
+	      </thead>
+      
+	      <tbody>
+	      <% @unapproved_users.each do |user| %>
+	        <tr>
+	          <td><%= user.full_name if user.full_name.present? %></td>
+	          <td><%= user.try(:email) %></td>
+	          <td><abbr title="<%= user.created_at.to_s %>"><%= clean_time_ago_in_words(user.created_at) %> ago</abbr></td> 
+	      <td><%= link_to 'Approve', approve_admin_masseur_path(user), class: 'btn btn-success approve-user', method: :post, remote: true %></td>
+	          <td><%= link_to 'Deny', deny_admin_masseur_path(user), class: 'btn btn-danger deny-user', data: {confirm: 'Are you sure you want to deny this user? Their entire account will be deleted and they will not be notified.'}, method: :post, remote: true %></td>
+		      </tr>
+	        </tr>
+	      <% end %>
+	      </tbody>
+	    </table>
+
+	    <%= link_to 'Manage User Queue', approval_queue_admin_masseurs_path, class: 'btn btn-primary' %>
+	    <% else %>
+			<div class="alert alert-success">
+				<i class="fa fa-check"></i> <strong>You're all caught up!</strong> No masseurs are currently awaiting approval.
+			</div>		
+	    <% end %>
+		</div> <!-- /.panel-body for masseur queue -->
+	</div> <!-- /.panel for masseur queue -->
+
+	<!-- PHOTO QUEUE -->
+	<div class="panel panel-default">
+		<div class="panel-heading" id="approve_queue_photo">
+			<%= render partial: 'admin/photos/photo_queue', :object => @photo_queue %>
+		</div>
+		
+		<div class="panel-body"id='photo'>
+	    <%= render partial: 'admin/shared/photo_queue_table' %>
+		</div> <!-- /.panel-body for photo queue -->
+	</div> <!-- /.panel for photo queue -->

@@ -1,0 +1,59 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<i class="fa fa-barcode"></i> Manage Promo Codes
+		</h3>
+	</div>
+	
+	<div class="panel-body">
+		<% if @promo_codes.count > 0 %>
+		<table class="table table-condensed">
+		  <thead>
+		    <tr>
+		      <th>Code</th>
+		      <th>Basic Discount</th>
+		      <th>Premium Discount</th>
+		      <th>Valid For</th>
+					<th>Description</th>
+		      <th>Starts</th>
+		      <th>Ends</th>
+		      <th>Active?</th>
+					<th></th>
+		      <th></th>
+		    </tr>
+		  </thead>
+  
+		  <tbody>
+		    <% @promo_codes.each do |code| %>
+		    <tr>
+		      <td><%= code.code %></td>
+		      <td><%= code.basic_discount_percentage %>%</td>
+		      <td><%= code.premium_discount_percentage %>%</td>
+		      <td><%= code.length_in_days %> days</td>
+					<td><%= code.description %></td>
+		      <td><%= code.start_date ? code.start_date : 'Immediately' %></td>
+		      <td><%= code.end_date ? code.end_date : 'Never' %></td>
+		      <td><%= code.active ? 'Yes' : 'No' %></td>
+					<td>
+						<%= link_to edit_admin_promo_code_path(code), class: 'btn btn-sm btn-primary' do %>
+							<i class="fa fa-pencil"></i> Edit
+						<% end %>
+					</td>
+		      <td>
+		        <% if code.active %>
+		          <%= button_to 'Deactivate', deactivate_admin_promo_code_path(code), class: 'btn btn-sm btn-danger', data: {confirm: 'Are you sure you want to deactivate this promo code?'} %>        
+		        <% else %>
+		          <%= button_to 'Activate', activate_admin_promo_code_path(code), class: 'btn btn-sm btn-success' %>
+		        <% end %>  
+		      </td>
+		    </tr>
+		    <% end %>
+		  </tbody>
+		</table>
+		<%= link_to 'Create New Promo Code', new_admin_promo_code_path, class: 'btn btn-primary' %>
+
+		<% else %>
+		<p>There are no promo codes in the system. <%= link_to 'Create one now', new_admin_promo_code_path %>.</p>
+		<% end %>		
+	</div>
+</div>

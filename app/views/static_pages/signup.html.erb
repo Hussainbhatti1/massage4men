@@ -1,0 +1,25 @@
+<!-- Signup step 1 -->
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title"><%= t('nav.create_account') %></h4>
+</div>
+
+<div class="modal-body signup">
+	<div class="alert alert-success text-center">
+    <%= t('signup.new_to_m4m') %>
+	</div>
+  
+  <div class="row client-or-masseur">
+    <div class="col-md-6">
+      <%= link_to t('signup.im_a_masseur'), new_masseur_registration_path, class: 'btn btn-lg btn-default', data: { stay_in_modal: true } %>
+    </div>
+    
+    <div class="col-md-6">
+      <%= link_to t('signup.im_a_client'), new_client_registration_path, class: 'btn btn-lg btn-default', data: { stay_in_modal: true } %>      
+    </div>
+  </div>
+  
+  <p class="text-center">
+    <%= link_to t('signup.already_a_member'), login_path, data: { stay_in_modal: true } %>
+  </p>
+</div>

@@ -1,0 +1,6 @@
+//	Customizations for wysihtml5
+[data-wysihtml5-command=Outdent],
+[data-wysihtml5-command=Indent] {
+	//	Nobody needs these and you can't (yet) get rid of them natively.
+	display:none;
+}

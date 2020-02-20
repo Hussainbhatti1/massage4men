@@ -1,0 +1,6 @@
+$('.approve-photo').bind('ajax:success', function() {
+  <%= render 'approve_deny' %>
+  $('#approve_queue_photo').html("<%=j render(:partial => 'admin/photos/photo_queue', :object => @photo_queue) %>");
+ 	// $('#photo').html("<%=j render(:partial => 'admin/shared/photo_queue_table', :object => @photo_queue) %>");
+});
+

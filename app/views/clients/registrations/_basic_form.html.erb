@@ -1,0 +1,49 @@
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name, format: :json), multipart: true, remote: true, data: {type: :json}) do |f| %>
+  <%= f.error_notification %>
+
+  <%# TODO: Implement support for tracking links on clients %>
+	<%# f.association :tracking_link, as: :hidden %>
+  <%= f.input :age_verified, as: :hidden, value: 1 %>
+
+	<%= f.input :source, as: :hidden, value: @source %>
+
+  <%= f.input :first_name, label: false, hint: t('signup.forms.first_name_hint'), placeholder: t('signup.forms.first_name') %>
+  <%= f.input :last_name, label: false, hint: t('signup.forms.last_name_hint'), placeholder: t('signup.forms.last_name') %>
+
+	<%= f.input :email, label: false, hint: t('signup.forms.email_hint'), placeholder: t('signup.forms.email') %><span id="errfn"></span>
+  <div class="input-eye">
+    <%= f.input :password, label: false, required: true, hint: t('signup.forms.password_hint'), placeholder: t('signup.forms.password')
+    %>
+    <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"
+    onclick="client_password_eye()"></span>
+  </div>
+  
+  <div class="input-eye">
+    <%= f.input :password_confirmation,label: false, required: true, hint: t('signup.forms.password_hint'), placeholder: t('signup.forms.password_confirmation')
+    %>
+    <span class="glyphicon glyphicon glyphicon-eye-open" aria-hidden="true"
+    onclick="client_confirm_password_eye()"></span>
+    </div>
+    <!-- <p id="validate-status"></p> -->
+
+  <%= f.input :dob, start_year: (Time.now.year - 18), end_year: (Time.now.year - 100), order: [:month, :day, :year], prompt: {month: t('signup.forms.month'), day: t('signup.forms.day'), year: t('signup.forms.year')}, label: t('signup.forms.dob'), required: false, hint: t('signup.forms.dob_hint_client'), input_html: {class: 'form-control'} %>
+
+	<%= f.input :screen_name, label: false, input_html: {class: 'form-control'}, placeholder: t('signup.forms.username'), hint: t('signup.forms.username_hint_client') %>
+
+  <%= f.input :zip, label: false, input_html: { class: 'form-control'}, placeholder: t('signup.forms.zip'), hint: t('signup.forms.zip_hint_client') %>
+
+  <%= f.input :city, label: false, input_html: { class: 'form-control'}, placeholder: t('signup.forms.city'), hint: t('signup.forms.zip_hint_client') %>          
+
+  <%= f.input :state, label: false, collection: states_for_country(f.object.country), prompt: t('signup.forms.state'), hint: t('signup.forms.zip_hint_client') %>    
+
+  <div class="profile-photo-upload">
+    <%= f.label :profile_photo, label: raw("#{t('signup.forms.upload_photo')}") %>
+    <%= f.label :profile_photo do %>
+      <%= image_tag 'upload.png', class: 'profile-photo-preview thumbnail' %>    
+    <% end %>
+
+    <%= f.input_field :profile_photo,class: 'profile-photo-upload-button' %>      
+  </div>
+  
+	<%= f.submit t('signup.forms.submit'), class: 'btn btn-lg btn-success center-block', data: {disable_with: t('signup.forms.submitted')},onclick: 'confirm_password(event)' %>
+<% end %>

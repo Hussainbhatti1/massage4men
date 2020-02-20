@@ -1,0 +1,61 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+@import 'global';
+@import 'custom-buttons';
+@import 'flexbox';
+@import 'mixins';
+@import 'media-queries';
+@import 'sfw';
+@import 'rates';
+@import 'masseurs';
+@import 'reviews';
+@import 'masseur_documentations';
+@import 'masseur_details';
+@import 'messages';
+@import 'masseur_dashboard';
+@import 'conversations';
+@import 'photos';
+@import 'home';
+@import 'header';
+@import 'static_pages';
+@import 'subscriptions';
+@import 'search';
+@import 'admin/admin';
+@import 'admin/masseurs';
+@import 'admin/subscriptions';
+@import 'chosen';
+
+@import 'jquery-ui/datepicker';
+@import 'switchery/dist/switchery.min';
+@import 'bootstrap-sweetalert/lib/sweet-alert';
+@import 'bootstrap-star-rating/css/star-rating.min';
+@import 'ekko-lightbox/dist/ekko-lightbox.min';
+@import 'bootstrap-social/bootstrap-social.scss';
+
+@import 'slick';
+@import 'slick-theme';
+@import 'ads';
+@import 'signup';
+@import 'wysihtml5';
+@import 'flags/basic';
+@import 'flags/flags16';
+@import 'flags/flags32';
+@import 'credit_cards_default';
+@import 'bootstrap-wysihtml5/bootstrap3-wysihtml5';
+@import 'toastr';
+@import 'custom';

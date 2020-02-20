@@ -1,0 +1,73 @@
+.signup {
+  .client-or-masseur {
+    margin-bottom:20px;
+    
+    .btn {
+      display: block;
+    }
+  }
+    
+  .new_masseur, .new_client {
+    input, select {
+      //  Set font size to 16px to avoid zooming on iOS
+      @media (max-width: 767px) {
+        font-size:16px;
+      }
+    }
+    
+  	label {
+  	  display:block;
+
+      text-transform:uppercase;
+      font-weight:normal;
+    
+      font-size:12px;
+      color:#8a9bae;
+      
+      text-align:left;
+  	}
+
+    .masseur_dob, .client_dob, .help-block {
+      text-align:left;
+    }
+    
+    select {
+      @media (max-width: 767px) {
+        width:32.5%;
+      }
+
+  		width:32.7%;
+  		display:inline-block;
+  	}
+    
+    .profile-photo-upload {
+      img {
+        width:100px;
+        height:100px;
+        cursor:pointer;        
+      }
+      
+      input[type=file] {
+        display:none;
+      }
+    }
+  }
+}
+
+.upload-profile-photo {
+  .profile-photo-upload {
+    img {
+      display:block;
+      margin:0 auto;
+      
+      width:150px;
+      height:150px;
+      cursor:pointer;      
+    }
+
+    input[type=file] {
+      display:none;
+    }
+
+  }
+}

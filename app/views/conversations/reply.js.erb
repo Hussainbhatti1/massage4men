@@ -1,0 +1,19 @@
+$('form.reply').bind('ajax:success', function(event, data, xhr, status) {
+  $('#reply_body').val('');
+  
+  $('.messages').prepend("<%= escape_javascript(render partial: 'message', locals: { receipt: @receipt }) %>");
+  
+  swal({
+    title: 'Success!',
+    text: 'Your message has been sent.',
+    type: 'success'
+  });
+});
+
+$('form.reply').bind('ajax:error', function(event, xhr, status, error) {
+  swal({
+    title: 'Error',
+    text: 'Your message could not be sent.',
+    type: 'error'
+  });
+});

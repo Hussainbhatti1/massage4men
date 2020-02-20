@@ -1,0 +1,26 @@
+$('form#new_client').on('ajax:success', function(event, data, status, xhr) {
+  $('.has-error').removeClass('has-error');
+  
+  <% if resource.valid? %>
+    $('.signup-form').fadeOut(function() { $('.message-form').removeClass('hide')});
+  <% else %>
+    <% resource.errors.each do |err| %>
+      $('.form-group.client_<%= err.to_s %>').addClass('has-error');
+    <% end %>
+    
+    //  TODO: Fix "Age Verified" message hack
+    // swal({
+    //   title: 'Error',
+    //   text: "<%= raw(resource.errors.full_messages.join('\n').gsub('Age verified', '')) %>",
+    //   type: 'error'
+    // });
+  <% end %>
+});
+
+$('form#new_client').on('ajax:error', function(event, xhr, status, error) {
+  swal({
+    title: 'Error',
+    text: 'There was a server error while processing your registration. Please try again.',
+    type: 'error'
+  });
+});

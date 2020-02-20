@@ -1,0 +1,31 @@
+.inline-block-css{display: inline-block;}
+.get-location-container{display: inline;}
+.location-icon{display: inline-block;}
+.glyphicon-map-marker{font-size: 48px; color: white;}
+.input-eye {position: relative;}
+
+.get-location-container a{display: inline-block;}
+
+.input-eye input[type="password"] {padding-right: 30px;}
+.input-eye .glyphicon {top: 18%;right: 2%;position: absolute;}
+
+.input-eye-login input[type="password"] {padding-right: 30px;}
+.input-eye-login .glyphicon{top: 43%;right: 16%;position: absolute;z-index: 3;}
+
+.input-current-password-eye input[type="password"] {padding-right: 30px;}
+.input-current-password-eye .glyphicon{top: 48%;right: 15%;position: absolute;z-index: 3;}
+
+.input-confirm-pass-edit input[type="password"] {padding-right: 30px;}
+.input-confirm-pass-edit .glyphicon{top: 58%;right: 15%;position: absolute;z-index: 3;}
+
+.active-red{border-color: red !important;}
+.verify-text{display: none;}
+#error-message-password p{color: red;}
+
+.progress-icons .fa-flag-checkered{font-size: 20px;}
+.progress-icons .fa-spinner{font-size: 20px;}
+.progress-icons .fa-thumbs-up{font-size: 20px;}
+.text-icons{padding: 10px 10px;font-size: 12px;line-height: 20px;color: #fff;background-color: #28a745;background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);vertical-align: middle;cursor: pointer;border: 1px solid rgba(27,31,35,0.2);border-radius: 0.25em;}
+.text-icons a{color: white;text-decoration: none;font-size: 15px;}
+.text-icons a:hover{color: white;text-decoration: none;}
+.text-icons a:focus{color: white;text-decoration: none;}

@@ -1,0 +1,49 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			Masseur Search Results
+		</h3>
+	</div>
+	
+	<div class="panel-body">
+		<%= render 'search_form' %>
+		
+		<% if @masseurs.count > 0 %>
+		  <table class="table table-striped">
+		    <thead>
+		      <tr>
+		        <th>ID</th>
+		        <th>Name</th>
+		        <th>Screen Name</th>
+		        <th>Email</th>
+		        <th>City</th>
+		        <th>State</th>
+		        <th>Subscribed</th>
+		        <!-- <th>Renewed</th> -->
+						<th>Active?</th>
+		        <th>Approved?</th>
+		        <th>Featured?</th>
+		        <th></th>
+		      </tr>
+		    </thead>
+  
+		    <tbody>
+		      <% @masseurs.each do |masseur| %>
+						<%= render partial: 'masseur_row', locals: {masseur: masseur} %>
+		      <% end %>
+		    </tbody>
+		  </table>
+
+		  <div class="text-center">
+		    <%= paginate @masseurs, :theme => 'twitter-bootstrap-3' %>
+
+        <p class="clearfix text-muted">
+          <%= page_entries_info @masseurs %>
+        </p>
+		  </div>
+
+		<% else %>
+		  <p>No results.</p>
+		<% end %>
+	</div> <!-- /.panel-body -->
+</div> <!-- /.panel -->

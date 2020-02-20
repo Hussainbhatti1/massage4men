@@ -1,0 +1,27 @@
+<tr>
+  <td>
+		<% if ad.travel_ad? %>
+			<abbr title="<%= travel_ad_summary(ad) %>", data-toggle="tooltip">
+				<i class="fa fa-plane"></i> Travel <%= ad.massage_type.name %>
+			</abbr>
+		<% else %>
+			<%= ad.massage_type.name %>
+		<% end %>
+	</td>
+  <td>
+    <% ad.photos.in_groups_of(4, false).each do |photo_group| %>
+      <div class="row">
+        <% photo_group.each do |photo| %>
+          <div class="col-md-3">
+            <%= link_to '#' do %>
+              <%= image_tag photo.picture.url(:medium_thumb), class: 'img-responsive' %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>              
+    <% end %>
+  </td>
+  <td>
+    <%= link_to 'View Ad', friendly_ad_path(ad), class: 'btn btn-default', target: '_blank' %>
+  </td>
+</tr>

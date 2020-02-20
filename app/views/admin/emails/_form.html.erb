@@ -1,0 +1,15 @@
+<%= simple_form_for([:admin, @email]) do |f| %>
+	<%= f.error_notification %>
+	
+	<%= select_tag "Masseurs",options_for_combined_email, :multiple => :true,class: 'chosen-select form-control'  %>
+
+	<%= f.input :subject  %>
+    
+	<%#= select_tag "Masseurs", options_for_select(Masseur.all.map{|x| [x.email,x.id]},Client.all.map{|y|[y.email,y.id]}), :multiple => :true, class: 'chosen-select' %>
+    <%#= select_tag 'user_id', options_for_select(Masseur.all.map{ |u| [u.email, u.id] }),multiple:true, class:"form-control" %>
+	<%= f.input :body ,hint: raw("Supported variables: #{EMAIL_INTERPOLATION_WHITELIST.join(', ')}<br>{$CITY} returns the home base city. {$STATE} returns the home base state\'s full name (i.e. &ldquo;Illinois&rdquo; not &ldquo;IL&rdquo;)"), input_html: {class: 'wysihtml5 email-editor', data: {custom_buttons: EMAIL_INTERPOLATION_WHITELIST.to_json}} %>
+	<%= link_to 'send Email' ,"javascript:void(0)", onclick:"send_email()" , class: 'btn btn-lg btn-default' %>
+	<%= f.submit class: 'btn btn-lg btn-success' %>
+	<%= link_to 'Cancel', admin_emails_path, class: 'btn btn-lg btn-default' %>
+<% end %>
+

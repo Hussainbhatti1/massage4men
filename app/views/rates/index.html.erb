@@ -1,0 +1,65 @@
+<% content_for :page_title do %>
+	<i class="fa fa-clock-o"></i> Manage Rates
+<% end %>
+
+<% content_for :page do %>
+  <div class="row">
+    <div class="col-md-6 incall-rates">
+      <h3><i class="fa fa-arrow-circle-right"></i> Incall <small>The client comes to you.</small></h3>
+      <%= render partial: 'rate_table', locals: {rate_type: RATE_INCALL} %>
+    </div>
+  
+    <div class="col-md-6 outcall-rates">
+      <h3><i class="fa fa-arrow-circle-left"></i> Outcall <small>You go to the client.</small></h3>
+      <%= render partial: 'rate_table', locals: {rate_type: RATE_OUTCALL} %>
+    </div>
+  </div>
+	
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<i class="fa fa-question-circle"></i> How Do I Set Up My Rates?
+			</h3>
+		</div>
+		
+		<div class="panel-body">
+			<p>Our Rate system is designed to be as flexible as you are. The most important thing to remember to avoid confusing clients is to <em>be specific!</em> You can put anything you want in these columns.</p>
+			
+			<p>
+				<strong>
+					Here's an example of how you might fill out your Rates table:
+				</strong>
+			</p>
+			
+			<table class="table table-striped table-responsive">
+				<tr>
+					<th>Rate</th>
+					<th>Time</th>
+				</tr>
+				
+				<tr>
+					<td>$75.00</td>
+					<td>Up to 30 minutes</td>
+				</tr>
+				
+				<tr>
+					<td>$65.00</td>
+					<td>30 - 60 minutes</td>
+				</tr>
+				
+				<tr>
+					<td>$50.00 / hour</td>
+					<td>1 - 2 hours</td>
+				</tr>
+				
+				<tr>
+					<td>$40.00 / hour</td>
+					<td>2+ hours</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+<% end %>
+
+<%= render 'shared/masseur_nav', active: 'rates' %>
+

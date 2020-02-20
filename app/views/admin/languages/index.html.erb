@@ -1,0 +1,38 @@
+<h2>Languages <small><%= @languages.count %> total</small></h2>
+<% if @languages.count > 0 %>
+  <table class="table table-striped table-responsive">
+    <thead>
+      <tr>
+        <th>Name (English)</th>
+        <th>Native Name</th>
+        <th>ISO Code</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% @languages.each do |language| %>
+        <tr>
+          <td><%= language.english_name %></td>
+          <td><%= language.native_name %></td>
+          <td><%= language.iso_code %></td>
+          <td>
+            <%= link_to edit_admin_language_path(language), class: 'btn btn-primary' do %>
+              <i class="fa fa-pencil"></i> Edit
+            <% end %>
+          </td>
+          
+          <td>
+            <%= link_to admin_language_path(language), class: 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure you want to delete this language option?'} do %>
+              <i class="fa fa-trash"></i> Delete
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-warning">
+    There are no language options in the system. <%= link_to new_admin_language_path, 'Click here to add one.' %>
+  </div>
+<% end %>

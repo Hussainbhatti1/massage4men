@@ -1,0 +1,7 @@
+$('.delete-rate').bind('ajax:success', function() {
+  $(this).closest('tr').fadeOut();
+});
+
+$('.delete-rate').bind('ajax:error', function() {
+  alert('Error deleting rate.');
+});

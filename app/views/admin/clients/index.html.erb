@@ -1,0 +1,51 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<i class="fa fa-user"></i> Manage Clients
+		</h3>
+	</div>
+	
+	<div class="panel-body">
+		<div class="alert alert-info alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <i class="fa fa-exclamation-triangle"></i> Clients without names or locations registered through the quick registration flow from a masseur ad.
+		</div>
+		
+		<%= render 'search_form' %>
+
+		<% if @clients.count > 0 %>
+		  <table class="table table-striped table-responsive">
+		    <thead>
+		      <tr>
+		        <th><%= link_to 'ID', sort_path('id') %></th>
+		        <th><%= link_to 'First', sort_path('first_name') %>/<%= link_to 'Last', sort_path('last_name') %> Name</th>
+		        <th><%= link_to 'Screen Name', sort_path('screen_name') %></th>
+		        <th><%= link_to 'Email', sort_path('email') %></th>
+		        <th><%= link_to 'City', sort_path('city') %></th>
+		        <th><%= link_to 'State', sort_path('state') %></th>
+		        <th><%= link_to 'Registered', sort_path('created_at') %></th>
+						<th><%= link_to 'Active?', sort_path('active') %></th>
+						<th></th>
+		      </tr>
+		    </thead>
+    
+		    <tbody>
+		      <% @clients.each do |client| %>
+						<%= render partial: 'client_row', locals: {client: client}%>
+		      <% end %>
+		    </tbody>
+		  </table>
+  
+		  <div class="text-center">
+		    <%= paginate @clients, :theme => 'twitter-bootstrap-3' %>
+
+		    <p class="clearfix text-muted">
+		      <%= page_entries_info @clients %>
+		    </p>
+		  </div>
+  
+		<% else %>
+		  <p>There are no clients registered.</p>
+		<% end %>
+	</div> <!-- /.panel-body -->
+</div> <!-- /.panel -->

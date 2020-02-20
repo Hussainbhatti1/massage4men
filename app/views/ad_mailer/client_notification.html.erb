@@ -1,0 +1,53 @@
+<td align="center" valign="top">
+  	<!-- BEGIN BODY // -->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+          <tr>
+              <td valign="top" class="bodyContent">
+								Hi <%= @client.screen_name %>,<br>								
+								<strong><%= @masseur.screen_name %></strong> just posted a new ad for <strong><%= @ad.massage_type.name.downcase %></strong> massage near you.
+								
+								<br><br>
+								<center>
+									<table width="85%">
+										<tr>
+											<td width="25%" valign="top">
+												<%= link_to masseur_ad_url(@masseur, @ad) do %>
+													<%= image_tag(@ad.primary_photo.photo.picture.url(:thumb)) %>
+												<% end %>											
+											</td>
+										
+											<td width="5%">&nbsp;</td>
+										
+											<td width="70%" valign="top">
+												<strong>Location:</strong><br><%= @masseur.masseur_detail.home_base_string(false, false) %>
+												
+												<% if @client.distance_to(@masseur.masseur_detail).round > 0 %>
+													<small>(<%= pluralize(@client.distance_to(@masseur.masseur_detail).round, 'mile') %>)</small>
+												<% end %>
+
+												<br><br>
+												<strong>Age</strong>:
+												<br><%= @masseur.age %> years old
+
+												<br><br>
+												<strong>About Me</strong><br>
+												<%= @ad.about_me %>
+																								
+												<br><br>
+												<strong>About My Services</strong><br>
+												<%= @ad.about_my_services %>
+
+										</tr>
+									</table>
+									
+									<br>
+									<%= link_to raw('See Full Ad'), masseur_ad_url(@masseur, @ad), style: 'color: #fff;background-color: #5cb85c;border-color:#4cae4c;padding:6px 12px;font-size:32px;font-weight:bold;border-radius:4px;text-align:center;text-decoration:none;margin:0 auto;' %>
+								</center>
+
+								<br><br>Thank you for using M4M.net!
+              </td>
+          </tr>
+      </table>
+      <!-- // END BODY -->
+  </td>
+</tr>

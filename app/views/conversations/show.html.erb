@@ -1,0 +1,35 @@
+<% content_for :page_title do %>
+  <strong>Conversation</strong>: <%= @conversation.subject %>
+<% end %>
+
+<% content_for :page do %>  
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-reply"></i> Reply</h3>
+  </div>
+  
+  <div class="panel-body">
+    <div class="media">
+      <div class="media-left text-center">
+        <%= image_tag profile_photo_url_for(current_user, :small_thumb), class: 'img-circle' %>
+        <p><small>You</small></p>
+      </div>
+      
+      <div class="media-body">
+        <%= simple_form_for :reply, url: reply_conversation_path(@conversation), data: {remote: true} do |f| %>
+          <%= f.input :body, label: false, as: :text %>
+          <%= f.submit 'Reply', class: 'btn btn-primary' %>
+        <% end %>          
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="messages">
+  <% @conversation.receipts_for(current_user).order(created_at: :desc).each do |receipt| %>
+    <%= render partial: 'message', locals: {receipt: receipt} %>
+  <% end %>
+</div> <!-- /.messages -->
+<% end %>
+
+<%= render 'shared/conversations_nav', active: 'inbox' %>

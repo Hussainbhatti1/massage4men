@@ -1,0 +1,27 @@
+<td align="center" valign="top">
+  	<!-- BEGIN BODY // -->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+          <tr>
+              <td valign="top" class="bodyContent">
+                  <h1>Your Massage4Men Weekly Digest</h1>
+                  Hi <%= @client.display_name ? @client.display_name : '' %>,
+                  <br />
+                  <%= pluralize(@masseurs.count, 'new masseur') %> <%= @masseurs.count == 1 ? 'has' : 'have' %> recently joined near <%= @client.city ? @client.city : ' you' %>. Check <%= 'him'.pluralize(@masseurs.count) %> out:
+              </td>
+          </tr>
+      </table>
+      <!-- // END BODY -->
+  </td>
+</tr>
+<tr>
+<td align="center" valign="top">
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateColumns">
+  <% @masseurs.in_groups_of(3, false) do |group| %>
+    <tr>
+      <% group.each_with_index do |masseur, index| %>
+        <%= render partial: 'masseur_box', locals: {masseur: masseur.masseur, index: index} %>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+</td>

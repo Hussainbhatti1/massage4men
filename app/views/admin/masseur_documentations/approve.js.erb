@@ -1,0 +1,7 @@
+$('.approve-doc').bind('ajax:success', function() {
+  $(this).closest('tr').fadeOut();  
+});
+
+$('.approve-doc').bind('ajax:error', function() {
+  alert('Error approving document.');
+});

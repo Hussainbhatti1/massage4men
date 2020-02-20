@@ -1,0 +1,18 @@
+<div class="media">
+  <div class="media-left text-center">
+    <%= image_tag conversation_avatar_for(receipt.message.sender), class: 'img-circle', alt: display_name_for(receipt.message.sender) %>
+    <p>
+      <small>
+        <%= display_name_for(receipt.message.sender) %>
+      </small>
+    </p>
+  </div>
+
+  <div class="media-body">
+    <div class="well">
+      <%= simple_format(receipt.message.body) %>
+    </div>
+
+    <p class="text-muted text-right"><small>Sent <abbr title="<%= receipt.message.created_at.strftime("%B %-d, %Y, %H:%M:%S") %>" data-toggle="tooltip"><%= time_ago_in_words(receipt.message.created_at) %> ago</abbr></small></p>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<table class="table table-responsive">
+	<tbody>
+		<tr>
+			<td>How many times have you seen this masseur?</td>
+			<td><%= answer(@review.times_seen) %></td>
+		</tr>
+	
+		<tr>
+			<td>What was the scheduled length of your appointment?</td>
+			<td><%= answer(@review.appointment_scheduled_length) %></td>
+		</tr>
+	
+		<tr>
+			<td>How long did the session actually last?</td>
+			<td><%= answer(@review.appointment_actual_length) %></td>
+		</tr>
+	
+		<tr>
+			<td>Did your masseur arrive on time?</td>
+			<td><%= answer(@review.masseur_on_time) %></td>
+		</tr>
+		
+		<% if @review.masseur_on_time != 'Yes' %>
+		<tr>
+			<td>Did the masseur let you know he would be late?</td>
+			<td><%= answer(@review.masseur_notified_of_lateness) %></td>
+		</tr>
+		<% end %>
+	
+		<tr>
+			<td>Was your session incall or outcall?</td>
+			<td><%= @review.incall_or_outcall == RATE_INCALL ? 'Incall' : 'Outcall' %></td>
+		</tr>
+	
+		<tr>
+			<td>Did the masseur provide the type of massage you requested?</td>
+			<td><%= answer(@review.service_as_requested) %></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>On a scale of 1&mdash;5 <small class="text-muted">(1 being <em>horrible</em> and 5 being <em>awesome</em>)</small>, please rate:</p>
+
+<table class="table table-responsive">
+	<tbody>
+		<tr>
+			<td>Masseur's appearance:
+				<br><small class="text-muted">(How did he look, smell, overall hygiene)</small>
+			</td>
+			
+			<td>
+				<%= render partial: 'reviews/display_rating', locals: {rating: @review.masseur_appearance} %>
+			</td>
+		</tr>
+	
+		<tr>
+			<td>Masseur's personality:
+				<br><small class="text-muted">(Did he make you feel at ease and comfortable? Was he friendly?)</small>
+			</td>
+			
+			<td>
+				<%= render partial: 'reviews/display_rating', locals: {rating: @review.masseur_personality} %>					
+			</td>
+		</tr>
+	
+		<tr>
+			<td>Overall rating</td>
+			<td>
+				<%= render partial: 'reviews/display_rating', locals: {rating: @review.rating} %>
+			</td>
+		</tr>
+	</tbody>
+</table>
+	
+<p>On a scale of 1&mdash;5 <small class="text-muted">(1 being <em>horrible</em> and 5 being <em>awesome</em>)</small>, please rate the likelihood that:</p>
+
+<table class="table table-responsive">
+	<tbody>
+		<tr>
+			<td>You will book another session with this masseur:</td>
+			<td>
+				<%= render partial: 'reviews/display_rating', locals: {rating: @review.likelihood_to_rebook} %>
+			</td>
+		</tr>
+	
+		<tr>
+			<td>You will refer this masseur to a friend or colleague:</td>
+			<td>
+				<%= render partial: 'reviews/display_rating', locals: {rating: @review.likelihood_to_refer} %>
+			</td>
+		</tr>		
+	</tbody>
+</table>

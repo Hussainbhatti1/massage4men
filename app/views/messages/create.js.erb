@@ -1,0 +1,16 @@
+$('form.message').bind('ajax:success', function(event, data, xhr, status) {
+    $('.modal').modal('hide');
+    swal({
+      title: 'Success!',
+      text: 'Your message has been sent.',
+      type: 'success'
+    });
+});
+
+$('form.message').bind('ajax:error', function(event, xhr, status, error) {
+  swal({
+    title: 'Error',
+    text: 'Your message could not be sent.',
+    type: 'error'
+  });
+});

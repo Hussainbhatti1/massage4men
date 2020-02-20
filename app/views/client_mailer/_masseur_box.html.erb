@@ -1,0 +1,21 @@
+<td align="center" valign="top" class="templateColumnContainer" style="padding-top:20px;">
+  	<table border="0" cellpadding="20" cellspacing="0" width="100%">
+      	<tr>
+          	<td class="<%= ['left', 'center', 'right'][index] %>ColumnContent" style="padding-bottom:10px;">
+              	<%= link_to image_tag((masseur.profile_photo.url(:thumb)), class: 'columnImage', style: 'max-width:160px;', alt: masseur.display_name, title: masseur.display_name), masseur_url(masseur) %>
+              </td>
+          </tr>
+          <tr>
+          	<td valign="top" class="leftColumnContent">
+                  <h3 style="font-style:normal;font-weight:bold;margin-bottom:0;">
+                    <%= link_to masseur.display_name, masseur_url(masseur) %>
+                  </h3>
+                  
+                  <%= masseur.masseur_detail.home_base_city %>, <%= masseur.masseur_detail.home_base_state %>
+                  <small>(<%= masseur.masseur_detail.distance_to(@client).round %> mi.)
+                  <br />
+                  <em><%= truncate(masseur.masseur_detail.about, length: 140) %></em>
+              </td>
+          </tr>
+      </table>
+  </td>

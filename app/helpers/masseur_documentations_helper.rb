@@ -1,0 +1,2 @@
+module MasseurDocumentationsHelper
+end

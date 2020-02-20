@@ -1,0 +1,73 @@
+<% content_for :page_title do %>
+  <i class="fa fa-calendar-check-o"></i> Manage Subscription
+<% end %>
+
+<% content_for :page do %>
+  <% if current_masseur.active_subscription %>
+		<div class="alert alert-success">
+			<% if current_masseur.active_trial %>
+				Your <strong>trial</strong> is currently active. It expires in <%= pluralize(((current_masseur.active_trial.ends_at - Time.now) / 86400).round, 'days') %>.
+			<% else %>
+			  Your <strong><%= AD_TYPES[current_masseur.active_subscription.subscription_type] %></strong> subscription is paid.		
+			<% end %>
+		</div>
+  <% else %>
+    <div class="alert alert-warning">
+      <i class="fa fa-exclamation-triangle"></i> You don't currently have an active subscription, so your ads are not currently running.<br>
+			<%= link_to 'Renew now to reactivate your ads', new_masseur_subscription_path(current_masseur), class: 'alert-link' %>.
+    </div>
+  <% end %>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Billing History</h3>
+	</div>
+	
+	<div class="panel-body">
+	<% if current_masseur.subscription_transactions.count > 0 %>
+	  <table class="table table-striped table-responsive">
+	    <thead>
+	      <tr>
+	        <th>Date</th>
+	        <th>Status</th>
+	        <th>Amount</th>
+	      </tr>
+	    </thead>
+
+	    <tbody>
+	      <% current_masseur.subscription_transactions.order(created_at: :desc).each do |trans| %>
+	        <tr>
+	          <td><%= trans.created_at.to_s(:short_without_time) %></td>
+	          <td>
+	            <% if trans.success %>
+	              <span class="text-success">
+	                OK
+	              </span>
+	            <% else %>
+	              <span class="text-danger">
+	                Failed
+	              </span>
+	            <% end %>
+	          </td>
+	          <td>
+							<%= number_to_currency(trans.amount_charged) %>
+							<% if trans.amount_charged == 0 %>
+							<small class="text-muted">(promo code <%= trans.subscription.promo_code.code %>)</small>
+							<% end %>
+						</td>
+	        </tr>
+	      <% end %>    
+	    </tbody>
+	  </table>				
+	<% else %>
+		<div class="alert alert-info">
+			<i class="fa fa-exclamation-triangle"></i> It looks like you haven't been billed yet.
+		</div>
+	<% end %>
+		</div> <!-- /.panel-body -->
+	</div> <!-- /.subscription panel -->
+	
+	<p class="text-right"><small><%= link_to 'Cancel my subscription', '#' %></small></p>  
+<% end %>
+
+<%= render 'shared/masseur_nav', active: 'subscriptions' %>

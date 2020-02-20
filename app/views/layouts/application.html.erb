@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<%= generate_html_tag %>
+<head>
+	<%= display_meta_tags site: 'Massage4Men', keywords: @settings.keywords %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= csrf_meta_tags %>
+
+  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="Gay Male Massage Directory – Male masseurs in Chicago, Illinois">
+  <meta name="Robots" content="index/follow">
+  <meta name="revisit-after" content="7 days">
+  <meta name="comments" content="Gay Male Massage Directory, gay male massasge">
+  <meta name="distribution" content="GLOBAL">
+  <meta name="classification" content="Male massage - Chicago">
+  <meta name="copyright" content="M4M Services Corporation 2018-2019">
+  <meta name="author" content="Male Massage Directory - Chicago">
+
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+
+  <%= favicon_link_tag asset_path('favicon.png') %>
+</head>
+<body<%= params[:sfw] ? raw(' class="sfw"') : ''%>>
+  
+<% if admin_signed_in? %>
+  <%= render partial: 'shared/admin_nav' %>
+<% end %>
+
+<div class="container-fluid">
+	<header class="row vertical-align">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <div class="col-md-4">
+  		<%= link_to (image_tag t(:logo_full), class: 'logo pull-left img-responsive'), root_path %>      
+    </div>
+    
+    <div class="col-md-8 header-nav navbar navbar-right" data-display-jumbotron="<%= (@display_jumbotron ? true : false) %>">
+      <ul class="nav nav-pills pull-right">
+        <%# Links for everybody %>
+        <!-- <li><%#= link_to t('nav.available_now'), available_now_masseurs_path %></li> -->
+        <li>
+          <%= link_to ads_search_path do %>
+            <i class="fa fa-search"></i> <%= t('nav.search') %>
+          <% end %>
+        </li>
+
+        <% if !current_user %>
+        <%# Login/create only when not logged in %>
+          <li><%= link_to t('nav.login'), login_path, data: {toggle: 'modal', target: '.modal', login_modal: true} %></li>
+          <li><%= link_to t('nav.create_account'), signup_path, class: 'btn btn-lg btn-success btn-signup', data: {toggle: 'modal', target: '.modal', confirm_close: true} %></li>          
+        <% else %>
+          <%# When logged in... %>
+          <li>
+            <%= link_to dashboard_path(current_user) do %>
+              <%= avatar_or_icon current_user %> <%= current_user.screen_name %>
+            <% end %>
+          </li>
+          
+          <li>
+            <%= link_to conversations_path do %>
+              <% if current_user.mailbox.inbox(unread: true).count(:id, distinct: true) > 0 %>
+                <i class="fa fa-envelope envelope-unread"></i>
+                <span class="badge"><%= current_user.mailbox.inbox(unread: true).count(:id, distinct: true).to_s %></span>
+              <% else %>
+                <i class="fa fa-envelope"></i>         
+              <% end %>
+            <% end %>
+          </li>
+          
+          <%# If admin, unimpersonate, else logout %>
+          <li>
+						<% if admin_signed_in? && session[:impersonating] %>
+	            <%= link_to @unimpersonate_path, method: :delete, class: 'text-danger' do %>
+	              <i class="fa fa-stop-circle"></i> Stop Impersonating
+	            <% end %>													
+						<% else %>
+	            <%= link_to logout_path, method: :delete do %>
+	              <i class="fa fa-sign-out-alt"></i> Log Out
+	            <% end %>						
+						<% end %>
+          </li>
+        <% end # /current_user check %>
+          
+
+      </ul>
+    </div> <!-- /.header-nav -->
+	</header>
+</div>
+	<% unless flash.empty? %>
+	  <script type="text/javascript">
+	    <% flash.each do |f| %>
+	      	<% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
+	     	toastr['<%= type %>']('<%= f[1] %>');
+	    <% end %>
+	  </script>
+	<% end %>
+
+	<% if @display_jumbotron %>
+	<div class="container">
+		<%= render 'shared/flashes' %>
+	</div>
+
+		<div class="jumbotron">
+			<div class="container">
+				<div class="search-container">
+					<h1 class="inline-block-css"><%= t(:jumbotron_search_header) %></h1>
+						<div class="get-location-container">
+				            <i class="fa fa-map-marker-alt location-icon get-location"></i>
+				            <%= link_to '#', class: 'get-location', data: {toggle: 'popover', title: 'Location Search', content: 'You may have to grant permission to use this feature.', placement: 'top'} do %>
+				            	 <span class="glyphicon glyphicon glyphicon-map-marker">
+				              
+				            <% end %>
+				        </div>						
+					
+					<p>Find the perfect massage around you.</p>
+			
+	        <%= simple_form_for :search, url: ads_search_path do |f| %>
+	          <%= f.input :location, label: false, wrapper: :vertical_input_group do %>
+	            <%= f.input_field :location, placeholder: 'City, state, zip or airport code', class: 'form-control input-lg search-info' %>
+
+	  					<span class="input-group-addon perform-search">
+	  						<i class="fa fa-search fa-2x"></i>
+	  					</span>
+	          <% end %>
+
+	  				<div class="input-group massage-types">
+	            <%= f.collection_check_boxes(:massage_types, MassageType.all.order(:id), :id, :name) do |b|
+	             b.label(class: 'checkbox-inline') { b.check_box(checked: true) + b.text }
+	            end %>
+	  				</div>          
+	        <% end %>
+				
+				</div>
+			</div>
+		</div>
+	<% end %>
+
+<div class="container container-main">
+	<% if cookies[:refer] && Rails.env.development? %>
+		<pre>Using code <%= cookies[:refer] %>! <%= @tracking_link && @tracking_link.promo_code ? "(with promo code #{@tracking_link.promo_code.code})" : nil %></pre>
+	<% end %>
+
+	<%= render 'shared/flashes' if !@display_jumbotron %>
+
+	<%= render :partial => 'flash_messages', :flash => flash %>
+
+	<%= yield %>
+  
+  <%= render 'shared/footer' %>
+</div>
+
+<%= render 'shared/basic_modal' %>
+
+<%= javascript_include_tag 'application' %>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65563537-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

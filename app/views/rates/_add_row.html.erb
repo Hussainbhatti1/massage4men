@@ -1,0 +1,17 @@
+<tr>
+  <td><%= text_field_tag :rate, @rate.rate, label: false, placeholder: 'i.e. "$50/hour"', class: 'form-control' %></td>
+  <td><%= text_field_tag :time, @rate.time, label: false, placeholder: 'i.e. "Up to 2 hours"', class: 'form-control' %></td>
+	<td>
+		<%= button_to masseur_masseur_detail_rate_url, class: 'btn btn-sm btn-success update-rate-btn', form: {data: {rate_id: @rate.id}}, form_class: 'update-rate', method: :patch, remote: true, data: {disable_with: 'Saving...'} do %>
+			<%= hidden_field_tag 'rate[rate]' %>
+			<%= hidden_field_tag 'rate[time]' %>
+			<i class="fa fa-floppy-o"></i> Save
+		<% end %>
+	</td>
+
+  <td>
+    <%= link_to masseur_masseur_detail_rate_path(@rate.masseur_detail.masseur, @rate), remote: true, class: 'btn btn-sm btn-default cancel-edit-rate', data: {rate_id: @rate.id} do %>
+      <i class="fa fa-ban"></i> Cancel
+    <% end %>
+  </td>
+</tr>

@@ -1,0 +1,75 @@
+<td align="center" valign="top">
+  	<!-- BEGIN BODY // -->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+          <tr>
+              <td valign="top" class="bodyContent">
+								<p>Hello,</p>
+								
+								<p>
+									A new client just signed up for M4M.net.
+									
+									<% if @client.dob.blank? %>
+										</p>
+										<p>He signed up through an ad, so all we currently have is his email address, which is <strong><%= mail_to @client.email %></strong>. He signed up at <%= @client.created_at.to_formatted_s(:short_with_12_hour_time) %>.</p>
+									<% else %>
+										Here's a little about him:
+									</p>
+
+										<table>
+											<tr>
+												<td width="40%"><strong>Name:</strong></td>
+												<td><%= @client.full_name %></td>
+											</tr>
+
+											<tr>
+												<td><strong>Email:</strong></td>
+												<td><%= mail_to @client.email %></td>
+											</tr>
+
+											<tr>
+												<td width="40%"><strong>Screen name:</strong></td>
+												<td><%= @client.screen_name %></td>
+											</tr>
+
+											<tr>
+												<td><strong>Date of birth:</strong></td>
+												<td><%= @client.dob.to_formatted_s(:long_without_time) %> <small>(<%= @client.age %> years old)</small></td>
+											</tr>
+											
+											<tr>
+												<td width="40%"><strong>Phone:</strong></td>
+												<td><%= @client.phone %> <small>(<%= @client.phone_type %>)</small></td>
+											</tr>
+
+											<tr>
+												<td><strong>City:</strong></td>
+												<td><%= @client.city %></td>
+											</tr>
+
+											<tr>
+												<td><strong>State:</strong></td>
+												<td><%= @client.state %></td>
+											</tr>
+											
+											<tr>
+												<td><strong>Zip / Postal Code:</strong></td>
+												<td><%= @client.zip %></td>
+											</tr>
+											
+											<tr>
+												<td><strong>Signup time:</strong></td>
+												<td><%= @client.created_at.to_formatted_s(:short_with_12_hour_time) %></td>
+											</tr>
+										</table>
+									<% end %>
+									
+									<p>
+										<center>
+										<%= link_to 'Manage Clients', admin_clients_url, style: 'color: #fff;background-color: #5cb85c;border-color:#4cae4c;padding:6px 12px;font-size:20px;font-weight:bold;border-radius:4px;text-align:center;text-decoration:none;margin:0 auto;' %>
+										</center>
+									</p>
+								
+							</td>
+					</tr>
+			</table>
+</td>

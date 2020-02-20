@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="admin-login">
+<head>
+	<%= display_meta_tags site: 'Massage4Men Admin Login' %>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  
+  <%= csrf_meta_tags %>
+
+  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= favicon_link_tag asset_path('favicon.png') %>
+</head>
+<body>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-5 col-md-offset-3 col-sm-10 col-sm-offset-1">
+			<header>
+				<%= image_tag 'logo-full.png', class: 'img-responsive center-block' %>
+			</header>
+
+			<section>
+				<%= render 'shared/flashes' %>
+
+        <% if user_signed_in? %>
+          <div class="alert alert-warning">
+            <i class="fa fa-exclamation-triangle"></i> You are currently signed in as a regular user. Signing in as an admin will sign you out of that user.
+          </div>
+        <% end %>
+
+				<%= yield %>
+			</section>
+		</div> <!-- /.col-4 -->
+	</div> <!-- /.row -->
+</div>
+
+</body>
+</html>

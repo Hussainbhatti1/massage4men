@@ -1,0 +1,27 @@
+<div class='row home-bottom'>
+   <% if @featured_masseur %>  
+  <div class='col-sm-10 col-md-10 col-md-offset-1 col-sm-offset-1'>
+    <div class='panel panel-default'>
+      <div class='panel-heading'>
+        <h3 class='panel-title'>Welcome to Massage4Men Alhambra.</h3>
+      </div>
+      
+      <div class='panel-body'>
+       <p>We connect you with mele friendly masseurs in Alhambra Whether at home, on vacation or on the go we can find you the perfect male-targeted massage to help you relax and relieve stress. </br></br> M4M.net is an adult, male massage directory that allows masseurs to advertise their services. Relaxing, therapeutic and gay massages are offered. Use the search above to find masseurs that are available near the Alhambra area in the 91801 postal code.</p>
+
+        <p>If you are a masseur and wish to place an ad, <%= link_to 'click here to sign up and get started', new_masseur_registration_path, data: {toggle: 'modal', target: '.modal', confirm_close: true} %>.</p>
+        <p>If you are a client looking for a masseur, <%= link_to 'create a free client account', new_client_registration_path, data: {toggle: 'modal', target: '.modal', confirm_close: true} %> to take advantage of all the features and benefits we offer.</p>            
+      </div>
+    </div>
+  </div>
+  
+  <% else %>
+    <div class='col-md-12 col-sm-12 text-center'>
+      <h2>Welcome to Massage4Men Alhambra/h2>
+      <p>We connect you with male friendly masseurs in Alhambra Whether at home, on vacation or on the go we can find you the perfect male-targeted massage to help you relax and relieve stress. </br></br> M4M.net is an adult, male massage directory that allows masseurs to advertise their services. Relaxing, therapeutic and gay massages are offered. Use the search above to find masseurs that are available near the Alhambra area in the 91801 postal code.</p>
+      
+      <p>If you are a masseur and wish to place an ad, <%= link_to 'click here to sign up and get started', StaticPage.find(@settings.advertise_page).slug %>.</p>
+      <p>If you are a client looking for a masseur, <%= link_to 'create a FREE client account', new_client_registration_path %> to take advantage of all the features and benefits we offer.</p>                      
+    </div>
+  <% end %>
+</div>

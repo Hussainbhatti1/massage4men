@@ -1,0 +1,137 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  nav:
+    available_now: "Available Now"
+    search: "Search"
+    login: "Login"
+    create_account: "Create Account"
+
+  login:
+    forms:
+      remember_me: 'Keep me logged in'
+      forgot_password: 'Forgot?'
+
+  signup:
+    new_to_m4m: 'New to Massage4Men?'
+    im_a_masseur: "I'm a Masseur"
+    im_a_client: "I'm a Client"
+
+    masseur_title: "Become a Masseur"
+    client_title: "Become a Client"
+
+    already_a_member: "I already have an account"
+    need_an_account: "I don't have an account"
+
+    masseur_intro: "Try our service for free. We will never share your information. We are striving to create the absolute best massage website. Come be a part of our experience!"
+    client_intro: "Become a Registered Client - there is never a fee!  Get updates on new masseurs near you or traveling masseurs coming to your area; enable adult image viewing; post masseur reviews and other features coming.  We NEVER spam you; sell, rent or reveal our Clients to anyone!  If you initiate contact with a masseur only then can he can see your profile so you can communicate directly.  WELCOME TO"
+
+    forms:
+      email: "Email Address"
+      email_hint: "Your email will NEVER be displayed. We take your privacy seriously."
+
+      first_name: "First Name"
+      first_name_hint: "Enter your First Name."
+
+      last_name: "Last Name"
+      last_name_hint: "Enter your Last Name."
+
+      password: "Password"
+      password_confirmation: "Confirm Password"
+      password_hint: "8 characters minimum"
+
+      dob: "Birthday"
+      dob_hint: "All masseurs must be at least 21."
+      dob_hint_client: 'All clients must be at least 21.'
+      month: "Month"
+      day: "Day"
+      year: "Year"
+
+      username: "Screenname"
+      username_hint: "This will be displayed on your profile and ads."
+      username_hint_client: 'This will be displayed when you contact and review masseurs.'
+
+      zip: "Zip Code"
+      zip_hint: "This gives clients a general distance to your location."
+      zip_hint_client: 'This helps us find masseurs near you.'
+  
+      state: "State"
+
+      city: "City"
+
+      phone: "Cell Phone Number"
+      phone_hint: "Clients can call or text you if you post your phone."
+      phone_hint_client: 'TODO: SOMEBODY WRITE A CAPTION FOR THIS PLEASE'
+
+      upload_photo: "Upload a Profile Photo"
+      add_photo: "Add Photo"
+      submit: "Complete your FREE Account!"
+      submitted: "Signing up..."
+
+  # Generic strings
+  pic_required_header: 'Just a second...'
+  pic_required_explanation: "We noticed you don't have a profile photo. M4M.net recently began requiring masseurs to upload a profile photo to be used throughout the site to ensure the best experience possible for your clients."
+  pic_required_explanation_2: 'Click the plus sign to select your profile picture.'
+
+  optional: 'optional'
+  hello: "Hello world"
+  welcome_header: "Welcome to Massage4Men"
+  welcome_description: "M4M.net is an adult, male-targeted site that allows masseurs to advertise their services."
+
+  about: "About"
+  advertise: "Masseurs"
+  clients: "Clients"
+
+  featured_masseur: "Featured Masseur"
+  massage_types_offered: "Massage Types Offered"
+
+  jumbotron_search_header: "Get relaxed."
+
+  # SFW images
+  logo_full: "logo-full.png"
+
+  # SIGNUPS
+  email_signup_hint: 'Your email address will be verified by M4M but NEVER displayed.'
+  email_masseur_signup_hint: 'Your email is only used for signing in.<br>It will NEVER be displayed to anyone.'
+  provides_services_at_mailing_address: 'Do you provide services at the above address?'
+
+  # LOGGING IN
+  account_locked: 'Your account is locked.'
+
+  # SIGNUP BUTTONS
+  sign_in: 'Sign In'
+  sign_out: 'Sign Out'
+  sign_up_client: "I'm a Client"
+  sign_up_masseur: "I'm a Masseur"
+
+  # PHOTOS
+  pending_tooltip: 'This photo is pending approval by M4M staff.'
+  nsfw_tooltip: 'This photo contains adult content.'
+
+  # MASSEUR DETAILS FORM
+  details_create: 'Next: Photos'
+  details_update: 'Update Details'
+
+
+  # ADS
+  ad_create_success: 'Your ad was created successfully.'
+  ad_create_failure: 'There was a problem creating your ad.'

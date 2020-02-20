@@ -1,0 +1,22 @@
+<%= simple_form_for :availability, html: {class: 'form-inline availability-form'}, remote: true, url: toggle_availability_masseur_path(@masseur) do |f| %>
+  <% if @masseur.available? %>
+    <p>You are currently marked as <span class="text-success">Available</span>.</p>
+
+    <%= f.submit 'Switch to Unavailable', class: 'btn btn-danger' %>
+  <% else %>
+    <p>When you're marked as <span class="text-success">Available</span>, your profile and ads will be marked with a green banner letting clients know that you're ready right now. When the time period you've specified expires, you'll no longer be marked as Available and we'll send you an email reminder.</p>
+
+    <%= f.input :duration, label: raw('Mark me <span class="text-success">Available</span> for the next: '), collection: availability_times, required: false, include_blank: false %>      
+
+    <%= f.submit 'Go!', class: 'btn btn-success' %>
+  <% end %>
+<% end %>
+
+<% if !@masseur.available? && !@masseur.premium? %>
+<p>
+  <div class="alert alert-info">
+    <i class="fa fa-question-circle"></i> <strong>Did you know?</strong> Premium accounts can set availability in 12 and 24 hour increments.
+  </div>
+</p>
+<% end %>
+

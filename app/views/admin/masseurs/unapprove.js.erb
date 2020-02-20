@@ -1,0 +1,13 @@
+$('.unapprove-user').parent().bind('ajax:success', function() {
+  $(this).closest('tr').find('.approval-status').text('No');
+	
+	swal({
+		title: 'Success!',
+		text: "<%= @masseur.screen_name %> has been suspended.",
+		type: 'success'
+	});
+});
+
+$('.unapprove-user').parent().bind('ajax:error', function() {
+  alert('Error unapproving user.');
+});

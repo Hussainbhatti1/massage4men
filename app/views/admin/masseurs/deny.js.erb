@@ -1,0 +1,20 @@
+$('.deny-user').bind('ajax:success', function() {
+  $(this).closest('tr').fadeOut();
+  
+  //  Update the number in the header
+  if($('.user-queue-count').length > 0) {
+    var new_queue_count = parseInt($('.user-queue-count').text());
+    new_queue_count--;
+  
+    if(new_queue_count == 0) {
+      $('.user-queue-header small').remove();
+      $('.user-queue-table').replaceWith('<p>All caught up!</p>');    
+    } else {
+      $('.user-queue-count').text(new_queue_count);
+    }    
+  }
+});
+
+$('.deny-user').bind('ajax:error', function() {
+  alert('Error denying user.');
+});

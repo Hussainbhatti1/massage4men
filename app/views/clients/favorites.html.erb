@@ -1,0 +1,39 @@
+<% content_for :page_title do %>
+  <i class="fa fa-heart"></i> Favorite Masseurs
+<% end %>
+
+<% content_for :page do %>
+  <% if @client.favorite_masseurs.count > 0 %>
+      <% @client.favorite_masseurs.in_groups_of(2, false).each do |group| %>
+      <div class="row">
+        <% group.each do |masseur| %>
+        <div class="col-md-6">
+          <div class="media">
+            <div class="media-left">
+              <%= image_tag profile_photo_url_for(masseur, :medium_thumb), title: masseur.display_name %>
+            </div>
+            
+            <div class="media-body">
+              <h4 class="media-heading"><%= masseur.display_name %></h4>
+              <span class="text-muted"><i class="fa fa-map-marker"></i> <%= masseur.masseur_detail.home_base_string(false, false) %></span>
+              
+              <h5><strong>Massage Types Offered:</strong></h5>
+              <ul class="list-inline">
+                <% masseur.ads.each do |ad| %>
+                  <li><%= link_to ad.massage_type.name, ad_url_for(masseur, ad.massage_type.name) %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>        
+        </div>
+        <% end %>
+      </div>
+      <% end %>
+  <% else %>
+    <div class="alert alert-warning">
+      <i class="fa fa-exclamation-triangle"></i> You have not added any masseurs to your Favorites list yet.
+    </div>
+  <% end %>
+<% end %>
+
+<%= render 'shared/client_nav', active: 'favorites' %>

@@ -1,0 +1,79 @@
+<% if @reviews.count > 0 %>
+<table class="table table-condensed table-responsive">
+	<thead>
+		<tr>
+			<th>Masseur</th>
+			<th>Client</th>
+      <th>Overall Rating</th>
+      <th>Posted</th>
+      <th>Status</th>
+      <th></th>
+      <th></th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<% @reviews.each do |review| %>
+			<tr>
+				<td><%= link_to review.masseur.screen_name, review.masseur, target: '_blank' %></td>
+				<td><%= link_to review.client.screen_name, review.client, target: '_blank' %></td>
+        <td>
+					<% 1.upto(review.rating) do %>
+						<i class="fa fa-hand-stop-o active-star"></i>
+					<% end %>
+        </td>
+        
+        <td><%= review.created_at.to_s(:short_with_12_hour_time) %></td>
+
+        <td>
+          <% if review.masseur_approved? %>
+            <span class="text-success">
+              <i class="fa fa-check"></i>
+              Approved by Masseur
+            </span>
+          <% else %>
+            <% if review.admin_approved? %>
+              <span class="text-success">
+                <i class="fa fa-check"></i>
+                Overridden by Admin
+              </span>            
+              <br>
+            <% end %>          
+
+            <span class="text-danger">
+              <i class="fa fa-exclamation-triangle"></i> Denied by Masseur
+            </span>
+          <% end %>
+        </td>
+
+        <td>
+          <%= link_to [:admin, review], class: 'btn btn-sm btn-default', data: {target: '.modal', toggle: 'modal'} do %>
+            Details
+          <% end %>
+          
+          <% if !review.masseur_approved? && !review.admin_approved? %>
+            <%= link_to approve_admin_review_path(review), class: 'btn btn-sm btn-default', title: "Override the masseur's denial and display this review on his profile", data: { toggle: 'tooltip', confirm: "Do you want to override the masseur's decision to deny this review? It will be displayed on his profile immediately." } do %>
+              <i class="fa fa-check"></i> Approve
+            <% end %>          
+          <% end %>
+        </td>
+
+				<td>					
+          
+					<%= link_to edit_admin_review_path(review), class: 'btn btn-sm btn-primary', data: { target: '.modal', toggle: 'modal' } do %>
+						<i class="fa fa-pencil"></i> Edit
+					<% end %>
+
+					<%= link_to admin_review_path(review), method: :delete, data: {confirm: 'Are you sure you want to delete this review?'}, class: 'btn btn-sm btn-danger' do %>
+						<i class="fa fa-trash"></i> Delete
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<% else %>
+	<div class="alert alert-warning">
+		There are no reviews.
+	</div>
+<% end %>

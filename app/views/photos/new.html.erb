@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">Upload Photo</h4>
+</div>
+<div class="modal-body">
+  <ul>
+    <li>All photos must be approved by M4M before being displayed.</li>
+    <li>Adult images uploaded to non-adult galleries may be reclassified or deleted at our discretion.</li>
+    <li>Photos may never show any other person besides you.</li>
+    <li><strong>No images depicting sexual activity are allowed</strong>, even if marked &ldquo;adult&rdquo;.</li>
+  </ul>
+
+  <%= simple_form_for [@photo.masseur, @photo] do |f| %>
+    <%= f.error_notification %>
+  
+    <%= f.input :picture, as: :file, input_html: { accept: ALLOWED_PHOTO_FILETYPES.join(','), capture: 'camera' } %>
+  
+    <%= f.input :adult, label: 'This photo contains adult content' %>
+  
+    <%= f.submit 'Upload Photo', class: 'btn btn-lg btn-primary', data: {disable_with: 'Uploading...'} %>
+  <% end %>
+</div>

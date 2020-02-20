@@ -1,0 +1,4 @@
+$('.edit-rate[data-rate-id=<%= @rate.id %>]').bind('ajax:success', function() {  
+	//	Replace the contents of this tr with the edit form
+	$(this).closest('tr').replaceWith("<%= j render partial: 'add_row', locals: {rate: @rate} %>");
+});

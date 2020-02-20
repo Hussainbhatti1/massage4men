@@ -1,0 +1,68 @@
+// Place all the styles related to the MasseurDetails controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.real-age-entry {
+  //  hide by default
+  display:none;
+}
+
+.height-metric {
+  display:none;
+}
+
+.height-imperial, .height-metric {
+	label {
+		width:100%;
+	}
+}
+
+.metric-toggle {
+  font-weight:normal;
+  font-size:.85em;
+  cursor:pointer;
+}
+
+.dropdown-menu.weight-unit-selector {
+  left:auto;
+  right:0;
+  float:right;
+}
+
+.weight-input .btn,
+.weight-input .open > .dropdown-toggle.btn-primary:focus,
+.weight-input .open>.dropdown-toggle.btn-primary:hover {
+  color:#000;
+  background:none;
+  border:none;
+  padding:0;
+}
+
+.masseur_languages .checkbox,
+.masseur_detail_services .checkbox,
+.masseur_detail_massage_products .checkbox,
+.masseur_detail_massage_techniques .checkbox {
+  display:block;
+  float:left;
+  
+  width:25%;  
+}
+
+.social-url {
+  display:none;
+}
+
+.social-url i {
+  
+}
+
+.new_masseur_detail {
+  .panel-title {
+    font-weight:bold;
+  }
+
+  .work-location-radius {
+    input {
+      width:70px;
+    }
+  }
+}

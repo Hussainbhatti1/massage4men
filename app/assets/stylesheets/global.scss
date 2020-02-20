@@ -1,0 +1,311 @@
+.nav li a, a.btn, a.list-group-item {
+  text-decoration:none;    
+}
+
+a {
+  text-decoration:underline;
+}
+
+body {
+	color:#000;
+  font-family: 'HelveticaNeue', Helvetica, sans-serif;
+  
+//  background: linear-gradient(
+//    to right,
+//    #0e024a 2%, white 2%,
+//    white 98%,
+//    white 1%, #0e024a 1%
+//  );
+}
+
+table {
+  td {
+    vertical-align:middle !important;
+  }
+}
+
+.container {
+	color:#000;
+	background:#fff;
+}
+
+//	HEADER
+header .logo {
+	height:125px;
+}
+
+//	JUMBOTRON
+.jumbotron {
+	background:#000 asset-url('search-bg.jpg') center center;
+	background-size:cover;
+	overflow:hidden;
+	
+	height:300px;
+  
+  margin-bottom:0;
+	
+	background-position:0 5%;
+	background-repeat:no-repeat;
+	
+	-webkit-filter: saturate(90%);
+	  -moz-filter: saturate(90%);
+	  -o-filter: saturate(90%);
+	  -ms-filter: saturate(90%);
+	  filter: saturate(90%);
+    
+    p {
+      font-size:18px;
+    }
+    
+}
+
+.jumbotron .container {
+	background:none;
+}
+
+.jumbotron .container div.search-container {
+  width:85%;
+	
+	padding:2% 3%;
+	
+	border-radius:20px;
+
+	color:#fff;
+	background:rgba(0, 0, 0, 0.50);
+  
+  .search_location {
+    margin-bottom:2px;
+  }
+  
+  .get-location-container {
+    i, a {
+      color:#ccc;      
+    }    
+  }
+}
+
+.standalone-search-panel {
+  h3 {
+    margin-top:0;
+    font-size:16px;
+  }
+  
+  .search_location {
+    margin-bottom:2px;
+  }
+  
+  .get-location-container {
+    i, a {
+      color:#555;
+    }
+    
+    padding-bottom:10px;
+    margin-bottom:10px;
+  }
+  
+  .massage-types {    
+    .radio > label:first-child {
+      padding-left:0px;
+    }
+  }
+}
+
+.navbar-nav > li > a:hover {
+  background-color:#DFDFDF !important;
+}
+
+.jumbotron h1 {
+	padding:0;
+	margin:0;
+}
+
+.jumbotron .search .input-group-addon {
+	background:#fff;
+}
+
+.jumbotron input[type=text] {
+	font-size:1.5em;
+	border-right:none;
+}
+
+form.search i:hover {
+	color:red;
+	cursor:pointer;
+};
+
+.jumbotron .search-container .massage-types {
+  margin-top:5px;
+  font-size:1.3em;
+  
+  width:100%;
+  
+  span:not(:first-child) {
+    margin-left:4%;
+  }
+}
+
+/* HEADER */
+.signin-box {
+  float:right;
+}
+
+.header-nav[data-display-jumbotron=true] {
+  margin-top:35px;
+}
+
+.header-nav[data-display-jumbotron=false] {
+  margin-top:5px;
+}
+
+.header-nav-profile-photo {
+  width:25px;
+  display:inline-block;
+}
+
+
+.header-nav ul {
+  font-size:150%;
+}
+
+//	MAIN
+.container-main {
+	background:#fff;
+}
+
+footer {
+  padding:10px 0;
+  clear:both;
+  font-size:12px;
+}
+
+//  Override bootstrap for our grouped checkboxes
+[data-in-groups-of] .row .checkbox+.checkbox, [data-in-groups-of] .row .radio+.radio {
+  margin-top:10px;
+}
+
+.well h3 {
+  font-size:20px;
+  margin-top:0;
+  padding-top:0;
+}
+
+.img-inline {
+  display:inline-block;
+}
+
+div.form-inline .form-group {
+  margin-top:30px;
+}
+
+div.form-inline .form-group label {
+  padding-right:5px;
+}
+
+/* Bootstrap Overrides */
+.panel-faded {
+	opacity:0.25;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+  background-color:#e9e9e9;
+}
+
+.popover {
+  .popover-title {
+    color:black;
+  }
+  
+  .popover-content {
+    color:#555;
+  }
+	
+	.badge-disclaimer {
+		text-align:center;
+		padding:5px;
+		font-size:75%;
+		font-style:italic;
+	}
+}
+
+.modal-header {
+  background:#337ab7;
+  color:#fff;
+  
+  @media (max-width: 767px) {
+    padding:10px;
+  }
+}
+
+.well.progress-status {
+	padding:10px;
+	line-height:28px;
+}
+
+.progress {
+	height:30px;
+	
+	margin-bottom:0;
+	
+	.progress-bar {
+		line-height:30px;
+	}
+}
+
+.media-ad {
+	.media-heading {
+		font-weight:bold;
+		font-size:1em;
+		margin-bottom:0px;
+		
+		+p {
+			margin-top:2px;
+		}
+	}
+}
+
+/*  Pagination  */
+.pagination {
+  margin:0;
+}
+
+.ui-datepicker {
+	z-index:9999;
+}
+
+/*  Mixins */
+@mixin text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Credit card sprite tweaks */
+ul.cc {
+  li.card {
+    zoom:0.75;    
+  }
+}
+
+ol.lower-alpha {
+  list-style-type:lower-alpha;
+}
+
+.seals {
+  img {
+    height:50px;
+  }
+  
+  .AuthorizeNetSeal img {
+    width:63px;
+  }
+}
+
+//	Tooltips
+.tooltip-inner {
+    white-space:pre-wrap;
+}
+
+a.btn.disabled[data-toggle=tooltip] {
+	//	Allow tooltips on disabled links
+	pointer-events:all;
+}

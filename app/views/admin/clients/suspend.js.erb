@@ -1,0 +1,14 @@
+$('.suspend-client').bind('ajax:success', function() {
+	$(this).attr('action', '<%= unsuspend_admin_client_url(@client) %>')
+				 .removeClass('suspend-client')
+				 .addClass('unsuspend-client');
+				 
+	$(this).find('.btn')				 
+		.text('Unsuspend')
+		.removeClass('btn-danger')
+		.addClass('btn-primary');
+});
+
+$('.suspend-client').bind('ajax:error', function() {
+  alert('Error suspending client.');
+});

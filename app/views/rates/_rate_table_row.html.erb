@@ -1,0 +1,14 @@
+<tr>
+  <td><%= rate.rate %></td>
+  <td><%= rate.time %></td>
+	<td>
+		<%= link_to edit_masseur_masseur_detail_rate_path(rate.masseur, rate), remote: true, class: 'btn btn-sm btn-success edit-rate', data: {rate_id: rate.id} do %>
+			<i class="fa fa-pencil"></i> Edit
+		<% end %>
+	</td>
+  <td>
+    <%= button_to masseur_masseur_detail_rate_path(rate.masseur, rate), method: :delete, remote: true, form_class: 'delete-rate', class: 'btn btn-sm btn-danger', data: {confirm: 'Are you sure you want to delete this rate?'} do %>
+      <i class="fa fa-trash"></i> Delete
+    <% end %>
+  </td>
+</tr>

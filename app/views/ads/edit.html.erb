@@ -1,0 +1,10 @@
+<% content_for :page_title do %>
+  Edit <%= @ad.travel_ad? ? 'Travel' : nil %> Ad
+<% end %>
+
+<% content_for :page do %>
+  <%= render partial: 'form', locals: {ad_index: 0, current_ad: @ad, remote: false} %>
+<% end %>
+
+<%= render 'shared/masseur_nav', active: 'ads' %>
+<%= render partial: 'shared/modals/add_photo', locals: {ad_index: 0} %>

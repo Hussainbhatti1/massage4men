@@ -1,0 +1,188 @@
+<table class="table table-responsive table-bordered pricing-table">
+	<thead>
+		<tr>
+			<th class="col-sm-4"></th>
+			<th class="col-sm-4 text-center">
+				<h3>Basic</h3>
+				<p>For masseurs who work part-time<br>and want to reach their local market</p>
+			</th>
+			
+			<th class="col-sm-4 text-center">
+				<h3>Premium</h3>
+				<p>For professional masseurs who want to<br>take their business to the next level</p>
+			</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr>
+			<td>
+				Categories of service<br>
+				<small>Therapeutic, Relaxation, Custom</small>
+			</td>
+			
+			<td>Advertise in any one category</td>
+			<td>Advertise in all three categories</td>
+		</tr>
+		
+		<tr>
+			<td>Local ads</td>
+			<td>1 ad in any category</td>
+			<td>1 ad in all three categories</td>
+		</tr>
+		
+		<tr>
+			<td>Blind messaging with clients</td>
+			<td class="success">Yes</td>
+			<td class="success">Yes</td>
+		</tr>
+
+		<tr>
+			<td>Photos per ad</td>
+			<td>4</td>
+			<td>10</td>
+		</tr>
+		
+		<tr>
+			<td>Travel Ads</td>
+			<td>1</td>
+			<td>
+				<ul>
+					<li>6 in any category</li>
+					<li>Automatic start/stop</li>
+					<li>Each ad customizable</li>
+				</ul>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>Photos per travel ad</td>
+			<td>4</td>
+			<td>10</td>
+		</tr>
+		
+		<tr>
+			<td>Travel Notices to Clients</td>
+			<td class="success">Yes</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Each Ad different</td>
+			<td class="success">Yes</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Number of videos</td>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+		
+		<tr>
+			<td>Photo size in search results</td>
+			<td>Regular</td>
+			<td>Large</td>
+		</tr>
+		
+		<tr>
+			<td>Weekly Specials</td>
+			<td class="success">Yes</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Real-time availability</td>
+			<td>Up to 90 minutes</td>
+			<td>Up to 6 hours</td>
+		</tr>
+		
+		<tr>
+			<td>Rate Protection Guarantee</td>
+			<td class="success">Yes</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Cancel anytime</td>
+			<td class="success">Yes</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Appear in Weekly Client Newsletter</td>
+			<td class="success">Yes</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Advertise Specials &amp; Discounts</td>
+			<td class="danger">No</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Adult photos in ads</td>
+			<td class="danger">No</td>
+			<td class="success">
+				Yes<br>
+				<small class="text-muted"><em>visible only to registered clients</em></small>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>Access to Client Reviews</td>
+			<td class="danger">No</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Verified Profile</td>
+			<td class="danger">No</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Priority Customer Support</td>
+			<td class="danger">No</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Ability to dispute reviews</td>
+			<td class="danger">No</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Online scheduling</td>
+			<td class="danger">No</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Online deposits</td>
+			<td class="danger">No</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td>Featured on homepage</td>
+			<td class="danger">No</td>
+			<td class="success">Yes</td>
+		</tr>
+		
+		<tr>
+			<td></td>
+			<td class="text-center">
+        <%= link_to 'Join Now', new_masseur_registration_path({ad_type: 'basic'}), class: 'btn btn-lg btn-primary buy-button', data: {toggle: 'modal', target: '.modal', confirm_close: true} %>
+				
+				<p><%= number_to_currency(@settings.basic_package_price) %> per month</p>
+			</td>
+			<td class="text-center">
+        <%= link_to 'Join Now', new_masseur_registration_path({ad_type: 'premium'}), class: 'btn btn-lg btn-primary buy-button buy-button-premium', data: {toggle: 'modal', target: '.modal', confirm_close: true} %>
+				<p><%= number_to_currency(@settings.premium_package_price) %> per month</p>
+			</td>
+		</tr>
+	</tbody>
+</table>

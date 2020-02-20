@@ -1,0 +1,53 @@
+<h2><i class="fa fa-usd"></i> Revenue</h2>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Today</h3>
+      </div>
+    
+      <div class="panel-body">
+        <div class="stats-figure">
+          <h2 class="text-success text-center"><%= number_to_currency(@today_transactions.sum(:amount_charged)) %></h2>
+          <p class="text-muted text-center"><%= pluralize(@today_transactions.count, 'transaction') %></p>
+        </div>      
+      </div>    
+    </div> <!-- /.panel -->
+  </div>
+  
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">This Month</h3>
+      </div>
+    
+      <div class="panel-body">
+        <div class="stats-figure">
+          <h2 class="text-success text-center"><%= number_to_currency(@this_month_transactions.sum(:amount_charged)) %></h2>
+          <p class="text-muted text-center"><%= pluralize(@this_month_transactions.count, 'transaction') %></p>
+        </div>
+      </div>    
+    </div> <!-- /.panel -->
+  </div>
+  
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">This Year</h3>
+      </div>
+    
+      <div class="panel-body">
+        <div class="stats-figure">
+          <h2 class="text-success text-center"><%= number_to_currency(@this_year_transactions.sum(:amount_charged)) %></h2>
+          <p class="text-muted text-center"><%= pluralize(@this_year_transactions.count, 'transaction') %></p>
+        </div>
+      </div>    
+    </div> <!-- /.panel -->
+  </div>
+</div>
+
+<table class="table table-striped table-responsive">
+  
+  
+</table>

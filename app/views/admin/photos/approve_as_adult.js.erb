@@ -1,0 +1,8 @@
+$('.approve-photo-as-adult').bind('ajax:success', function() {
+  <%= render 'approve_deny' %>
+    $('#approve_queue_photo').html("<%=j render(:partial => 'admin/photos/photo_queue', :object => @photo_queue) %>");
+});
+
+$('.approve-photo-as-adult').bind('ajax:error', function() {
+  alert('Error approving photo.');
+});

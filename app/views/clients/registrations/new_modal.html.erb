@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title"><%= t('signup.client_title') %></h4>
+</div>
+
+<div class="modal-body signup text-center">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <% if @source == "message_masseur" %>
+        <div class="vertical-align">
+          <div class="media-left">
+            <%= image_tag(profile_photo_url_for(@recipient, :medium_thumb), class: 'media-object img-circle') %>
+          </div>
+        
+          <div class="media-body text-center">
+            <h4 class="media-heading">Become a Client to message <%= display_name_for(@recipient) %>.</h4>
+          
+            <p>It only takes a minute to register and start messaging <%= display_name_for(@recipient) %>.</p>
+          </div>
+        </div>
+      <% else %>
+        <p><%= t('signup.client_intro') %> <a href="https://m4m.net">M4M.net</a>!</p>
+      <% end %>
+      <%= render 'basic_form' %>
+    </div>
+  </div>
+</div>

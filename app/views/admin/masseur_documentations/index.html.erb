@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<i class="fa fa-certificate"></i> Badges Awaiting Approval
+		</h3>
+	</div>
+	
+	<div class="panel-body">
+		<% if @unapproved.count > 0 %>
+		<table class="table table-responsive">
+			<thead>
+				<tr>
+					<th>Masseur</th>
+					<th>Document</th>
+					<th>Submitted</th>
+					<th></th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<% @unapproved.each do |dox| %>
+					<% ['certification', 'license', 'photo_id'].each do |doc_type| %>
+						<% if dox.send(doc_type).exists? && !dox.send("#{doc_type}_approved") %>
+							<%= render partial: 'doc_row', locals: {doc_type: doc_type, dox: dox } %>						
+						<% end %>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+		<% else %>
+			<div class="alert alert-success">
+				<i class="fa fa-check"></i> <strong>You're all caught up!</strong> No badges are currently awaiting approval.
+			</div>
+		<% end %>
+	</div>
+</div>

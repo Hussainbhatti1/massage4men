@@ -1,0 +1,154 @@
+<nav class="navbar navbar-default navbar-static-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#admin-navbar" aria-expanded="false">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			<%= link_to 'M4M Admin Dashboard', admin_root_path, :class => 'navbar-brand' %>
+		</div>
+
+		<div class="navbar-collapse collapse" id="admin-navbar">
+				<ul class="nav navbar-nav">
+          <li>
+            <%= link_to '#', data: {toggle: 'dropdown'} do %>
+              Reports <span class="caret"></span>
+            <% end %>
+          
+            <ul class="dropdown-menu">
+							<% if can? :manage, Subscription %>
+              	<li><%= link_to 'Revenue', admin_subscriptions_path %></li>
+							<% end %>
+            </ul>
+          </li>
+
+          <li>
+            <%= link_to '#', data: {toggle: 'dropdown'} do %>
+              Users <span class="caret"></span>
+            <% end %>
+          
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">Masseurs</li>
+              <li>
+                <%= link_to admin_masseurs_path do %>
+                  Manage Masseurs
+                <% end %>                
+              </li>
+              
+              <li>
+                <%= link_to approval_queue_admin_masseurs_path do %>
+                  Masseur Approval Queue <span class="badge"><%= Masseur.unapproved.count %></span>
+                <% end %>
+              </li>
+							
+							<li>
+								<%= link_to admin_masseur_documentations_path do %>
+									Manage Masseur Badges
+								<% end %>
+							</li>
+              
+              <li>
+                <%= link_to admin_reviews_path do %>
+                  Manage Masseur Reviews
+                <% end %>
+              </li>
+              
+              <li class="divider"></li>
+              <li class="dropdown-header">Clients</li>
+              <li><%= link_to 'Manage Clients', admin_clients_path %></li>            
+            </ul>
+          </li>
+            
+          <li>
+            <%= link_to approval_queue_admin_photos_path do %>
+             Photos <% if Photo.unapproved.count > 0 %><span class="badge"><%= Photo.unapproved.count %></span><% end %>
+            <% end %>
+          </li>
+
+            <li>
+              <%= link_to 'Deleted Messeur History ', blocked_history_admin_masseurs_path   %>
+            </li>
+					
+					<% if can? :manage, PromoCode %>
+          <li><%= link_to 'Promo Codes', admin_promo_codes_path %></li>
+					<% end %>
+					
+          <li>
+            <%= link_to '#', data: {toggle: 'dropdown'}  do %>
+              Other <span class="caret"></span>
+            <% end %>
+
+            <ul class="dropdown-menu">
+              <!-- <li class="dropdown-header">Edit Demographic Constants</li>
+                <li><%= link_to 'Airports', admin_airports_path %></li>
+                <li><%= link_to 'Body Hair', admin_body_hairs_path %></li>
+                <li><%= link_to 'Build', admin_builds_path %></li>
+                <li><%= link_to 'Drug Frequency', admin_drug_frequencies_path %></li>
+                <li><%= link_to 'Ethnicities', admin_ethnicities_path %></li>
+                <li><%= link_to 'Eye Color', admin_eye_colors_path %></li>
+                <li><%= link_to 'Hair Color', admin_hair_colors_path %></li>
+                <li><%= link_to 'Languages', admin_languages_path %></li>
+                <li><%= link_to 'Sexual Orientation', admin_sexual_orientations_path %></li>
+                <li><%= link_to 'Smoking Frequency', admin_smoking_frequencies_path %></li>
+                <li><%= link_to 'TODO: Work Locations', '#' %></li>
+                <li><%= link_to 'TODO: Work Surfaces', '#' %></li> -->
+
+							<% if (can? :manage, StaticPage) || (can? :manage, SiteSetting) || (can? :manage, TrackingLink) %>
+                <!-- <li class="divider"></li> -->
+
+	              <li class="dropdown-header">Content &amp; Constants</li>
+								<% if can? :manage, Email %>
+									<li><%= link_to 'System Emails', admin_emails_path %></li>
+								<% end %>
+								
+	              <% if can? :manage, StaticPage %>
+								<li><%= link_to 'Static Pages', admin_static_pages_path %></li>
+								<% end %>
+								
+								<% if can? :manage, TrackingLink %>
+								<li><%= link_to 'Tracking Links', admin_tracking_links_path %></li>
+								<% end %>
+							
+								<% if can? :manage, SiteSetting %>
+	              <li><%= link_to 'Site Settings', admin_site_settings_path %></li>
+								<% end %>
+							<% end %>
+               
+							<% if current_admin.is_admin? %> 
+	              <li class="divider"></li>
+	              <li class="dropdown-header">Server Processes</li>
+	              <li><%= link_to 'Resque', admin_resque_web_path %></li>
+              
+	              <% if Rails.env.development? %>
+	              <li><%= link_to 'Mailcatcher', 'http://127.0.0.1:1080' %></li>
+								<li><%= link_to 'Mailer Previews', '/rails/mailers/' %></li>
+	              <% end %>
+							<% end %>
+            </ul>          
+          </li>
+				</ul>
+			
+  			<ul class="nav navbar-nav navbar-right list-inline">
+  			<% if admin_signed_in? %>
+  				<li><p class="navbar-text"><i class="fa fa-user"></i> <%= current_admin.email %></p></li>
+          <li>
+            <%= link_to destroy_admin_session_path, method: :delete do %>
+              <i class="fa fa-sign-out-alt"></i> Log Out
+            <% end %>
+          </li>
+  			<% end %>
+  			</ul>			
+		</div>
+	</div> <!-- /container-fluid -->	
+</nav>
+
+	<% if session[:impersonating] %>
+	<div class="container-fluid">
+		<div class="alert alert-warning text-center">
+			<i class="fa fa-exclamation-triangle"></i>
+			You are currently impersonating <%= link_to (session[:impersonating]['screen_name'].present? ? session[:impersonating]['screen_name'] : session[:impersonating]['email']), @impersonation_dashboard_path, class: 'alert-link' %>. 
+		</div>
+	</div>
+	<% end %>

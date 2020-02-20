@@ -1,0 +1,16 @@
+// Place all the styles related to the Subscriptions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.subscription-features {
+  font-size:.85em;
+  padding-left:20px;
+}
+
+.order-summary {
+  margin-bottom:0;
+  border:none;
+
+  tbody, tr, td {
+    border:none !important;
+  }
+}

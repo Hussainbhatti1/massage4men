@@ -1,0 +1,79 @@
+<h2><i class="fa fa-cog"></i> Site Settings</h2>
+<%= simple_form_for([:admin, @site_setting]) do |f| %>
+  <%= f.error_notification %>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-dollar"></i> Package Prices
+      </h3>
+    </div>
+
+    <div class="panel-body">
+      <div class="alert alert-info">
+        <i class="fa fa-exclamation-circle"></i> Existing subscriptions will continue to be rebilled at their old rate until canceled.
+      </div>      
+  
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.input :basic_package_price %>
+        </div>
+
+        <div class="col-md-6">
+          <%= f.input :premium_package_price %>
+        </div>
+      </div>      
+    </div>
+  </div>
+    
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-file-text-o"></i> Core Pages
+      </h3>
+    </div>
+    
+    <div class="panel-body">
+      <div class="alert alert-info">
+        <i class="fa fa-exclamation-triangle"></i> If you don't specify these, they won't appear in the site navigation.
+      </div>
+      
+      
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.input :advertise_page, label: 'Advertise Page', collection: StaticPage.all %>
+        </div>
+        
+        <div class="col-md-4">
+          <%= f.input :privacy_page, label: 'Privacy Policy', collection: StaticPage.all %>
+        </div>
+        
+        <div class="col-md-4">
+          <%= f.input :tos_page, label: 'Terms of Service', collection: StaticPage.all %>          
+        </div>
+      </div>
+    </div>
+  </div> 
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <i class="fa fa-list-ul"></i> Other Settings
+      </h3>
+    </div>
+    
+    <div class="panel-body">
+      <%= f.input :approval_required_for_new_masseurs %>
+			<%= f.input :keywords, as: :string, label: 'Base meta keywords', placeholder: 'example, keywords, here', hint: 'Comma-separated. These keywords will be appended to any page-specific keywords.' %>
+			
+			<%= f.input :badge_disclaimer, hint: 'Appears when a user hovers over the badges on an ad' %>
+			
+      <%= f.input :payment_address, hint: 'Check payments should be sent to this address.' %>
+			
+      <%= f.input :admin_notification_email, hint: 'System emails for the administrator will be sent here. Separate multiple addresses with commas.'%>
+    </div>
+  </div>
+  
+  <%= f.submit 'Update Settings', class: 'btn btn-primary'%>
+<% end %>

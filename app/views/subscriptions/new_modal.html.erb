@@ -1,0 +1,78 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">Confirm &amp; Checkout</h4>
+</div>
+
+<div class="modal-body">
+	<div class="alert alert-info">
+		<p>You are signing up for a <strong><%= subscription_type_by_session %></strong> subscription, billed at <%= number_to_currency(package_price_by_session) %> per month.</p>
+	</div>
+
+    <div class="panel panel-default payment-panel">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-credit-card"></i> Payment Information</h3>
+      </div>
+      
+      <div class="panel-body">
+				<div class="alert alert-success validate-code-success hide">
+					<i class="fa fa-check"></i> <strong>Code accepted!</strong> <span class="code-description"></span>
+				</div>
+				
+				<div class="promo-code-container">		
+					<h4>Got a Promo Code? <small>If you have a promo code, enter it now.</small></h4>
+						<%= simple_form_for PromoCode.new, url: promo_codes_check_path(format: :json), html: {class: 'validate-code'}, data: {remote: true} do |f| %>
+							<%= f.hidden_field :subscription_type, value: (session[:m4m]['ad_type'] == 'premium' ? SUBSCRIPTION_PREMIUM : SUBSCRIPTION_BASIC) %>
+							<%= f.input :code, label: false, input_html: { class: 'input-lg text-center' } %>
+				
+							<%= f.button :button, class: 'btn btn-lg btn-primary submit-code center-block', data: {disable_with: 'Checking...'} do %>
+								<i class="fa fa-check"></i> Validate Code
+							<% end %>
+						<% end %>
+					
+						<hr>
+					</div>
+					
+					<p class="payment-required-help text-center">Complete your billing information to start posting your ads. You can cancel anytime.</p>
+
+		      <%= simple_form_for [@masseur, @subscription], format: :json, remote: true do |f| %>
+		        <%= f.error_notification %>
+
+		        <%= simple_fields_for :card, @card do |cc| %>
+		          <div class="row">
+		            <div class="col-sm-6">
+		              <%= cc.input :first_name, label: false, placeholder: 'First name', input_html: { class: 'input-lg' } %>
+		            </div>
+        
+		            <div class="col-sm-6">
+		              <%= cc.input :last_name, label: false, placeholder: 'Last name', input_html: { class: 'input-lg' } %>
+		            </div>
+		          </div>
+      
+		          <%= cc.input :number, label: false, placeholder: 'Card number', input_html: { class: 'input-lg' } %>            
+
+		          <div class="row">
+		            <div class="col-sm-6">
+		              <%= cc.input :expiry_string, label: false, placeholder: 'Expiration (MM/YY)', include_blank: true, input_html: { class: 'input-lg' } %>
+		            </div>
+          
+		            <div class="col-sm-6">
+		              <%= cc.input :verification_value, label: false, maxlength: 4, placeholder: 'CVC', input_html: { class: 'input-lg' } %>
+
+		            </div>
+          
+		          </div> <!-- /.row -->
+		        <% end %>
+      
+		        <%= simple_fields_for :code, @code do |code| %>
+		          <%= code.input :code, as: :hidden, required: false, label: 'Promo Code' %>
+		        <% end %>
+						
+						<%= button_tag(type: 'submit', class: 'btn btn-lg btn-success center-block', data: {disable_with: 'Processing...'}) do %>
+							<i class="fa fa-lock"></i> Complete Sign Up
+						<% end %>
+						
+					  <% end %>
+			</div>
+		</div>
+			
+</div> <!-- /.modal-body -->			

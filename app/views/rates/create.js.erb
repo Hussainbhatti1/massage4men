@@ -1,0 +1,17 @@
+var rate_type = <%= @rate.rate_type %>;
+
+if(rate_type == 0) {
+	$('table[data-rate-type=0]').append("<%= j render partial: 'rate_table_row', locals: {rate: @rate} %>");
+	$('form.new-rate-0').find('input[type=text]').val('');
+	$('form.new-rate-0').find('#rate_rate').focus();
+} else if(rate_type == 1) {
+	$('table[data-rate-type=1]').append("<%= j render partial: 'rate_table_row', locals: {rate: @rate} %>");
+	$('form.new-rate-1').find('input[type=text]').val('');
+	$('form.new-rate-1').find('#rate_rate').focus();
+} else {
+	swal({
+		title: 'Error',
+		text: 'Invalid rate type.',
+		type: 'error'
+	});
+}

@@ -1,0 +1,45 @@
+<div class="list-group">
+  <%= link_to dashboard_masseur_path(current_user), class: "list-group-item#{(active == 'dashboard') ? ' active' : ''}" do %>
+    <i class="fa fa-home"></i> My Masseur Home
+  <% end %>
+
+  <%= link_to edit_masseur_registration_path, class: "list-group-item#{(active == 'account') ? ' active' : ''}" do %>
+    <i class="fa fa-user"></i> My Masseur Profile
+  <% end %>
+
+  <%= link_to edit_masseur_masseur_detail_path(current_user), class: "list-group-item#{(active == 'details') ? ' active' : ''}" do %>
+    <i class="fa fa-pencil"></i> My Ad Details
+  <% end %>
+
+  <%= link_to manage_masseur_photos_path(current_user), class: "list-group-item#{(active == 'photos') ? ' active' : ''}" do %>
+    <i class="fa fa-camera"></i> My Ad Photos
+  <% end %>
+
+  <%= link_to manage_masseur_ads_path(current_user), class: "list-group-item#{(active == 'ads') ? ' active' : ''}" do %>
+    <i class="fa fa-newspaper-o"></i> Manage My Ads
+  <% end %>
+
+  <%= link_to masseur_masseur_detail_rates_path(current_user), class: "list-group-item#{(active == 'rates') ? ' active' : ''}" do %>
+    <i class="fa fa-clock-o"></i> Manage My Rates
+  <% end %>
+	
+	<% if current_user.masseur_documentation %>
+	  <%= link_to edit_masseur_masseur_documentation_path(current_user), class: "list-group-item#{(active == 'dox') ? ' active' : ''}" do %>
+	    <i class="fa fa-certificate"></i> Manage My Documents
+	  <% end %>	
+	<% else %>
+	  <%= link_to new_masseur_masseur_documentation_path(current_user), class: "list-group-item#{(active == 'dox') ? ' active' : ''}" do %>
+	    <i class="fa fa-certificate"></i> Manage My Documents
+	  <% end %>		
+	<% end %>
+
+  <%= link_to masseur_subscriptions_path(current_user), class: "list-group-item#{(active == 'subscriptions') ? ' active' : ''}" do %>
+    <i class="fa fa-calendar-check-o"></i> Manage My Subscription
+  <% end %>
+  
+  <%= link_to notifications_masseur_path(current_user), class: "list-group-item#{(active == 'notifications') ? ' active' : ''}" do %>
+    <i class="fa fa-envelope"></i> Manage My Notifications
+  <% end %>
+</div> <!-- /.list-group -->
+
+<%= render partial: 'shared/mailbox_nav', locals: {active: active} %>

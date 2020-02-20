@@ -1,0 +1,15 @@
+<div class="list-group">
+  <%= link_to dashboard_client_path(current_user), class: "list-group-item#{(active == 'account') ? ' active' : ''}" do %>
+    <i class="fa fa-user"></i> My Client Account
+  <% end %>
+
+  <%= link_to favorites_client_path(current_user), class: "list-group-item#{(active == 'favorites') ? ' active' : ''}" do %>
+    <i class="fa fa-heart"></i> Favorite Masseurs
+  <% end %>
+
+  <%= link_to reviews_client_path(current_user), class: "list-group-item#{(active == 'reviews') ? ' active' : ''}" do %>
+    <i class="fa fa-pencil"></i> My Reviews
+  <% end %>
+</div> <!-- /.list-group -->
+
+<%= render partial: 'shared/mailbox_nav', locals: {active: active} %>

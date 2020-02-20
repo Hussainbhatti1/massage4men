@@ -1,0 +1,75 @@
+<tr<%= masseur.active? ? '' : raw(' class="danger"') %>>
+  <td><%= masseur.id %></td>
+  <td><%= link_to masseur.full_name, [:admin, masseur], data: {target: '.modal', toggle: 'modal'} %></td>
+  <td><%= (masseur.display_name == masseur.first_name) ? '-' : masseur.display_name %></td>
+  <td><%= mail_to masseur.email, truncate(masseur.email, length: 15) %></td>
+  <td><%= masseur.mailing_city %></td>
+  <td><%= masseur.mailing_state %></td>
+  <td><%= (masseur.subscriptions.count > 0) ? masseur.subscriptions.order(created_at: :asc).first.created_at.to_s(:short_without_time) : masseur.created_at.to_s(:short_without_time)%></td>
+  <!-- <td><%= (masseur.subscription_transactions.count > 1) ? masseur.subscription_transactions.order(created_at: :desc).first.created_at.to_s(:short_without_time) : 'Never' %></td> -->
+  <td><%= masseur.active? ? 'Yes' : 'No' %></td>
+  <td class="approval-status"><%= masseur.approved ? 'Yes' : 'No' %></td>
+  <td><%= masseur.featured ? 'Yes' : 'No' %></td>
+	<td>
+		<div class="btn-group">
+		  <button type="button" class="btn btn-default">Actions</button>
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="caret"></span>
+		    <span class="sr-only">Toggle Dropdown</span>
+		  </button>
+		  <ul class="dropdown-menu">
+				<% if masseur.active? %>
+			    <li>
+						<% if session[:impersonating] && session[:impersonating]['email'] == masseur.email %>
+							<%= link_to unimpersonate_admin_masseur_path(masseur), method: :delete do %>
+								<i class="fa fa-stop"></i> Stop Impersonating
+							<% end %>
+						<% else %>
+							<%= link_to impersonate_admin_masseur_path(masseur), data: @impersonate_data do %>
+								<i class="fa fa-cog"></i> Impersonate
+							<% end %>
+						<% end %>
+					</li>
+				<% end %>
+
+				<li>
+          <%= link_to edit_admin_masseur_path(masseur) do %>
+            <i class="fa fa-pencil"></i> Edit Account
+          <% end %>
+				</li>
+
+				<li>
+					<%= link_to client_password_url(format: :json), class: 'reset-password-from-admin', data: {user_email: masseur.email, confirm: 'This will send an email to the user with instructions to reset their password. Are you sure you want to do this?'} do %>
+						<i class="fa fa-unlock-alt"></i> Reset Password
+					<% end %>
+				</li>
+
+		    <li role="separator" class="divider"></li>
+		    <li>
+						<% if masseur.active? %>
+		          <%= link_to suspend_admin_masseur_path(masseur), method: :post, data: {confirm: 'Are you sure you want to suspend this masseur? All of their ads and photos will be hidden and they will be banned from logging in.' } do %>
+		            <i class="fa fa-ban"></i> Suspend
+		          <% end %>
+						<% else %>
+		          <%= link_to unsuspend_admin_masseur_path(masseur), method: :post, data: {confirm: 'Are you sure you want to unsuspend this masseur? Their content will be immediately visible and they will be able to log in.' } do %>
+		            <i class="fa fa-ban"></i> Unsuspend
+		          <% end %>
+						<% end %>
+
+				</li>
+				<li>
+          <% if !masseur.is_deleted? %>
+					 <%= link_to admin_masseur_path(masseur),method: :delete ,class: 'deny-user' ,remote:true do %>
+
+            <i class="fa fa-trash" aria-hidden="true"></i>Delete Account
+         		 <% end %>
+          <% else %>
+            <%= link_to unblock_admin_masseur_path(masseur), method: :post, data: {confirm: 'Are you sure you want to unblock this masseur? ' } do %>
+              <i class="fa fa-unlock"></i> Unblock Account
+            <% end %>
+          <% end %>
+				</li>
+		  </ul>
+		</div>
+	</td>
+</tr>

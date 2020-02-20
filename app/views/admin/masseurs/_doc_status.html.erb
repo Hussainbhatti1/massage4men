@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-md-6">
+		<% if @masseur.send("#{doc_type}_uploaded?") %>
+			<%= link_to 'View Doc', @masseur.masseur_documentation.send(doc_type).url, target: '_blank', class: 'btn btn-sm btn-default' %>
+		<% else %>
+			None
+		<% end %>		
+	</div>
+	
+	<div class="col-md-6">
+		<% if !@masseur.send("#{doc_type}_approved?") %>
+			<%= button_to 'Approve', approve_admin_masseur_documentation_path(@masseur.masseur_documentation), class: 'btn btn-sm btn-success', form_class: 'approve-doc', params: {doc: doc_type} %>
+		<% else %>
+			<%= button_to 'Revoke', deny_admin_masseur_documentation_path(@masseur.masseur_documentation), class: 'btn btn-sm btn-danger', form_class: 'deny-doc', data: {confirm: "Are you sure you want to revoke this masseur's #{doc_type.titleize} badge? His supporting documentation will be deleted and he will not be notified."}, params: {doc: doc_type} %>
+		<% end %>		
+	</div>
+</div>

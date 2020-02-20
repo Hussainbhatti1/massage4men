@@ -1,0 +1,7 @@
+$('.deny-doc').bind('ajax:success', function() {
+  $(this).closest('tr').fadeOut();  
+});
+
+$('.deny-doc').bind('ajax:error', function() {
+  alert('Error approving document.');
+});

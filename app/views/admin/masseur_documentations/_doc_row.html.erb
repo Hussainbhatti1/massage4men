@@ -1,0 +1,24 @@
+<tr>
+	<td><%= dox.masseur.full_name %> <small>(<%= dox.masseur.screen_name %>)</small></td>
+	
+	<td><%= doc_type.titleize %></td>
+	<td><%= time_ago_in_words(dox.send("#{doc_type}_submitted")) %> ago</td>
+
+	<td>
+		<%= link_to dox.send(doc_type).url, target: '_blank', class: 'btn btn-default' do %>
+			<i class="fa fa-eye"></i> View Document
+		<% end %>							
+	</td>
+	
+	<td>
+		<%= button_to approve_admin_masseur_documentation_path(dox), class: 'btn btn-success', form_class: 'approve-doc', remote: true, params: {doc: doc_type} do %>
+			<i class="fa fa-check"></i> Approve Document
+		<% end %>
+	</td>
+
+	<td>
+		<%= button_to deny_admin_masseur_documentation_path(dox), class: 'btn btn-danger', form_class: 'deny-doc', data: {confirm: 'Are you sure you want to deny this document? It will be deleted and the user will not be notified.'}, remote: true, params: {doc: doc_type} do %>
+			<i class="fa fa-ban"></i> Deny Document
+		<% end %>							
+	</td>
+</tr>

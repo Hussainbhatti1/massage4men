@@ -1,0 +1,27 @@
+<td>
+  <div class="text-center">
+    <%= image_tag conversation_avatar_for(conversation.participants.reject { |u| u == current_user }.first, :small_thumb), class: 'img-circle inbox-avatar' %>
+    <br>
+    <small><%= display_name_for(conversation.participants.reject { |u| u == current_user }.first) %></small>
+  </div>
+</td>
+
+<td></td>
+
+<td>
+  <% if conversation.last_message.sender == current_user %>
+    <i class="fa fa-reply"></i>
+  <% end %>
+  
+  <%= link_to conversation.subject, conversation_path(conversation), class: (conversation.is_unread?(current_user) ? 'unread' : '') %>    
+</td>
+
+<td class="text-muted">
+  <%= time_ago_in_words(conversation.original_message.created_at) %> ago
+</td>
+
+<td>
+  <%= link_to conversation_path(conversation), method: :delete, class: 'btn btn-danger trash-conversation', data: {remote: true} do %>
+    <i class="fa fa-trash"></i> Trash
+  <% end %>
+</td>

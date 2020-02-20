@@ -1,0 +1,55 @@
+<div class="row home-bottom">
+  <% if @featured_masseur %>
+  <div class="col-sm-5 col-md-5 featured-masseur">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-user-circle"></i> <%= t(:featured_masseur) %></h3>
+      </div>
+
+      <div class="panel-body">
+        <div class="media">
+          <div class="media-left">
+            <%= link_to image_tag(profile_picture(@featured_masseur), class: 'img-responsive featured-masseur-img'), ad_url_for(@featured_masseur, @featured_masseur.ads.first) %>
+          </div>
+
+          <div class="media-body">
+            <h3 class="media-heading"><%= @featured_masseur.display_name %></h3>
+            <p><i class="fa fa-home"></i> <%= @featured_masseur.masseur_detail.home_base_city %>, <%= @featured_masseur.masseur_detail.home_base_state %> <small class="text-muted"><%= pluralize(@distance_to_featured_masseur, 'mile') %> away</small></p>
+
+            <h5><strong><%= t(:massage_types_offered) %>:</strong></h5>
+            <ul class="list-inline">
+              <% @featured_masseur.ads.includes(:massage_type).order('massage_types.id').each do |ad| %>
+                <li><%= link_to ad.massage_type.name, ad_url_for(@featured_masseur, ad.massage_type.name) %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div> <!-- /.media -->
+      </div> <!-- /.panel-body -->
+    </div> <!-- /.panel -->
+  </div>
+
+  <div class="col-sm-6 col-md-6 col-md-offset-1 col-sm-offset-1">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= t(:welcome_header)%></h3>
+      </div>
+
+      <div class="panel-body">
+        <p><%= t(:welcome_description) %></p>
+
+        <p>If you are a masseur and wish to place an ad, <%= link_to 'click here to sign up and get started', new_masseur_registration_path, data: {toggle: 'modal', target: '.modal', confirm_close: true} %>.</p>
+        <p>If you are a client looking for a masseur, <%= link_to 'create a free client account', new_client_registration_path, data: {toggle: 'modal', target: '.modal', confirm_close: true} %>to take advantage of all the features and benefits we offer.</p>
+      </div>
+    </div>
+  </div>
+
+  <% else %>
+    <div class="col-md-12 col-sm-12 text-center">
+      <h2><%= t(:welcome_header)%></h2>
+      <p><%= t(:welcome_description) %></p>
+
+      <p>If you are a masseur and wish to place an ad, <%= link_to 'click here to sign up and get started', StaticPage.find(@settings.advertise_page).slug %>.</p>
+      <p>If you are a client looking for a masseur, <%= link_to 'create a free client account', new_client_registration_path, data: {toggle: 'modal', target: '.modal', stay_in_modal: true } %> to take advantage of all the features and benefits we offer.</p>
+    </div>
+  <% end %>
+</div>

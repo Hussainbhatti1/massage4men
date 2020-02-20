@@ -1,0 +1,11 @@
+<% content_for :page_title do %>
+  <i class="fa fa-pencil"></i> Edit Details
+<% end %>
+
+<% content_for :page do %>
+  <p>This information will appear in all of your ads.</p>
+  <%= render 'form' %>
+<% end %>
+
+<%= render 'shared/masseur_nav', active: 'details' %>
+

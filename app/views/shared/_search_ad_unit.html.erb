@@ -1,0 +1,25 @@
+<div class="col-md-4 search-ad-unit">
+  <div class="thumbnail">
+    <% if result.masseur.available %>
+    <div class="ribbon">
+      <a href="#">Available!</a>
+    </div>
+    <% end %>
+    
+    <%= link_to [result.masseur, result] do %>
+      <%= image_tag profile_picture(result.masseur), class: 'img-responsive profile-photo' %>
+    <% end %>
+    
+    <div class="caption">
+      <h4><%= link_to result.masseur.display_name, [result.masseur, result] %></h4>
+      <p class="text-muted">
+        <i class="fa fa-home"></i> <%= result.masseur.masseur_detail.home_base_city %>, <%= result.masseur.masseur_detail.home_base_state %>
+      </p>
+      
+      <p class="about">
+        <%= result.masseur.masseur_detail.about %>
+      </p>
+                      
+    </div> <!-- /.caption -->
+  </div> <!-- /.thumbnail -->
+</div> <!-- /.col-md-4 -->

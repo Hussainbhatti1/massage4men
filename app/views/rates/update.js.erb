@@ -1,0 +1,3 @@
+$('.update-rate[data-rate-id=<%= @rate.id %>]').bind('ajax:success', function() {  
+	$(this).closest('tr').replaceWith("<%= j render partial: 'rate_table_row', locals: {rate: @rate} %>");
+});

@@ -1,0 +1,57 @@
+.unread {
+  font-weight:bold;
+}
+
+.envelope-unread {
+  color:#d9534f;
+}
+
+.bordered-padded-avatar {
+  border:1px solid #ccc;
+  border-radius:5px;
+  margin-right:10px;
+}
+
+.reply-form {
+  .reply_body {
+    padding-left:0;
+  }
+  
+  #reply_body {
+    width:100%;
+  }
+}
+
+.conversation-msg {
+  padding-bottom:10px;
+  
+  border-bottom:1px solid #ccc;
+}
+
+.conversation-msg:last-child {
+   border-bottom:none; 
+}
+
+.messages {
+  .well {
+    margin-bottom:0;
+  }
+}
+
+.signup-form {
+  form#new_client {
+    padding-top:10px;
+    padding-bottom:10px;
+
+    margin-top:10px;
+    margin-bottom:0;
+    
+    .checkbox {
+      margin-top:0;
+    }
+    
+    .form-group {
+      margin-bottom:0;
+    }
+  }
+}

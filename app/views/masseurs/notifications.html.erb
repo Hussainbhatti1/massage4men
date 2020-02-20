@@ -1,0 +1,17 @@
+<% content_for :page_title do %>
+  <i class="fa fa-envelope"></i> Manage Notifications
+<% end %>
+
+<% content_for :page do %>
+  <p>Send me an email when...</p>
+  
+  <%= simple_form_for(@masseur, url: masseur_registration_url, html: { method: :put }) do |f| %>
+    <%= f.error_notification %>
+
+    <%= f.input :notify_when_availability_expires, label: 'My availability expires' %>
+
+    <%= f.submit 'Update Notification Preferences', class: 'btn btn-lg btn-primary center-block' %>
+  <% end %>  
+<% end %>
+
+<%= render 'shared/masseur_nav', active: 'notifications' %>

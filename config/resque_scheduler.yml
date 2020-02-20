@@ -1,0 +1,7 @@
+weekly_digest:
+  cron: "59 23 * * 0 America/Chicago"
+  queue: "mailers"
+  class: "SendWeeklyDigestJob"
+  args:
+    -
+  description: "Sends the masseur weekly digest every Sunday at 11:59 p.m."

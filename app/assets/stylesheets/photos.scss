@@ -1,0 +1,65 @@
+// Place all the styles related to the Photos controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.photo-container {
+  position:relative;
+  
+  margin-bottom:5px;
+}
+
+.add-container a {
+  color:#555;
+}
+
+img.photo {
+  border:1px solid gray;
+}
+
+.photo-extra {
+  position:absolute;
+  bottom:0;
+  
+  left:0px;
+  
+  display:block;
+  background:rgba(0, 0, 0, 0.75);
+
+  color:#fff;
+  padding:5px;
+  
+  width:100%;
+}
+
+img.grayscale {
+  -webkit-filter:grayscale(100%);
+  filter:grayscale(100%);
+}
+
+img.disabled {
+  cursor:not-allowed;
+}
+
+.photo-extra p {
+  margin:0;
+  padding:0;
+}
+
+.photo-grid.row {
+  margin-bottom:20px;
+}
+
+.photo-grid .col {
+  margin-bottom:25px;
+}
+
+.photo-grid-condensed.row {
+  margin-bottom:5px;
+}
+
+.photo-grid-condensed img {
+  border:1px solid gray;
+}
+
+.photo-grid-condensed img.selected {
+  border:1px solid red;
+}

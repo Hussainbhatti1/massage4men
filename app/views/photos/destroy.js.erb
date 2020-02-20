@@ -1,0 +1,7 @@
+$('.delete-photo').bind('ajax:success', function() {
+  $(this).closest('.col').fadeOut('fast');
+});
+
+$('.delete-photo').bind('ajax:error', function() {
+  alert('Could not delete photo.');
+});

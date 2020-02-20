@@ -1,0 +1,54 @@
+<!-- Reviews -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+			<i class="fa fa-comment"></i> <%= @masseur.screen_name %>'s Reviews
+
+			<% if @masseur.reviews.approved.count > 0 %>
+			<small class="pull-right">
+				<input class="rating" data-show-clear="false" data-show-caption="false" data-rating-class="rating-fa static-rating" data-glyphicon="false" data-container-class="average-container pull-left" data-symbol="" data-size="xs" value="<%= @masseur.review_average %>">
+				
+				<span class="badge pull-right review-average"><%= pluralize(@masseur.reviews.approved.count, 'review') %></span>
+			</small>
+
+			<% end %>
+		</h3>
+  </div>
+
+	<div class="panel-body">
+	<!-- Iterate reviews -->
+  <% if @masseur.reviews.approved.count == 0 %>
+    <p>No one has reviewed <%= @masseur_name %> yet.</p>
+  <% else %>
+    <% @masseur.reviews.approved.order(created_at: :desc).each do |review| %>
+			<div class="media">
+				<div class="media-left">
+					<%= image_tag review.client.profile_photo.url(:thumb), class: 'media-object img-responsive' %>
+					<small class="text-muted text-center">
+					<%= review.client.screen_name %>
+					</small>
+				</div>
+				
+				<div class="media-body">
+				<% if review.rating %>
+				<p>
+					<% 1.upto(review.rating) do %>
+						<i class="fa fa-2x fa-hand-stop-o active-star"></i> 
+					<% end %>
+				</p>
+				<% end %>
+
+				<p><%= review.review %></p>
+				<p><%= link_to 'All Review Details', masseur_review_path(@masseur, review), data: {toggle: 'modal', target: '.modal'} %></p>								
+				</div>
+			</div> <!-- /media -->
+		<% end %>
+	<% end %>
+
+  <% if current_client %>
+		<p class="text-center">
+			<%= link_to 'Post a Review', new_masseur_review_path(@masseur), class: 'btn btn-lg btn-primary', data: {target: '.modal', toggle: 'modal', review_modal: true} %>
+		</p>
+  <% end %>        
+</div> <!-- /.review panel body -->
+<!-- End Reviews -->
