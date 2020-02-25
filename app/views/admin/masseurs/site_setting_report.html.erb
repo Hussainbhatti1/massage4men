@@ -1,0 +1,43 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      <i class="fa fa-user"></i> Site Setting Report
+    </h3>
+  </div>
+  
+  <div class="panel-body">
+
+
+    <% if @site_reports.count > 0 %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Who did change</th>
+            <th>What was CHANGE</th>
+            <th>FIRST&LAST NAME</th>
+            <th>EMAIL ADDRESS</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <% @site_reports.each do |site_report| %>
+            <%= render partial: 'site_report_row', locals: {site_report: site_report} %>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="text-center">
+        <%= paginate @site_reports, :theme => 'twitter-bootstrap-3' %>
+
+        <p class="clearfix text-muted">
+          <%= page_entries_info @site_reports %>
+        </p>
+      </div>
+
+    <% else %>
+      <p>There are no reports.</p>
+    <% end %>
+  </div> <!-- /.panel-body -->
+</div> <!-- /.panel -->

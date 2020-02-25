@@ -53,6 +53,7 @@ gem 'mail_form'
 gem 'country_select'
 gem 'carmen'
 gem 'validates_timeliness'
+gem "recaptcha"
 
 gem 'paperclip'
 gem 'aws-sdk'
@@ -86,7 +87,9 @@ gem 'pry-rails'
 # For fetching random records
 gem 'randumb'
 
-gem 'recaptcha', require: 'recaptcha/rails'
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
+gem "recaptcha", require: "recaptcha/rails"
+gem "mailcatcher"
 
 gem 'meta-tags'
 
@@ -151,7 +154,7 @@ end
 
 group :development, :test do
   gem 'byebug'
-  gem 'factory_girl_rails'
+  gem 'factory_bot'
   gem 'faker'
   gem 'quiet_assets'
   gem 'rspec-rails', '~> 3.1'

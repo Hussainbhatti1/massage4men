@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180813055844) do
+ActiveRecord::Schema.define(version: 20200225102342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,9 +42,19 @@ ActiveRecord::Schema.define(version: 20180813055844) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.integer  "role"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
+
+  create_table "admins_site_setting_logs", id: false, force: :cascade do |t|
+    t.integer "site_setting_log_id", null: false
+    t.integer "admin_id",            null: false
+  end
+
+  add_index "admins_site_setting_logs", ["admin_id", "site_setting_log_id"], name: "index_admin_logs", using: :btree
+  add_index "admins_site_setting_logs", ["site_setting_log_id", "admin_id"], name: "index_site_logs", using: :btree
 
   create_table "ads", force: :cascade do |t|
     t.integer  "masseur_id"
@@ -92,11 +102,11 @@ ActiveRecord::Schema.define(version: 20180813055844) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "email"
-    t.string   "encrypted_password",                     default: "",   null: false
+    t.string   "encrypted_password",                     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                          default: 0,    null: false
+    t.integer  "sign_in_count",                          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -113,8 +123,8 @@ ActiveRecord::Schema.define(version: 20180813055844) do
     t.boolean  "email_new_masseurs"
     t.boolean  "email_masseur_profile_update"
     t.boolean  "email_weekly_update"
-    t.datetime "created_at",                                            null: false
-    t.datetime "updated_at",                                            null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.float    "latitude"
     t.float    "longitude"
     t.string   "profile_photo_file_name"
@@ -125,6 +135,7 @@ ActiveRecord::Schema.define(version: 20180813055844) do
     t.string   "slug"
     t.boolean  "active",                                 default: true
     t.string   "country",                                default: "US"
+    t.boolean  "approved",                               default: false
   end
 
   add_index "clients", ["email"], name: "index_clients_on_email", unique: true, using: :btree
@@ -456,8 +467,13 @@ ActiveRecord::Schema.define(version: 20180813055844) do
     t.float    "latitude"
     t.float    "longitude"
     t.boolean  "is_deleted",                                     default: false
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
+  add_index "masseurs", ["confirmation_token"], name: "index_masseurs_on_confirmation_token", unique: true, using: :btree
   add_index "masseurs", ["email"], name: "index_masseurs_on_email", unique: true, using: :btree
   add_index "masseurs", ["reset_password_token"], name: "index_masseurs_on_reset_password_token", unique: true, using: :btree
   add_index "masseurs", ["slug"], name: "index_masseurs_on_slug", unique: true, using: :btree
@@ -545,6 +561,12 @@ ActiveRecord::Schema.define(version: 20180813055844) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "site_setting_logs", force: :cascade do |t|
+    t.text     "site_changes"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "site_settings", force: :cascade do |t|
     t.float    "basic_package_price"
     t.float    "premium_package_price"
@@ -558,6 +580,7 @@ ActiveRecord::Schema.define(version: 20180813055844) do
     t.string   "admin_notification_email"
     t.text     "keywords"
     t.text     "badge_disclaimer"
+    t.boolean  "approval_required_for_new_clients",  default: true
   end
 
   create_table "smoking_frequencies", force: :cascade do |t|

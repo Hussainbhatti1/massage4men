@@ -45,5 +45,7 @@
     <%= f.input_field :profile_photo,class: 'profile-photo-upload-button' %>      
   </div>
   
+  <%= recaptcha_tags %>
+  
 	<%= f.submit t('signup.forms.submit'), class: 'btn btn-lg btn-success center-block', data: {disable_with: t('signup.forms.submitted')},onclick: 'confirm_password(event)' %>
 <% end %>

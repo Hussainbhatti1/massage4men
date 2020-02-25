@@ -6,6 +6,7 @@ class Masseur < ActiveRecord::Base
   # Extensions
   devise :database_authenticatable,
          :registerable,
+         :confirmable,
          :recoverable,
          :rememberable,
          :trackable,
@@ -23,7 +24,6 @@ class Masseur < ActiveRecord::Base
 
   # Associations
   belongs_to :tracking_link
-
   has_one :masseur_detail, dependent: :destroy
 
   has_many :ads, dependent: :destroy
@@ -51,7 +51,7 @@ class Masseur < ActiveRecord::Base
   #           #   message: 'must contain 1 uppercase, 1 lowercase and 1 special character' },
   #           confirmation: true
 
-  validates :screen_name, :first_name, :last_name,
+  validates :screen_name,
             presence: true
 
   validate :email_must_not_be_in_use_by_client_or_masseur, if: :email_changed?
@@ -76,6 +76,7 @@ class Masseur < ActiveRecord::Base
   #
   #default_scope {where(:is_deleted => false)}
   scope :blocked , -> { where(is_deleted: true) }
+  scope :suspended , -> { where(active: false) }
   scope :unapproved, -> { where.not(approved: true) }
   scope :approved, -> { where(approved: true) }
 
@@ -86,6 +87,10 @@ class Masseur < ActiveRecord::Base
 
   def state
     masseur_detail.present? ? masseur_detail.home_base_state : '?'
+  end
+
+  def active_for_authentication?
+    true
   end
 
   def phone
@@ -174,6 +179,10 @@ class Masseur < ActiveRecord::Base
 
   def approve
     self.update_attributes(approved: true)
+  end
+
+  def profile_picture
+    self.profile_photo
   end
 
   def deny
@@ -394,7 +403,6 @@ class Masseur < ActiveRecord::Base
      completeness
   end
 
-
   def complete?
     calculate_completeness[:percentage] == 100
   end
@@ -445,7 +453,7 @@ class Masseur < ActiveRecord::Base
 
   def notify_admin_for_approval
     if !self.approved? && SiteSetting.first.approval_required_for_new_masseurs
-      MasseurMailer.notify_admin_for_approval_email(self).deliver_later
+      MasseurMailer.notify_admin_for_approval_email(self).deliver_now
     end
   end
 

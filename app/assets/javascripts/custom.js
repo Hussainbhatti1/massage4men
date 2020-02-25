@@ -259,6 +259,7 @@ function masseur_confirm_password(event) {
     
     check_masseur_first_name();
     check_masseur_last_name();
+    check_masseur_photo();
     masseur_check_email();
     masseur_check_dob2();
     masseur_check_dob3();
@@ -317,6 +318,18 @@ function check_masseur_state(){
         $("#masseur_mailing_state").addClass("active-red");
         toastr.info('Please Choose State')
     }   
+}
+
+function check_masseur_photo(){
+    var masseurprofilephoto=$("#masseur_profile_photo").val();
+    if(masseurprofilephoto != ""){
+        $(".profile-photo-preview").removeClass("active-red");
+    }
+    else{
+        event.preventDefault();
+        $(".profile-photo-preview").addClass("active-red");
+        toastr.info('Please Upload Valid Photo')
+    }
 }
 
 function masseur_check_email(){

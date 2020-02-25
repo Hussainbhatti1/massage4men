@@ -8,6 +8,13 @@ class ClientMailer < ApplicationMailer
     )
   end
 
+  def notify_admin_for_approval_email(client)
+    @client = client
+    @admin_emails = SiteSetting.first.admin_notification_email ? SiteSetting.first.admin_notification_email : ADMIN_EMAIL
+
+    mail(to: @admin_emails, subject: "[M4M] Approval Required for New Client Account")
+  end
+
   def weekly_masseur_digest(client, masseurs)
     @client = client
     @masseurs = masseurs

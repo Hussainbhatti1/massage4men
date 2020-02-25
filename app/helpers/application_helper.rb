@@ -212,8 +212,8 @@ module ApplicationHelper
   
   def options_for_combined_email
     masseur_email = Masseur.order(id: :desc).map{|x| [x.email,x.id]}
-    # client_email =Client.all.map{|y|[y.email ,y.id]}
-    # masseur_email.concat(client_email)
+    client_email =Client.all.map{|y|[y.email ,y.id]}
+    masseur_email.concat(client_email)
     options_for_select(masseur_email)
   end
 end

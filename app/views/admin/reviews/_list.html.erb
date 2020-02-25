@@ -22,7 +22,7 @@
 						<i class="fa fa-hand-stop-o active-star"></i>
 					<% end %>
         </td>
-        
+
         <td><%= review.created_at.to_s(:short_with_12_hour_time) %></td>
 
         <td>
@@ -36,9 +36,9 @@
               <span class="text-success">
                 <i class="fa fa-check"></i>
                 Overridden by Admin
-              </span>            
+              </span>
               <br>
-            <% end %>          
+            <% end %>
 
             <span class="text-danger">
               <i class="fa fa-exclamation-triangle"></i> Denied by Masseur
@@ -50,16 +50,16 @@
           <%= link_to [:admin, review], class: 'btn btn-sm btn-default', data: {target: '.modal', toggle: 'modal'} do %>
             Details
           <% end %>
-          
+
           <% if !review.masseur_approved? && !review.admin_approved? %>
             <%= link_to approve_admin_review_path(review), class: 'btn btn-sm btn-default', title: "Override the masseur's denial and display this review on his profile", data: { toggle: 'tooltip', confirm: "Do you want to override the masseur's decision to deny this review? It will be displayed on his profile immediately." } do %>
               <i class="fa fa-check"></i> Approve
-            <% end %>          
+            <% end %>
           <% end %>
         </td>
 
 				<td>					
-          
+
 					<%= link_to edit_admin_review_path(review), class: 'btn btn-sm btn-primary', data: { target: '.modal', toggle: 'modal' } do %>
 						<i class="fa fa-pencil"></i> Edit
 					<% end %>

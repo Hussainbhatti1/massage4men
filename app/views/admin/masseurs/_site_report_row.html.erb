@@ -1,0 +1,8 @@
+<tr>
+  <td><%= site_report.site_setting_log.created_at.strftime('%Y-%m-%d') %></td>
+  <td><%= site_report.site_setting_log.created_at.strftime("%I:%M%p") %></td>
+  <td><%= site_report.admin.full_name %></td>
+  <td><%= link_to "See changes here", admin_site_setting_log_path(site_report.site_setting_log.id)%></td>
+  <td><%= site_report.admin.first_name %>/<%= site_report.admin.last_name %></td>
+  <td><%= site_report.admin.email %></td>
+</tr>

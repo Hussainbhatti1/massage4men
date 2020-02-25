@@ -1,0 +1,15 @@
+<tr<%= masseur.active? ? '' : raw(' class="danger"') %>>
+  <td><%= masseur.id %></td>
+  <td><%= link_to masseur.full_name, [:admin, masseur], data: {target: '.modal', toggle: 'modal'} %></td>
+  <td><%= (masseur.display_name == masseur.first_name) ? '-' : masseur.display_name %></td>
+  <td><%= mail_to masseur.email, truncate(masseur.email, length: 15) %></td>
+  <td>
+    <div class="btn-group">
+      <% if !masseur.complete? %>
+        <%= link_to send_reminder_admin_masseur_path(masseur) do %>
+          <i class="fa fa-bell"></i> Send Completion Reminder
+        <% end %>
+      <% end %>
+    </div>
+  </td>
+</tr>

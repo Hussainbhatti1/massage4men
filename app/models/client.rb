@@ -3,6 +3,7 @@ class Client < ActiveRecord::Base
 
   geocoded_by :client_address
   after_validation :geocode
+  after_create  :notify_admin_for_approval
   
   # Extensions
   devise  :database_authenticatable,
@@ -60,10 +61,7 @@ class Client < ActiveRecord::Base
   # ActiveRecord callbacks
   before_save :geocode_zip
   after_commit :send_welcome_email, :new_client_signup, on: :create
- 
-  def active_for_authentication?
-    super and self.active?
-  end
+
 
   def geocode_zip
     if self.zip_changed?       
@@ -122,9 +120,15 @@ class Client < ActiveRecord::Base
   def should_generate_new_friendly_id?
     true
   end
+
+  def notify_admin_for_approval
+    if !self.approved? && SiteSetting.first.approval_required_for_new_clients
+      ClientMailer.notify_admin_for_approval_email(self).deliver_now
+    end
+  end
   
   def send_devise_notification(notification, *args)
-    devise_mailer.send(notification, self, *args).deliver_later
+    devise_mailer.send(notification, self, *args).deliver_now
   end
   
   # Setter overrides

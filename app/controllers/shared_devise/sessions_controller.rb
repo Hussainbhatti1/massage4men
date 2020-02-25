@@ -1,5 +1,7 @@
 class SharedDevise::SessionsController < Devise::SessionsController
   # Sign in with either client or masseur from the same form
+  before_action :store_user_location!, if: :storable_location?
+
   def create
     self.resource = warden.authenticate(auth_options)
     resource_name = self.resource_name
@@ -39,4 +41,19 @@ class SharedDevise::SessionsController < Devise::SessionsController
       end      
     end
   end
+
+  private
+
+    def storable_location?
+      current_client.present? && request.referer.include?('/masseurs')
+    end
+
+    def store_user_location!
+      # :user is the scope we are authenticating
+      store_location_for(:client, request.referrer)
+    end
+
+    def after_sign_in_path_for(resource_or_scope)
+      stored_location_for(resource_or_scope) || super
+    end
 end

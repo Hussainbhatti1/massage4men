@@ -32,6 +32,12 @@
 					</li>
 				<% end %>
 
+        <li>
+          <%= link_to [:admin, masseur], data: {target: '.modal', toggle: 'modal'} do %>
+            <i class="fa fa-user"></i> Show Masseur Details
+          <% end %>
+        </li>
+
 				<li>
           <%= link_to edit_admin_masseur_path(masseur) do %>
             <i class="fa fa-pencil"></i> Edit Account
@@ -47,7 +53,7 @@
 		    <li role="separator" class="divider"></li>
 		    <li>
 						<% if masseur.active? %>
-		          <%= link_to suspend_admin_masseur_path(masseur), method: :post, data: {confirm: 'Are you sure you want to suspend this masseur? All of their ads and photos will be hidden and they will be banned from logging in.' } do %>
+		          <%= link_to suspend_admin_masseur_path(masseur), method: :post, data: {confirm: 'Are you sure you want to suspend this masseur? All of their ads and photos will be hidden and they will be banned from logging in.' }, class: 'suspend-user' , remote:true do %>
 		            <i class="fa fa-ban"></i> Suspend
 		          <% end %>
 						<% else %>

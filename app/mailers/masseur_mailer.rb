@@ -9,7 +9,7 @@ class MasseurMailer < ApplicationMailer
   def notify_admin_for_approval_email(masseur)
     @masseur = masseur
     @admin_emails = SiteSetting.first.admin_notification_email ? SiteSetting.first.admin_notification_email : ADMIN_EMAIL
-    
+
     mail(to: @admin_emails, subject: "[M4M] Approval Required for New Masseur Account")
   end
   

@@ -7,6 +7,10 @@ class Admin::SiteSettingsController < Admin::BaseController
 
   def update
     if @site_setting.update_attributes(site_setting_params)
+      if current_admin.present? && @site_setting.previous_changes.present?
+        @site_setting_log = SiteSettingLog.create!(site_changes: @site_setting.previous_changes)
+        AdminsSiteSettingLog.create!(admin_id: current_admin.id, site_setting_log_id: @site_setting_log.id)
+      end
       redirect_to admin_site_settings_path, notice: 'Settings saved.'
     else
       render :index

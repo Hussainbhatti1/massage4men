@@ -21,6 +21,7 @@
 							<% if can? :manage, Subscription %>
               	<li><%= link_to 'Revenue', admin_subscriptions_path %></li>
 							<% end %>
+              <li><%= link_to 'Site Setting Reports', site_setting_report_admin_masseurs_path %></li>
             </ul>
           </li>
 
@@ -34,7 +35,13 @@
               <li>
                 <%= link_to admin_masseurs_path do %>
                   Manage Masseurs
-                <% end %>                
+                <% end %>
+              </li>
+
+              <li>
+                <%= link_to uncompleted_profile_admin_masseurs_path do %>
+                  Uncompleted Profiles
+                <% end %>
               </li>
               
               <li>
@@ -69,6 +76,10 @@
 
             <li>
               <%= link_to 'Deleted Messeur History ', blocked_history_admin_masseurs_path   %>
+            </li>
+
+            <li>
+              <%= link_to 'Suspended Messeur History ', suspended_history_admin_masseurs_path   %>
             </li>
 					
 					<% if can? :manage, PromoCode %>

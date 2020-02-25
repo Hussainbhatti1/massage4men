@@ -1,6 +1,27 @@
 class Admin::MasseursController < Admin::BaseController
   load_and_authorize_resource
 
+  def send_reminder
+    @masseur = Masseur.find(params[:id])
+    @completion = @masseur.calculate_completeness
+
+
+    MasseurMailer.completion_reminder(@masseur, @completion).deliver_later
+    redirect_to uncompleted_profile_admin_masseurs_path, notice: 'Reminder email sent successfully.'
+  end
+
+
+  def send_bulk_reminder
+    Masseur.all.each do |masseur|
+      if !masseur.complete?
+        @completion = masseur.calculate_completeness
+        MasseurMailer.completion_reminder(masseur, @completion).deliver_later
+      end
+    end
+
+    redirect_to uncompleted_profile_admin_masseurs_path, notice: 'Reminder email sent successfully.'
+  end
+
   def impersonate
     # Sign in an arbitrary user without credentials. Be careful!
     session[:impersonating] = @masseur
@@ -59,8 +80,9 @@ class Admin::MasseursController < Admin::BaseController
       order = 'desc'
     end
     options={}
-    options={is_deleted: false }
-    @masseurs = @masseurs.joins('LEFT OUTER JOIN masseur_details ON masseur_details.masseur_id = masseurs.id').where(options).order("#{sort} #{order}").page(params[:page])
+    options={is_deleted: false, active: true }
+
+    @masseurs = @masseurs.joins('LEFT OUTER JOIN masseur_details ON masseur_details.masseur_id = masseurs.id').where(options).order("#{sort} #{order}").page(params[:page]).per(10)
     # @masseurs = @masseurs.joins(:masseur_detail).order("#{sort} #{order}").page(params[:page])
     # Setup the data for our Impersonate buttons
     if session[:impersonating]
@@ -101,6 +123,10 @@ class Admin::MasseursController < Admin::BaseController
   # APPROVAL/DENIAL
   def approval_queue
     @unapproved_users = Masseur.unapproved.order(created_at: :desc)
+  end
+
+  def uncompleted_profile
+    @masseurs = Masseur.all.page(params[:page])
   end
 
   def unapprove
@@ -155,7 +181,7 @@ class Admin::MasseursController < Admin::BaseController
     respond_to do |format|
       if @masseur.update_attributes(active: true)
         format.js {}
-        format.html { redirect_to :back, notice: 'Masseur unsuspended.'}
+        format.html { redirect_to admin_masseurs_path, notice: 'Masseur unsuspended.'}
       else
         format.js { render json: {success: false}, status: :unprocessable_entity }
         format.html {
@@ -188,6 +214,14 @@ class Admin::MasseursController < Admin::BaseController
 
   def blocked_history
     @masseurs=Masseur.blocked.order(created_at: :desc).page(params[:page])
+  end
+
+  def suspended_history
+    @masseurs=Masseur.suspended.order(created_at: :desc).page(params[:page])
+  end
+
+  def site_setting_report
+    @site_reports = AdminsSiteSettingLog.all.page(params[:page])
   end
 
   def update_image

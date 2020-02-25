@@ -100,6 +100,10 @@ Rails.application.routes.draw do
         get 'approval_queue'
         get 'search'
         get  'blocked_history'
+        get 'suspended_history'
+        get 'uncompleted_profile'
+        get 'send_bulk_reminder'
+        get 'site_setting_report'
       end
       
       member do
@@ -111,6 +115,7 @@ Rails.application.routes.draw do
         post 'unsuspend'
         post  'unblock'
         get 'impersonate'
+        get 'send_reminder'
         delete 'unimpersonate'   
       end
     end
@@ -141,7 +146,7 @@ Rails.application.routes.draw do
     resources :languages
     resources :sexual_orientations
     resources :smoking_frequencies
-    
+    resources :site_setting_logs
     resources :static_pages
     resources :site_settings
   end
@@ -153,7 +158,6 @@ Rails.application.routes.draw do
   post 'subscriptions/postback' => 'subscriptions#postback'
   
   post 'promo_codes/check' => 'promo_codes#check'
-
   
 
   resources :clients, only: [:show] do

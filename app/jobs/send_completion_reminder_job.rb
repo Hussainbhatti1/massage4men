@@ -17,3 +17,4 @@ class SendCompletionReminderJob < ActiveJob::Base
     end
   end
 end
+ 

@@ -24,43 +24,53 @@ respond_to :json, only: :create
 
   # POST /resource
   def create
-    # TODO: DRY this up from Masseurs::Registrations
-    super do
+    if !verify_recaptcha
+      flash.delete :recaptcha_error
+      build_resource(sign_up_params)
+      resource.valid?
+      resource.errors.add(:base, "There was an error with the recaptcha code below. Please re-enter the code.")
+      clean_up_passwords(resource)
+      respond_with_navigational(resource) { render_with_scope :new }
+      else
+      flash.delete :recaptcha_error
+      # TODO: DRY this up from Masseurs::Registrations
+      super do
 
-      # Clear cookies if the model saved successfully
-      if resource.persisted? && cookies[:refer]
-        cookies[:refer] = nil
-      end
+        # Clear cookies if the model saved successfully
+        if resource.persisted? && cookies[:refer]
+          cookies[:refer] = nil
+        end
 
-      # Respond appropriately
-      respond_to do |format|
-        if resource.persisted? && resource.active_for_authentication?
-          resource_update(params)
+        # Respond appropriately
+        respond_to do |format|
+          if resource.persisted? && resource.active_for_authentication?
+            resource_update(params)
 
-          # Sign in the new user
-          sign_up(resource_name, resource)
+            # Sign in the new user
+            sign_up(resource_name, resource)
 
-          # Return a JSON object with the link to redirect to
-          ret = {
-            success: true,
-            payment_required: false
-          }
-          ret[:dashboard_url] = dashboard_client_path(resource) if params[:client][:source].blank?
+            # Return a JSON object with the link to redirect to
+            ret = {
+              success: true,
+              payment_required: false
+            }
+            ret[:dashboard_url] = dashboard_client_path(resource) if params[:client][:source].blank?
 
-          format.json { return render json: ret, status: :ok }
-        else
-          format.json { return render json: { success: false, errors: resource.errors }, status: :unprocessable_entity }
-        end # / resource.persisted?
-      end # / respond_to
-    end # / super do
+            format.json { return render json: ret, status: :ok }
+          else
+            format.json { return render json: { success: false, errors: resource.errors }, status: :unprocessable_entity }
+          end # / resource.persisted?
+        end # / respond_to
+      end # / super do
 
-    # super do
-    #   # If we're doing an AJAX signup, set :age_verified so the model doesn't try a full validation
-    #   # if params[:client][:age_verified]
-    #   #   resource.age_verified = params[:client][:age_verified]
-    #   # end
-    # end
-    # super
+      # super do
+      #   # If we're doing an AJAX signup, set :age_verified so the model doesn't try a full validation
+      #   # if params[:client][:age_verified]
+      #   #   resource.age_verified = params[:client][:age_verified]
+      #   # end
+      # end
+      # super
+    end
   end # / create
 
   # GET /resource/edit

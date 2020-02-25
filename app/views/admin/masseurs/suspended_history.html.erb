@@ -1,0 +1,48 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      <i class="fa fa-user"></i> Manage Masseurs
+    </h3>
+  </div>
+
+  <div class="panel-body">
+    <%#= render 'search_form' %>
+    <% if @masseurs.count > 0 %>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th><%= link_to 'ID', sort_path('id') %></th>
+          <th><%= link_to 'First', sort_path('first_name') %>/<%= link_to 'Last', sort_path('last_name') %> Name</th>
+          <th><%= link_to 'Screen Name', sort_path('screen_name') %></th>
+          <th><%= link_to 'Email', sort_path('email') %></th>
+          <th><%= link_to 'City', sort_path('mailing_city') %></th>
+          <th><%= link_to 'State', sort_path('mailing_state') %></th>
+          <th>Subscribed</th>
+          <!-- <th>Renewed</th> -->
+          <th><%= link_to 'Active?', sort_path('active') %></th>
+          <th><%= link_to 'Approved?', sort_path('approved') %></th>
+          <th><%= link_to 'Featured?', sort_path('featured') %></th>
+          <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @masseurs.each do |masseur| %>
+          <%= render partial: 'masseur_row', locals: {masseur: masseur} %>
+        <% end %>
+        </tbody>
+      </table>
+
+      <div class="text-center">
+        <%= paginate @masseurs, :theme => 'twitter-bootstrap-3' %>
+
+        <p class="clearfix text-muted">
+          <%= page_entries_info @masseurs %>
+        </p>
+      </div>
+
+    <% else %>
+      <p>There are no masseurs registered.</p>
+    <% end %>
+  </div> <!-- /.panel-body -->
+</div> <!-- /.panel -->

@@ -1,0 +1,47 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      <i class="fa fa-user"></i> Manage Masseurs
+    </h3>
+  </div>
+  
+  <div class="panel-body">
+    <%= link_to send_bulk_reminder_admin_masseurs_path do %>
+      Send Bulk Emails
+    <% end %>
+  </div>
+
+  <div class="panel-body">
+
+    <% if @masseurs.count > 0 %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Screen Name</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <% @masseurs.each do |masseur| %>
+            <%= render partial: 'uncompleted_masseur_row', locals: {masseur: masseur} %>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="text-center">
+        <%= paginate @masseurs, :theme => 'twitter-bootstrap-3' %>
+
+        <p class="clearfix text-muted">
+          <%= page_entries_info @masseurs %>
+        </p>
+      </div>
+
+    <% else %>
+      <p>There are no masseurs registered.</p>
+    <% end %>
+  </div> <!-- /.panel-body -->
+</div> <!-- /.panel -->
