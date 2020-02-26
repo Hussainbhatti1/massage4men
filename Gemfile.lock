@@ -776,6 +776,7 @@ GEM
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
     bcrypt (3.1.12)
+    bcrypt_pbkdf (1.0.1)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
     bootstrap-kaminari-views (0.0.5)
@@ -889,6 +890,7 @@ GEM
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
       railties (>= 3.2, < 6.1)
+    ed25519 (1.2.4)
     erubis (2.7.0)
     et-orbi (1.1.7)
       tzinfo
@@ -1247,6 +1249,7 @@ DEPENDENCIES
   airbrake (~> 5.4)
   awesome_print
   aws-sdk
+  bcrypt_pbkdf (>= 1.0, < 2.0)
   bootstrap-kaminari-views
   bootstrap-sass (~> 3.3.6)
   bootstrap-wysihtml5-rails!
@@ -1268,6 +1271,7 @@ DEPENDENCIES
   devise
   devise_security_extension
   dotenv-rails
+  ed25519 (>= 1.2, < 2.0)
   eye
   eye-slack
   factory_bot
