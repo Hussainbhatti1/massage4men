@@ -12,7 +12,7 @@ server '34.201.38.42', user: 'deploy', roles: %w{app web db}
 # set :server_name, '52.207.236.3'
 set :branch, 'master'
 set :deploy_to, '/home/m4m/apps/m4m'
-set :user, 'ubuntu'
+set :user, 'deploy'
 set :tmp_dir, '/home/m4m/tmp'
 set :rails_env, 'production'
 
