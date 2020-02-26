@@ -12,7 +12,7 @@ gem 'rails', '4.2.9'
 gem 'sass-rails', '~> 5.0'
 
 # Bootstrap for asset pipeline
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '~> 3.4.1'
 
 gem 'font-awesome-rails'
 
