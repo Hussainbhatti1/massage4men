@@ -89,7 +89,6 @@ gem 'randumb'
 
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem "recaptcha", require: "recaptcha/rails"
-gem "mailcatcher"
 
 gem 'meta-tags'
 
@@ -148,6 +147,7 @@ group :development do
   gem 'capistrano-rbenv',   require: false
   gem 'capistrano-bundler'
   gem 'capistrano-resque', require: false
+  gem "mailcatcher"
 
   # The `deploy:restart` hook for passenger applications is now in a separate gem called capistrano-passenger.  Just add it to your Gemfile and require it in your Capfile.
   # gem 'capistrano-passenger'

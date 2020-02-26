@@ -11,9 +11,9 @@ server '34.201.38.42', user: 'deploy', roles: %w{app web db}
 
 # set :server_name, '52.207.236.3'
 set :branch, 'master'
-set :deploy_to, '/home/m4m/apps/m4m'
+set :deploy_to, '/home/deploy/m4m/apps/m4m'
 set :user, 'deploy'
-set :tmp_dir, '/home/m4m/tmp'
+set :tmp_dir, '/home/deploy/m4m/tmp'
 set :rails_env, 'production'
 
 set :eye_env, -> { { rails_env: fetch(:rails_env) } }
