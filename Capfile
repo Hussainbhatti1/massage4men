@@ -15,7 +15,7 @@
 
 require 'capistrano/setup'
 require 'capistrano/deploy'
-require 'capistrano/rvm'
+require "capistrano/rbenv"
 require 'capistrano/bundler'
 require "capistrano/scm/git"
 require 'capistrano/rails'
@@ -40,7 +40,6 @@ install_plugin Capistrano::SCM::Git
   # https://github.com/capistrano/passenger
 #
 # require "capistrano/rvm"
-# require "capistrano/rbenv"
 # require "capistrano/chruby"
 # require "capistrano/bundler"
 # require "capistrano/rails/assets"
