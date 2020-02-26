@@ -7,7 +7,7 @@
 # role :web, %w{52.207.236.3}
 # role :db,  %w{ubuntu@52.207.236.3}
 
-server '100.25.206.239', user: 'ubuntu', roles: %w{app web db}
+server '34.201.38.42', user: 'deploy', roles: %w{app web db}
 
 # set :server_name, '52.207.236.3'
 set :branch, 'master'
@@ -19,8 +19,8 @@ set :rails_env, 'production'
 set :eye_env, -> { { rails_env: fetch(:rails_env) } }
 
 # For Resque
-role :resque_worker, "100.25.206.239"
-role :resque_scheduler, "100.25.206.239"
+role :resque_worker, "34.201.38.42"
+role :resque_scheduler, "34.201.38.42"
 set :workers, { "*" => 1 }
 
 set :resque_environment_task, true

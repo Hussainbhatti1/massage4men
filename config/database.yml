@@ -24,4 +24,4 @@ test:
   password: 
 
 production:
-  database: m4m_production
+  database: massage4men

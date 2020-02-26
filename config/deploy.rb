@@ -2,7 +2,7 @@
 lock '3.11.0'
 
 set :application, 'm4m'
-set :repo_url, 'git@github.com:techverx/m4m.git'
+set :repo_url, 'git@github.com:Hussainbhatti1/massage4men.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
