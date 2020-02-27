@@ -125,7 +125,7 @@ gem 'eye-slack'
 gem "capistrano"
 gem 'capistrano-bundler'
 gem 'capistrano-rvm', :require => false
-# gem 'capistrano3-puma'
+gem 'capistrano3-puma'
 gem 'capistrano-rails'
 gem "capistrano-db-tasks", require: false
 gem 'rails_sortable'

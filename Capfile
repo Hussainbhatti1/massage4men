@@ -22,11 +22,12 @@ require 'capistrano/rails'
 # require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 
-# require 'capistrano/puma'
+require 'capistrano/puma'
 # require 'capistrano/puma/workers' # if you want to control the workers (in cluster mode)
 # require 'capistrano/puma/jungle'
 
 install_plugin Capistrano::SCM::Git
+install_plugin Capistrano::Puma
 
 # Include tasks from other gems included in your Gemfile
 #
