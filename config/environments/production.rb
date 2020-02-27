@@ -14,6 +14,9 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
   # For large-scale production use, consider using a caching reverse proxy like
@@ -97,10 +100,8 @@ Rails.application.configure do
   # MAILERS
   config.action_mailer.default_url_options = { host: ENV['DOMAIN_URL'] }
   
-  config.action_mailer.asset_host = 'https://m4m.net'
-  
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = { 
+
+  ActionMailer::Base.smtp_settings = {
     domain: ENV['DOMAIN_URL'],
     user_name: ENV['MAIL_USER'],
     password:  ENV['MAIL_PASSWORD'],
@@ -108,6 +109,13 @@ Rails.application.configure do
     port: 587,
     authentication: :plain,
   }
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    email: {
+      email_prefix: '[FoodOrdering] ',
+      sender_address: %{"notifier" <notifier@thedevden.co>},
+      exception_recipients: %w{hussain.bhatti@thedevden.co}
+    }
 
 
 end
