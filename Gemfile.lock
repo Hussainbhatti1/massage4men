@@ -1025,7 +1025,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (5.1.0)
-    nio4r (2.3.1)
+    nio4r (2.5.2)
     nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
@@ -1312,6 +1312,7 @@ DEPENDENCIES
   pg (= 0.20)
   pg_search
   pry-rails
+  puma
   quiet_assets
   rails (= 4.2.9)
   rails_12factor
