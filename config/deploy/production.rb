@@ -19,7 +19,7 @@ set :puma_workers,    0
 set :tmp_dir, '/home/deploy/m4m/tmp'
 set :rails_env, 'production'
 
-set :puma_bind,       "unix:///home/deploy/m4m/apps/m4m/shared/tmp/sockets/puma.sock"
+set :puma_bind,       "unix:///home/deploy/m4m/apps/m4m/shared/tmp/sockets/m4m-puma.sock"
 set :puma_state,      "/home/deploy/m4m/apps/m4m/shared/tmp/pids/puma.state"
 set :puma_pid,        "/home/deploy/m4m/apps/m4m/shared/tmp/pids/puma.pid"
 set :puma_access_log, "/home/deploy/m4m/apps/m4m/shared/log/puma_error.log"
