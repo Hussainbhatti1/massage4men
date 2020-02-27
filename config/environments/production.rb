@@ -95,24 +95,21 @@ Rails.application.configure do
   }
   
   # MAILERS
-  config.action_mailer.default_url_options = {
-    protocol: 'https',
-    host: 'm4m.net',
-    only_path: false
-  }
+  config.action_mailer.default_url_options = { host: ENV['DOMAIN_URL'] }
   
   config.action_mailer.asset_host = 'https://m4m.net'
   
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = { 
-    address: "smtp.m4m.net",
+    domain: ENV['DOMAIN_URL'],
+    user_name: ENV['MAIL_USER'],
+    password:  ENV['MAIL_PASSWORD'],
+    address: 'smtp.sendgrid.net',
     port: 587,
-    user_name: ENV['SMTP_USERNAME'],
-    password: ENV['SMTP_PASSWORD'],
-    authentication: :login,
-    enable_starttls_auto: true,
-    openssl_verify_mode: 'none'
+    authentication: :plain,
   }
+
+
 end
 
 
