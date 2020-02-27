@@ -19,11 +19,11 @@ set :puma_workers,    0
 set :tmp_dir, '/home/deploy/m4m/tmp'
 set :rails_env, 'production'
 
-set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
-set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
-set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
-set :puma_access_log, "#{shared_path}/log/puma_error.log"
-set :puma_error_log,  "#{shared_path}/log/puma_access.log"
+set :puma_bind,       "unix:///home/deploy/m4m/apps/m4m/shared/tmp/sockets/puma.sock"
+set :puma_state,      "/home/deploy/m4m/apps/m4m/shared/tmp/pids/puma.state"
+set :puma_pid,        "/home/deploy/m4m/apps/m4m/shared/tmp/pids/puma.pid"
+set :puma_access_log, "/home/deploy/m4m/apps/m4m/shared/log/puma_error.log"
+set :puma_error_log,  "/home/deploy/m4m/apps/m4m/shared/log/puma_access.log"
 
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
@@ -48,8 +48,8 @@ namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
   task :make_dirs do
     on roles(:app) do
-      execute "mkdir #{shared_path}/tmp/sockets -p"
-      execute "mkdir #{shared_path}/tmp/pids -p"
+      execute "mkdir home/deploy/m4m/apps/m4m/shared/tmp/sockets -p"
+      execute "mkdir home/deploy/m4m/apps/m4m/shared/tmp/pids -p"
     end
   end
 
