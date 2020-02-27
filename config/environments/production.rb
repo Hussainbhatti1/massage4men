@@ -110,13 +110,6 @@ Rails.application.configure do
     authentication: :plain,
   }
 
-  Rails.application.config.middleware.use ExceptionNotification::Rack,
-    email: {
-      email_prefix: '[FoodOrdering] ',
-      sender_address: %{"notifier" <notifier@thedevden.co>},
-      exception_recipients: %w{hussain.bhatti@thedevden.co}
-    }
-
 
 end
 
