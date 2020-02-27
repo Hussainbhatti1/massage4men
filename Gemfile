@@ -145,7 +145,6 @@ group :development do
   gem 'capistrano-ssh-doctor'
   gem 'capistrano-rvm'
   gem 'capistrano-rbenv',   require: false
-  gem 'capistrano-bundler'
   gem 'capistrano-resque', require: false
   gem "mailcatcher"
 
