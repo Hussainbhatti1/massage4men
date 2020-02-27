@@ -38,55 +38,55 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # set :keep_releases, 5
 
 # eye config
-set :eye_roles, -> { :app }
-set :eye_env, -> { { rails_env: fetch(:rails_env) } }
-set :eye_config_file, -> { "#{shared_path}/eye/#{fetch :rails_env}.eye" }
+# set :eye_roles, -> { :app }
+# set :eye_env, -> { { rails_env: fetch(:rails_env) } }
+# set :eye_config_file, -> { "#{shared_path}/eye/#{fetch :rails_env}.eye" }
 
-# eye namespace
-namespace :eye do
+# # eye namespace
+# namespace :eye do
 
-  task :start do
-    on roles(fetch(:eye_roles)), in: :groups, limit: 3, wait: 10 do
-      within current_path do
-        with fetch(:eye_env) do
-          execute :bundle, "exec eye start m4m"
-        end
-      end
-    end
-  end
+#   task :start do
+#     on roles(fetch(:eye_roles)), in: :groups, limit: 3, wait: 10 do
+#       within current_path do
+#         with fetch(:eye_env) do
+#           execute :bundle, "exec eye start m4m"
+#         end
+#       end
+#     end
+#   end
 
-  task :stop do
-    on roles(fetch(:eye_roles)), in: :groups, limit: 3, wait: 10 do
-      within current_path do
-        with fetch(:eye_env) do
-          execute :bundle, "exec eye stop m4m"
-        end
-      end
-    end
-  end
+#   task :stop do
+#     on roles(fetch(:eye_roles)), in: :groups, limit: 3, wait: 10 do
+#       within current_path do
+#         with fetch(:eye_env) do
+#           execute :bundle, "exec eye stop m4m"
+#         end
+#       end
+#     end
+#   end
 
-  task :restart do
-    on roles(fetch(:eye_roles)), in: :groups, limit: 3, wait: 10 do
-      within current_path do
-        with fetch(:eye_env) do
-          execute :bundle, "exec eye restart m4m"
-        end
-      end
-    end
-  end
+#   task :restart do
+#     on roles(fetch(:eye_roles)), in: :groups, limit: 3, wait: 10 do
+#       within current_path do
+#         with fetch(:eye_env) do
+#           execute :bundle, "exec eye restart m4m"
+#         end
+#       end
+#     end
+#   end
 
-  desc "Start eye with the desired configuration file"
-  task :load_config do
-    on roles(fetch(:eye_roles)) do
-      within current_path do
-        with fetch(:eye_env) do
-          execute :bundle, "exec eye load #{fetch(:eye_config_file)}"
-        end
-      end
-    end
-  end
+#   desc "Start eye with the desired configuration file"
+#   task :load_config do
+#     on roles(fetch(:eye_roles)) do
+#       within current_path do
+#         with fetch(:eye_env) do
+#           execute :bundle, "exec eye load #{fetch(:eye_config_file)}"
+#         end
+#       end
+#     end
+#   end
 
-end
+# end
 
 # random task
 desc 'Invoke a rake command on the remote server'
@@ -135,8 +135,8 @@ namespace :deploy do
   # after :restart_resque_scheduler, :sphinx_setup
 end
 
-before "deploy:restart", "eye:load_config"
+#before "deploy:restart", "eye:load_config"
 
 # Restart all services - especially Resque or it will use old templates!
 
-after "deploy:restart", "eye:restart"
+#after "deploy:restart", "eye:restart"

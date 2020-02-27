@@ -24,4 +24,7 @@ test:
   password: 
 
 production:
-  database: massage4men
+  database: m4m_staging
+  username: hussain
+  password: massage4men
+
