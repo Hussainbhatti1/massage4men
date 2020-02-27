@@ -1,15 +1,10 @@
 # config valid only for current version of Capistrano
-lock '3.11.0'
 
-set :application, 'm4m'
-set :repo_url, 'git@github.com:Hussainbhatti1/massage4men.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # REMOVED: :rails_env now set in stage files.
-set :use_sudo, true
-set :verbose, true
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -24,11 +19,11 @@ set :verbose, true
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+#set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
 # set :linked_files, fetch(:linked_files, []).push('config/production.sphinx.conf')
 
 # Default value for linked_dirs is []
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'config/eye')
+#set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'config/eye')
 # set :linked_files, fetch(:linked_files, []).push('config/eye/production.eye')
 
 # Default value for default_env is {}
@@ -89,51 +84,51 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 # end
 
 # random task
-desc 'Invoke a rake command on the remote server'
-task :invoke, [:command] => 'deploy:set_rails_env' do |task, args|
-  on primary(:app) do
-    within current_path do
-      with :rails_env => fetch(:rails_env) do
-        rake args[:command]
-      end
-    end
-  end
-end
+# desc 'Invoke a rake command on the remote server'
+# task :invoke, [:command] => 'deploy:set_rails_env' do |task, args|
+#   on primary(:app) do
+#     within current_path do
+#       with :rails_env => fetch(:rails_env) do
+#         rake args[:command]
+#       end
+#     end
+#   end
+# end
 
 # deploy namespace
-namespace :deploy do
+# namespace :deploy do
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
+#   desc 'Restart application'
+#   task :restart do
+#     on roles(:app), in: :sequence, wait: 5 do
+#       execute :touch, release_path.join('tmp/restart.txt')
+#     end
+#   end
 
-  # desc 'Restart Resque workers'
-  # task :restart_resque do
-  #   invoke 'resque:restart'
-  # end
-  #
-  # desc 'Restart Resque Scheduler'
-  # task :restart_resque_scheduler do
-  #   invoke 'resque:scheduler:restart'
-  # end
-  #
-  # desc 'Stop Sphinx, regenerate its config and restart it'
-  # task :sphinx_setup do
-  #   on roles(:app), in: :sequence do
-  #     invoke 'thinking_sphinx:stop'
-  #     invoke 'thinking_sphinx:configure'
-  #     invoke 'thinking_sphinx:start'
-  #   end
-  # end
+#   # desc 'Restart Resque workers'
+#   # task :restart_resque do
+#   #   invoke 'resque:restart'
+#   # end
+#   #
+#   # desc 'Restart Resque Scheduler'
+#   # task :restart_resque_scheduler do
+#   #   invoke 'resque:scheduler:restart'
+#   # end
+#   #
+#   # desc 'Stop Sphinx, regenerate its config and restart it'
+#   # task :sphinx_setup do
+#   #   on roles(:app), in: :sequence do
+#   #     invoke 'thinking_sphinx:stop'
+#   #     invoke 'thinking_sphinx:configure'
+#   #     invoke 'thinking_sphinx:start'
+#   #   end
+#   # end
 
-  after :publishing, :restart
-  # after :restart, :restart_resque
-  # after :restart_resque, :restart_resque_scheduler
-  # after :restart_resque_scheduler, :sphinx_setup
-end
+#   after :publishing, :restart
+#   # after :restart, :restart_resque
+#   # after :restart_resque, :restart_resque_scheduler
+#   # after :restart_resque_scheduler, :sphinx_setup
+# end
 
 #before "deploy:restart", "eye:load_config"
 
