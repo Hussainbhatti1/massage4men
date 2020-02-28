@@ -103,6 +103,8 @@ respond_to :json, only: :create
     resource.screen_name  = params[:client][:screen_name]
     resource.zip  = params[:client][:zip]
     resource.dob          = params[:client][:dob]
+    resource.city          = params[:client][:city]
+    resource.state         = params[:client][:state]
     resource.save
   end
 

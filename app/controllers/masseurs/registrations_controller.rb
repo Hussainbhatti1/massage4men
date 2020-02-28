@@ -134,6 +134,8 @@ class Masseurs::RegistrationsController < Devise::RegistrationsController
   def resource_update(params)
     resource.screen_name  = params[:masseur][:screen_name]
     resource.mailing_zip  = params[:masseur][:mailing_zip]
+    resource.mailing_city  = params[:masseur][:mailing_city]
+    resource.mailing_state  = params[:masseur][:mailing_state]
     resource.dob          = params[:masseur][:dob]
     resource.contact_phone = params[:masseur][:contact_phone]
     resource.profile_photo_file_name = params[:masseur][:profile_photo]

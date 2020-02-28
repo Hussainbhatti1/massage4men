@@ -90,7 +90,7 @@ function confirm_password(event) {
     check_client_zip();
     check_client_city();
     check_client_state();
-    // check_client_photo();
+    check_client_photo();
 }
 
 function check_email(){
@@ -269,7 +269,6 @@ function masseur_confirm_password(event) {
     check_masseur_city();
     check_masseur_state();
     check_masseur_phone();
-    // check_masseur_photo();
 }
 
 function check_masseur_first_name(){
@@ -415,18 +414,6 @@ function check_masseur_phone(){
         $("#masseur_contact_phone").addClass("active-red");
         toastr.info('Please Enter Valid Contact Number')
     }   
-}
-
-function check_masseur_photo(){
-    var masseurprofilephoto=$("#masseur_profile_photo").val();
-    if(masseurprofilephoto != ""){
-        $(".profile-photo-preview").removeClass("active-red");
-    }
-    else{
-        event.preventDefault();
-        $(".profile-photo-preview").addClass("active-red");
-        toastr.info('Please Upload Valid Photo')
-    }
 }
 
 function masseur_address_require(event){   
