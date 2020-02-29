@@ -118,7 +118,7 @@ class SubscriptionsController < ApplicationController
     
     # Let us know if we can't find the Subscription
     if !sub
-      AdminMailer.postback_subscription_not_found(params).deliver_later
+      AdminMailer.postback_subscription_not_found(params).deliver_now
       render json: {success: false, error: "Could not find subscription with ID #{params[:x_subscription_id]}"}
     else
       # Create a new transaction off of this Subscription

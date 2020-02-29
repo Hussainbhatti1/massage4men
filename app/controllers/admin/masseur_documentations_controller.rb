@@ -30,7 +30,7 @@ class Admin::MasseurDocumentationsController < Admin::BaseController
     
     respond_to do |format|
       if @masseur_documentation.update_attributes("#{@doc_type}_approved": true)
-        MasseurMailer.badge_approved_email(@masseur, badge_name, badge_type).deliver_later
+        MasseurMailer.badge_approved_email(@masseur, badge_name, badge_type).deliver_now
         format.js { }
         format.html { redirect_to :back, notice: "#{@doc_type.titleize} approved." }
       else

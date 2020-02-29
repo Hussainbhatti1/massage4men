@@ -93,11 +93,11 @@ class Client < ActiveRecord::Base
   end
   
   def send_welcome_email
-    ClientMailer.welcome_message(self).deliver_later
+    ClientMailer.welcome_message(self).deliver_now
   end
   
   def new_client_signup
-    AdminMailer.new_client_signup(self).deliver_later
+    AdminMailer.new_client_signup(self).deliver_now
   end
   
   def favorited?(masseur)

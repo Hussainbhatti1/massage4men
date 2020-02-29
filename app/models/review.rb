@@ -31,6 +31,6 @@ class Review < ActiveRecord::Base
   scope :approved, -> { where('admin_approved = true OR masseur_approved = true') }
   
   def notify_masseur
-    MasseurMailer.notify_masseur_of_new_review_email(self).deliver_later
+    MasseurMailer.notify_masseur_of_new_review_email(self).deliver_now
   end
 end

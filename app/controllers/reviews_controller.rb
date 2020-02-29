@@ -45,7 +45,7 @@ class ReviewsController < ApplicationController
   def deny
     if @review.update_attributes(masseur_approved: false)
       # Inform the staff so they can override if necessary
-      AdminMailer.notify_admin_of_rejected_review(@review).deliver_later
+      AdminMailer.notify_admin_of_rejected_review(@review).deliver_now
 
       flash[:success] = 'You have rejected this review. It will not appear on your ads.'
     else

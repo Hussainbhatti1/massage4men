@@ -6,7 +6,7 @@ class Admin::MasseursController < Admin::BaseController
     @completion = @masseur.calculate_completeness
 
 
-    MasseurMailer.completion_reminder(@masseur, @completion).deliver_later
+    MasseurMailer.completion_reminder(@masseur, @completion).deliver_now
     redirect_to uncompleted_profile_admin_masseurs_path, notice: 'Reminder email sent successfully.'
   end
 
@@ -15,7 +15,7 @@ class Admin::MasseursController < Admin::BaseController
     Masseur.all.each do |masseur|
       if !masseur.complete?
         @completion = masseur.calculate_completeness
-        MasseurMailer.completion_reminder(masseur, @completion).deliver_later
+        MasseurMailer.completion_reminder(masseur, @completion).deliver_now
       end
     end
 
