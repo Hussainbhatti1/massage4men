@@ -155,9 +155,9 @@ class AdsController < ApplicationController
         end
 
         masseurs_ids = masseur_details.map(&:masseur_id)
-        @masseurs = Masseur.all
+        @masseurs = Masseur.approved.where(id: masseurs_ids).where.not(profile_photo_file_name: nil).includes(:masseur_detail, :reviews, :ads => [:massage_type]).where("massage_types.id": @massage_types).sort_by { |m| masseurs_ids.index(m.id) }
       else
-        @masseurs = Masseur.all
+        @masseurs = Masseur.approved.where.not(profile_photo_file_name: nil).order(id: :desc).includes(:masseur_detail, :reviews, :ads => [:massage_type, ]).where("massage_types.id": @massage_types)
       end
     end
   end
