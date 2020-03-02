@@ -143,6 +143,8 @@
 			
   			<ul class="nav navbar-nav navbar-right list-inline">
   			<% if admin_signed_in? %>
+          <li><%= link_to 'Reset Password', admin_edit_password_path %></li>
+
   				<li><p class="navbar-text"><i class="fa fa-user"></i> <%= current_admin.email %></p></li>
           <li>
             <%= link_to destroy_admin_session_path, method: :delete do %>

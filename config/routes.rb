@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   get 'subscriptions/new'
 
   devise_for :admins, controllers: {
-    sessions: 'admin/sessions'
+    sessions: 'admin/sessions',
+    registrations: "admin/registrations"
   }
   
   devise_for :clients, controllers: {
@@ -32,6 +33,11 @@ Rails.application.routes.draw do
     sessions: 'shared_devise/sessions',
     passwords: 'shared_devise/passwords'
   }
+
+  devise_scope :admin do
+    get "admin/edit/password", to: 'admin/registrations#edit_password', as: :admin_edit_password
+    patch "admin/edit/password", to: 'admin/registrations#update_password', as: :admin_update_password
+  end
   
   # for shared forms
   devise_scope :client do
